@@ -37,7 +37,7 @@ Always do **smaller iterations**. Multiple small PIV loops, never try to impleme
 - Use command: `/execute requests/{feature}-plan.md`
 - Or use prompt: `templates/IMPLEMENTATION-PROMPT.md` (for non-Claude Code tools)
 - Trust but verify: watch loosely, don't micromanage
-- **Remote execution (optional)**: The PIV Loop can also run remotely via GitHub Actions. Create a GitHub Issue, comment `@claude-fix` or `@claude-create`, and the full loop runs in CI. See `sections/10_github_integration.md` for setup.
+- **Remote execution (optional)**: The PIV Loop can also run remotely via GitHub Actions. Create a GitHub Issue, comment `@claude-fix` or `@claude-create`, and the full loop runs in CI. See `reference/github-integration.md` for setup.
 
 ### Validation
 - **AI validates**: unit tests, integration tests, linting

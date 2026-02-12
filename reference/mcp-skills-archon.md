@@ -1,6 +1,6 @@
 # MCP Servers, Cloud Skills & Archon Integration
 
-This guide explains **how MCP servers and Cloud Skills extend the PIV Loop with external tool access and progressive context loading** — covering the MCP protocol, token cost management, Cloud Skills architecture, Archon integration for knowledge bases and task management, PIV Loop integration, and practical examples — going deeper than the always-loaded overview in `sections/12_mcp_servers_cloud_skills.md`.
+This guide explains **how MCP servers and Cloud Skills extend the PIV Loop with external tool access and progressive context loading** — covering the MCP protocol, token cost management, Cloud Skills architecture, Archon integration for knowledge bases and task management, PIV Loop integration, and practical examples — going deeper than the guide at `reference/mcp-skills-overview.md`.
 
 ---
 
@@ -469,7 +469,7 @@ mem0 and Archon solve **different problems** and complement each other:
 ## Next Steps
 
 1. Read this guide (you're doing this now)
-2. Study `sections/12_mcp_servers_cloud_skills.md` for the always-loaded overview
+2. Study `reference/mcp-skills-overview.md` for the MCP & Skills overview
 3. Try Exercise 1 — add an MCP server and test it
 4. Try Exercise 2 — create a Cloud Skill for a project convention
 5. Study `sections/15_archon_workflow.md` for the complete Archon integration rules
@@ -479,7 +479,7 @@ mem0 and Archon solve **different problems** and complement each other:
 
 ## Related Resources
 
-- **MCP & Skills overview**: `sections/12_mcp_servers_cloud_skills.md` — always-loaded section with tables and integration patterns
+- **MCP & Skills overview**: `reference/mcp-skills-overview.md` — on-demand guide with tables and integration patterns
 - **Archon workflow rules**: `sections/15_archon_workflow.md` — complete ARCHON-FIRST rule, tool reference, task/RAG workflow
 - **Remote Agentic System**: `reference/remote-agentic-system.md` — prerequisite: remote system architecture
 - **Subagents guide**: `reference/subagents-guide.md` — next: parallel execution with context isolation

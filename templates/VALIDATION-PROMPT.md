@@ -3,7 +3,7 @@
 > Use this after implementation to run the validation suite.
 > Replace the commands with your project's actual tools.
 >
-> This covers Levels 1-4 of the 5-level validation pyramid (see `sections/07_validation_strategy.md`).
+> This covers Levels 1-4 of the 5-level validation pyramid (see `reference/validation-strategy.md`).
 > For comprehensive technical review, also use `/code-review`. For process review, use `/system-review`.
 
 ---

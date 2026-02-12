@@ -122,7 +122,7 @@ Investigate the 5 open questions in multi-instance-routing.md and update the gui
 
 ### Phase 4: Update File Structure
 
-Ensure sections/08_file_structure.md reflects the new /agents command.
+Ensure reference/file-structure.md reflects the new /agents command.
 
 **Tasks:**
 - Add agents.md to the file structure listing
@@ -264,17 +264,17 @@ Ensure sections/08_file_structure.md reflects the new /agents command.
 - **GOTCHA**: Be honest about what's NOT supported. Don't leave aspirational features unmarked — users will try them and be confused when they fail.
 - **VALIDATE**: `powershell -Command "Select-String -Path 'reference/multi-instance-routing.md' -Pattern 'NOT YET SUPPORTED|Verified Answers' | Measure-Object | Select-Object -ExpandProperty Count"` — should be >= 2
 
-### UPDATE sections/08_file_structure.md
+### UPDATE reference/file-structure.md
 
 - **IMPLEMENT**: Add the new agents.md command to the `.claude/commands/` section:
   ```
   agents.md                            #   /agents — generate subagent definition files
   ```
   Place it alphabetically in the commands list.
-- **PATTERN**: Follow existing format in `sections/08_file_structure.md`
+- **PATTERN**: Follow existing format in `reference/file-structure.md`
 - **IMPORTS**: None
 - **GOTCHA**: Maintain the existing comment alignment (use spaces/tabs consistently)
-- **VALIDATE**: `powershell -Command "Select-String -Path 'sections/08_file_structure.md' -Pattern 'agents.md' | Measure-Object | Select-Object -ExpandProperty Count"` — should be >= 1
+- **VALIDATE**: `powershell -Command "Select-String -Path 'reference/file-structure.md' -Pattern 'agents.md' | Measure-Object | Select-Object -ExpandProperty Count"` — should be >= 1
 
 ---
 
@@ -303,7 +303,7 @@ N/A — markdown commands. No code to unit test.
 
 ### Level 1: File Existence
 ```
-powershell -Command "@('.claude/commands/code-review-fix.md','.claude/commands/agents.md','reference/multi-instance-routing.md','sections/08_file_structure.md') | ForEach-Object { if (Test-Path $_) { Write-Host 'OK:' $_ } else { Write-Host 'MISSING:' $_ } }"
+powershell -Command "@('.claude/commands/code-review-fix.md','.claude/commands/agents.md','reference/multi-instance-routing.md','reference/file-structure.md') | ForEach-Object { if (Test-Path $_) { Write-Host 'OK:' $_ } else { Write-Host 'MISSING:' $_ } }"
 ```
 
 ### Level 2: Line Count Verification
@@ -336,7 +336,7 @@ powershell -Command "Select-String -Path 'reference/multi-instance-routing.md' -
 - [ ] Phase 0 has escape hatch for users with clear specs
 - [ ] multi-instance-routing.md has all 5 questions answered with "Verified Answers" section
 - [ ] All commands have proper frontmatter (description, argument-hint where needed)
-- [ ] sections/08_file_structure.md includes agents.md entry
+- [ ] reference/file-structure.md includes agents.md entry
 - [ ] No aspirational features are presented as working (honest documentation)
 
 ---

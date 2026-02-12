@@ -1,6 +1,6 @@
 # GitHub as the AI Orchestration Layer
 
-This guide explains **how GitHub serves as the orchestration layer for AI coding agents** — covering the GitHub Actions anatomy, three integration approaches (Hybrid, Autonomous, Deterministic), prompt template adaptation for remote workflows, the automated review-fix loop with CodeRabbit, and practical exercises — going deeper than the always-loaded overview in `sections/10_github_integration.md`.
+This guide explains **how GitHub serves as the orchestration layer for AI coding agents** — covering the GitHub Actions anatomy, three integration approaches (Hybrid, Autonomous, Deterministic), prompt template adaptation for remote workflows, the automated review-fix loop with CodeRabbit, and practical exercises — going deeper than the guide at `reference/github-integration.md`.
 
 ---
 
@@ -506,7 +506,7 @@ Manual → Commands → Chained → GitHub Actions → Remote System (see Remote
 ## Next Steps
 
 1. Read this guide (you're doing this now)
-2. Study `sections/10_github_integration.md` for the always-loaded overview
+2. Study `reference/github-integration.md` for the integration overview
 3. Set up GitHub Actions on a test repository — follow `templates/GITHUB-SETUP-CHECKLIST.md`
 4. Test the hybrid approach with a simple bug fix issue
 5. Add CodeRabbit for automated review-fix loops
@@ -516,7 +516,7 @@ Manual → Commands → Chained → GitHub Actions → Remote System (see Remote
 
 ## Related Resources
 
-- `sections/10_github_integration.md` — always-loaded overview of GitHub integration
+- `reference/github-integration.md` — on-demand guide to GitHub integration
 - `templates/GITHUB-SETUP-CHECKLIST.md` — step-by-step GitHub Actions setup guide
 - `reference/github-workflows/` — example workflow YAML files (claude-fix, claude-review)
 - `.github/workflows/prompts/` — GitHub-adapted prompt templates (prime, e2e, bug-fix, code-review)

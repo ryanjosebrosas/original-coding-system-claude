@@ -1,27 +1,27 @@
 ```
 CLAUDE.md                              # Layer 1: Global rules (slim, @references)
 .coderabbit.yaml                       # CodeRabbit config template (copy to project root)
-sections/                              # Modular rule sections
-  01_core_principles.md                #   YAGNI, KISS, DRY, Limit AI Assumptions
+sections/                              # Auto-loaded rule sections (every session)
+  01_core_principles.md                #   YAGNI, KISS, DRY, Limit AI Assumptions, ABP
   02_piv_loop.md                       #   Plan, Implement, Validate methodology
   03_context_engineering.md            #   4 Pillars: Memory, RAG, Prompts, Tasks
   04_git_save_points.md                #   Commit plans before implementing
   05_decision_framework.md             #   When to proceed vs ask
-  06_layer1_guide.md                   #   How to build CLAUDE.md for real projects
-  07_validation_strategy.md            #   Linting, tests, manual testing
-  08_file_structure.md                 #   This file
-  09_command_design.md                 #   Slash commands & INPUT→PROCESS→OUTPUT
-  10_github_integration.md             #   GitHub Actions, remote agents, orchestration
-  11_remote_system.md                  #   Remote Agentic Coding System, orchestrator, deployment
-  12_mcp_servers_cloud_skills.md       #   MCP protocol, cloud skills, progressive loading
-  13_subagents.md                      #   Subagents, parallel execution, context isolation
-  14_git_worktrees.md                  #   Git worktrees, parallel implementation, worktree workflow
   15_archon_workflow.md                #   Archon task management & RAG workflow rules
 reference/                             # On-demand guides (loaded when needed)
+  layer1-guide.md                      #   How to build CLAUDE.md for real projects
+  validation-strategy.md               #   5-level validation pyramid, linting, tests
+  file-structure.md                    #   This file — project directory layout
+  command-design-overview.md           #   Slash commands & INPUT→PROCESS→OUTPUT
+  github-integration.md                #   GitHub Actions, remote agents, orchestration
+  remote-system-overview.md            #   Remote Agentic Coding System, orchestrator
+  mcp-skills-overview.md               #   MCP protocol, cloud skills, progressive loading
+  subagents-overview.md                #   Subagents, parallel execution, context isolation
+  git-worktrees-overview.md            #   Git worktrees, parallel implementation
   system-foundations.md                #   System gap, mental models, self-assessment
   piv-loop-practice.md                #   PIV Loop in practice, 4 Pillars, validation
   global-rules-optimization.md        #   Modular CLAUDE.md, Two-Question Framework
-  command-design-framework.md          #   Slash commands, INPUT→PROCESS→OUTPUT
+  command-design-framework.md          #   Slash commands, INPUT→PROCESS→OUTPUT (deep dive)
   planning-methodology-guide.md        #   6-phase planning, PRD, Vertical Slice
   implementation-discipline.md         #   Execute command, meta-reasoning, save states
   validation-discipline.md             #   5-level pyramid, code review, system review

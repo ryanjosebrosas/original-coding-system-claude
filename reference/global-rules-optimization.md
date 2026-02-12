@@ -1,6 +1,6 @@
 # Global Rules & Layer 1 Optimization
 
-This guide explains **how to organize your CLAUDE.md for maximum effectiveness** — covering modular organization with @sections, the Two-Question Framework for auto-load vs on-demand decisions, strategic context loading to avoid token bloat, and building Layer 1 with AI — going deeper than the always-loaded overview in `sections/06_layer1_guide.md`.
+This guide explains **how to organize your CLAUDE.md for maximum effectiveness** — covering modular organization with @sections, the Two-Question Framework for auto-load vs on-demand decisions, strategic context loading to avoid token bloat, and building Layer 1 with AI — going deeper than the guide at `reference/layer1-guide.md`.
 
 ---
 
@@ -240,7 +240,7 @@ Is this constant or task-specific?
 ### Real-World Application
 
 In this template, the MCP Servers & Cloud Skills content was split using this framework:
-- **Auto-loaded section** (`sections/12_mcp_servers_cloud_skills.md`): 104 lines — core concepts needed whenever using MCP
+- **On-demand guide** (`reference/mcp-skills-overview.md`): 104 lines — core concepts needed whenever using MCP
 - **On-demand guide** (`reference/mcp-skills-archon.md`): 190 lines — detailed setup only needed when configuring MCP
 
 The split was guided directly by the Two-Question Framework: MCP concepts are needed when working with MCP (not every session), but setup details are only needed during initial configuration.
@@ -586,7 +586,7 @@ When truly uncertain, err toward auto-loading small sections and on-demand for l
 
 **Long answer**: The `/init-c` command (built from the "Create Global Rules" prompt) generates a solid starting point by analyzing your codebase or asking clarifying questions. But AI-generated rules are a first draft, not a final product.
 
-After running `/init-c`, review the output for: accuracy (does it match your actual conventions?), completeness (is anything important missing?), specificity (are examples from YOUR code, not generic?), and length (100-500 lines target). Customize as needed, then commit. Your CLAUDE.md will evolve over time as you discover what matters — see the System Evolution principle in `sections/09_command_design.md`.
+After running `/init-c`, review the output for: accuracy (does it match your actual conventions?), completeness (is anything important missing?), specificity (are examples from YOUR code, not generic?), and length (100-500 lines target). Customize as needed, then commit. Your CLAUDE.md will evolve over time as you discover what matters — see the System Evolution principle in `reference/command-design-overview.md`.
 
 ### "How do I know if my global rules are too long?"
 
@@ -629,12 +629,12 @@ Don't update for every small issue. The system evolution principle applies: fix 
 
 ## Related Resources
 
-- **Layer 1 Guide**: See `sections/06_layer1_guide.md` for the auto-loaded overview of Layer 1 components, creation order, and the Two-Question Framework summary
+- **Layer 1 Guide**: See `reference/layer1-guide.md` for the on-demand guide to Layer 1 components, creation order, and the Two-Question Framework summary
 - **PIV Loop**: See `sections/02_piv_loop.md` for the core Plan → Implement → Validate methodology and how Layer 1 fits into the bigger picture
 - **Context Engineering**: See `sections/03_context_engineering.md` for the 4 Pillars (Memory, RAG, Prompt Engineering, Task Management)
 - **Generate Global Rules**: Use the `/init-c` command or `templates/CREATE-REFERENCE-GUIDE-PROMPT.md` to build Layer 1 with AI assistance
 - **Structured Plan Template**: `templates/STRUCTURED-PLAN-TEMPLATE.md` — For Layer 2 task-specific plans (what does NOT go in CLAUDE.md)
-- **Slash Commands**: See `sections/09_command_design.md` for Method 2 on-demand loading via commands and the trust progression
+- **Slash Commands**: See `reference/command-design-overview.md` for Method 2 on-demand loading via commands and the trust progression
 
 ---
 
@@ -648,4 +648,4 @@ Don't update for every small issue. The system evolution principle applies: fix 
 - Building Layer 1 with AI (two prompts, `/init-c`)
 - Practical exercise for auditing and optimizing global rules
 
-**Ready for the next step?** Learn slash commands — reusable prompts that automate workflows and provide the recommended Method 2 for loading reference guides on-demand. See `sections/09_command_design.md` for a preview, or `reference/command-design-framework.md` for the deep dive.
+**Ready for the next step?** Learn slash commands — reusable prompts that automate workflows and provide the recommended Method 2 for loading reference guides on-demand. See `reference/command-design-overview.md` for an overview, or `reference/command-design-framework.md` for the deep dive.

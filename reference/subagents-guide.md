@@ -44,7 +44,7 @@ Be specific about what the agent IS and IS NOT. This prevents scope drift.
 
 Read these files to understand project standards:
 - `CLAUDE.md` — project rules and conventions
-- `sections/07_validation_strategy.md` — validation criteria
+- `reference/validation-strategy.md` — validation criteria
 
 Then read the files that were changed (provided by main agent or specified in arguments).
 ```
@@ -105,7 +105,7 @@ This is the most critical section. See "Output Format Design Patterns" below.
 ### Context Analyzed
 - Plan file: `requests/feature-plan.md` (247 lines)
 - Execution report: `requests/execution-reports/feature-report.md` (189 lines)
-- Additional: `sections/07_validation_strategy.md` (42 lines)
+- Additional: `reference/validation-strategy.md` (42 lines)
 
 ### Scope
 - Included: all implementation tasks, validation results

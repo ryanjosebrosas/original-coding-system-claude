@@ -40,7 +40,7 @@ mem0 is currently referenced across 9+ system files as the memory layer. Problem
 
 - `sections/02_piv_loop.md` (lines 1-90) — Why: References mem0 in planning/commit workflow
 - `sections/03_context_engineering.md` (lines 1-11) — Why: Lists mem0 as "Memory" pillar
-- `sections/12_mcp_servers_cloud_skills.md` (lines 1-150+) — Why: Token cost analysis includes mem0
+- `reference/mcp-skills-overview.md` (lines 1-150+) — Why: Token cost analysis includes mem0
 - `.claude/commands/planning.md` (lines 1-362) — Why: Phase 2c searches mem0 for past decisions
 - `.claude/commands/commit.md` (lines 1-166) — Why: Step 6 stores learnings to mem0
 - `.claude/commands/prime.md` (lines 1-108) — Why: Step 5 searches mem0 for project memories
@@ -109,7 +109,7 @@ Replace mem0 references in always-loaded sections with memory.md approach.
 **Tasks:**
 - Update sections/02_piv_loop.md
 - Update sections/03_context_engineering.md
-- Update sections/12_mcp_servers_cloud_skills.md
+- Update reference/mcp-skills-overview.md
 
 ### Phase 4: Update References & Templates
 
@@ -119,7 +119,7 @@ Replace mem0 references in on-demand guides and templates.
 - Update reference/piv-loop-practice.md
 - Update reference/mcp-skills-archon.md
 - Update templates/STRUCTURED-PLAN-TEMPLATE.md
-- Update sections/08_file_structure.md
+- Update reference/file-structure.md
 
 ---
 
@@ -261,7 +261,7 @@ Replace mem0 references in on-demand guides and templates.
 - **GOTCHA**: This is only 11 lines — one precise edit needed
 - **VALIDATE**: `powershell -Command "if (Select-String -Path 'sections/03_context_engineering.md' -Pattern 'mem0' -Quiet) { Write-Host 'FAIL: mem0 still referenced' } else { Write-Host 'OK: no mem0 references' }"`
 
-### UPDATE sections/12_mcp_servers_cloud_skills.md
+### UPDATE reference/mcp-skills-overview.md
 
 - **IMPLEMENT**: Replace mem0 references in the token cost analysis and integration sections:
   - Update the token cost table: remove "mem0 only" and "mem0 + Archon" rows, or replace with "memory.md" (which has zero MCP token cost)
@@ -272,7 +272,7 @@ Replace mem0 references in on-demand guides and templates.
 - **PATTERN**: Surgical replacement, preserve table formatting
 - **IMPORTS**: None
 - **GOTCHA**: This is a longer section (~150 lines). Be careful to only change mem0-specific content, not Archon content.
-- **VALIDATE**: `powershell -Command "if (Select-String -Path 'sections/12_mcp_servers_cloud_skills.md' -Pattern 'mem0' -Quiet) { Write-Host 'FAIL: mem0 still referenced' } else { Write-Host 'OK: no mem0 references' }"`
+- **VALIDATE**: `powershell -Command "if (Select-String -Path 'reference/mcp-skills-overview.md' -Pattern 'mem0' -Quiet) { Write-Host 'FAIL: mem0 still referenced' } else { Write-Host 'OK: no mem0 references' }"`
 
 ### UPDATE reference/piv-loop-practice.md
 
@@ -308,7 +308,7 @@ Replace mem0 references in on-demand guides and templates.
 - **GOTCHA**: Only change the mem0-specific text, not the surrounding template structure
 - **VALIDATE**: `powershell -Command "if (Select-String -Path 'templates/STRUCTURED-PLAN-TEMPLATE.md' -Pattern 'mem0' -Quiet) { Write-Host 'FAIL: mem0 still referenced' } else { Write-Host 'OK: no mem0 references' }"`
 
-### UPDATE sections/08_file_structure.md
+### UPDATE reference/file-structure.md
 
 - **IMPLEMENT**: Add memory.md template to the templates/ section and add memory.md as a project-level file:
   - Add under templates/: `MEMORY-TEMPLATE.md                    # Template for project memory (cross-session context)`
@@ -316,7 +316,7 @@ Replace mem0 references in on-demand guides and templates.
 - **PATTERN**: Follow existing format
 - **IMPORTS**: None
 - **GOTCHA**: memory.md at project root is optional — note it as such
-- **VALIDATE**: `powershell -Command "Select-String -Path 'sections/08_file_structure.md' -Pattern 'MEMORY-TEMPLATE|memory.md' | Measure-Object | Select-Object -ExpandProperty Count"` — should be >= 2
+- **VALIDATE**: `powershell -Command "Select-String -Path 'reference/file-structure.md' -Pattern 'MEMORY-TEMPLATE|memory.md' | Measure-Object | Select-Object -ExpandProperty Count"` — should be >= 2
 
 ---
 
@@ -377,7 +377,7 @@ powershell -Command "@('.claude/commands/prime.md','.claude/commands/planning.md
 - [ ] All sections updated (02, 03, 12)
 - [ ] All references updated (piv-loop-practice, mcp-skills-archon)
 - [ ] STRUCTURED-PLAN-TEMPLATE.md updated
-- [ ] sections/08_file_structure.md updated
+- [ ] reference/file-structure.md updated
 
 ---
 

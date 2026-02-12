@@ -550,7 +550,7 @@ Status: VALIDATION FAILED
 - Alignment with intent (right solution?)
 - Edge cases not covered by tests
 
-See `sections/07_validation_strategy.md` for the complete 5-level pyramid explanation.
+See `reference/validation-strategy.md` for the complete 5-level pyramid explanation.
 
 ---
 
@@ -755,8 +755,8 @@ The upfront investment pays dividends throughout the feature lifecycle.
 
 - **PIV Loop Overview**: See `sections/02_piv_loop.md` for the core Plan -> Implement -> Validate methodology and granularity principle
 - **4 Pillars of Context Engineering**: See `sections/03_context_engineering.md` for Memory, RAG, Prompt Engineering, and Task Management definitions
-- **Layer 1 Guide**: See `sections/06_layer1_guide.md` for the complete guide to creating CLAUDE.md for real projects
-- **Validation Strategy**: See `sections/07_validation_strategy.md` for the complete 5-level validation pyramid
+- **Layer 1 Guide**: See `reference/layer1-guide.md` for the complete guide to creating CLAUDE.md for real projects
+- **Validation Strategy**: See `reference/validation-strategy.md` for the complete 5-level validation pyramid
 - **Structured Plan Template**: `templates/STRUCTURED-PLAN-TEMPLATE.md` — the template used by `/planning` command for Layer 2 plans
 - **Vibe Planning Examples**: `templates/VIBE-PLANNING-GUIDE.md` — example prompts showing the exploratory planning phase
 

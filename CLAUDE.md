@@ -29,55 +29,25 @@ A comprehensive AI-assisted development methodology combining systematic plannin
 
 ---
 
-## Layer 1 Guide
-@sections/06_layer1_guide.md
-
----
-
-## Validation Strategy
-@sections/07_validation_strategy.md
-
----
-
-## File Structure
-@sections/08_file_structure.md
-
----
-
-## Command Design
-@sections/09_command_design.md
-
----
-
-## GitHub Integration
-@sections/10_github_integration.md
-
----
-
-## Remote System
-@sections/11_remote_system.md
-
----
-
-## MCP Servers & Cloud Skills
-@sections/12_mcp_servers_cloud_skills.md
-
----
-
-## Subagents
-@sections/13_subagents.md
-
----
-
-## Git Worktrees
-@sections/14_git_worktrees.md
-
----
-
 ## Archon Workflow
 @sections/15_archon_workflow.md
 
 ---
 
-> **Template System**: This project uses the modular @sections architecture.
-> For deeper context on this system, see the reference guides in `reference/` (e.g., `system-foundations.md`, `piv-loop-practice.md`, `global-rules-optimization.md`).
+## On-Demand Guides
+
+> These guides are NOT auto-loaded. Read them when the task requires it.
+
+| Guide | Load when... |
+|-------|-------------|
+| `reference/layer1-guide.md` | Setting up CLAUDE.md for a new project |
+| `reference/validation-strategy.md` | Planning or running validation |
+| `reference/file-structure.md` | Looking up where files belong |
+| `reference/command-design-overview.md` | Designing or modifying slash commands |
+| `reference/github-integration.md` | Setting up GitHub Actions or CodeRabbit |
+| `reference/remote-system-overview.md` | Deploying or using the remote coding agent |
+| `reference/mcp-skills-overview.md` | Configuring MCP servers or creating skills |
+| `reference/subagents-overview.md` | Creating or debugging subagents |
+| `reference/git-worktrees-overview.md` | Parallel feature implementation with worktrees |
+
+> For deeper context, see additional reference guides in `reference/` (e.g., `system-foundations.md`, `piv-loop-practice.md`, `global-rules-optimization.md`).

@@ -16,7 +16,7 @@ The reference guides describe specific formats and frameworks (baseline assessme
 
 - Decision 1: Create standalone template files — because templates should be immediately usable without reading the reference guide first
 - Decision 2: Keep templates concise with placeholders — because templates that are too prescriptive become rigid; the reference guide provides the "why"
-- Decision 3: Place in templates/ directory (except .coderabbit.yaml at root) — because that's the established convention per sections/08_file_structure.md
+- Decision 3: Place in templates/ directory (except .coderabbit.yaml at root) — because that's the established convention per reference/file-structure.md
 
 ## Feature Metadata
 
@@ -118,7 +118,7 @@ Verify all templates follow conventions and cross-references are correct.
 
 **Tasks:**
 - Verify each template is referenced correctly in the system
-- Update sections/08_file_structure.md to include new templates
+- Update reference/file-structure.md to include new templates
 
 ---
 
@@ -228,7 +228,7 @@ Verify all templates follow conventions and cross-references are correct.
 - **GOTCHA**: This is a TEMPLATE — users must customize path_instructions for their project. Don't make it too project-specific.
 - **VALIDATE**: `powershell -Command "if (Test-Path '.coderabbit.yaml') { Write-Host 'OK'; (Get-Content '.coderabbit.yaml').Count } else { Write-Host 'MISSING' }"`
 
-### UPDATE sections/08_file_structure.md
+### UPDATE reference/file-structure.md
 
 - **IMPLEMENT**: Add the 4 new template files to the file structure listing under the `templates/` section. Add entries:
   - `BASELINE-ASSESSMENT-TEMPLATE.md` — Self-assessment for measuring PIV Loop improvement
@@ -236,10 +236,10 @@ Verify all templates follow conventions and cross-references are correct.
   - `TOOL-DOCSTRING-TEMPLATE.md` — 7-element template for agent tool documentation
   - `META-REASONING-CHECKLIST.md` — 5-step meta-reasoning + WHERE-to-fix framework
   Also add `.coderabbit.yaml` entry at the root level of the file tree.
-- **PATTERN**: Follow existing format in `sections/08_file_structure.md` — comment-style descriptions after each file
+- **PATTERN**: Follow existing format in `reference/file-structure.md` — comment-style descriptions after each file
 - **IMPORTS**: None
 - **GOTCHA**: Maintain alphabetical ordering within the templates/ section where existing entries allow. Don't break the existing structure.
-- **VALIDATE**: `powershell -Command "Select-String -Path 'sections/08_file_structure.md' -Pattern 'BASELINE-ASSESSMENT|VALIDATION-REPORT|TOOL-DOCSTRING|META-REASONING|coderabbit' | Measure-Object | Select-Object -ExpandProperty Count"`
+- **VALIDATE**: `powershell -Command "Select-String -Path 'reference/file-structure.md' -Pattern 'BASELINE-ASSESSMENT|VALIDATION-REPORT|TOOL-DOCSTRING|META-REASONING|coderabbit' | Measure-Object | Select-Object -ExpandProperty Count"`
 
 ---
 
@@ -253,7 +253,7 @@ N/A — these are markdown templates and YAML config. No code to unit test.
 
 - Verify each template follows the established pattern (blockquote header, placeholder format)
 - Verify .coderabbit.yaml is valid YAML syntax
-- Verify sections/08_file_structure.md accurately reflects the new files
+- Verify reference/file-structure.md accurately reflects the new files
 
 ### Edge Cases
 
@@ -285,7 +285,7 @@ powershell -Command "@('templates/BASELINE-ASSESSMENT-TEMPLATE.md','templates/VA
 1. Read each template and verify it matches the source reference content
 2. Verify templates use placeholder format (curly braces), not prescriptive content
 3. Verify .coderabbit.yaml has helpful comments explaining customization
-4. Verify sections/08_file_structure.md lists all new files
+4. Verify reference/file-structure.md lists all new files
 
 ### Level 5: Cross-Reference Check
 
@@ -303,7 +303,7 @@ Verify each template is findable from its reference guide:
 - [ ] Each template follows the established header/placeholder pattern
 - [ ] Templates are concise (under 100 lines each, preferably 50-80)
 - [ ] .coderabbit.yaml is valid YAML with helpful comments
-- [ ] sections/08_file_structure.md updated with all new entries
+- [ ] reference/file-structure.md updated with all new entries
 - [ ] No reference guide prose is duplicated — templates contain placeholders and brief instructions only
 - [ ] Each template can be immediately used without reading the reference guide
 

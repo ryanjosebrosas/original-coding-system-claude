@@ -1,6 +1,6 @@
 # Command Design Framework: INPUT-PROCESS-OUTPUT
 
-This guide explains **how to design, build, and evolve** slash commands — reusable prompts that automate workflows — using the INPUT→PROCESS→OUTPUT framework, going deeper than the always-loaded overview in `sections/09_command_design.md`.
+This guide explains **how to design, build, and evolve** slash commands — reusable prompts that automate workflows — using the INPUT→PROCESS→OUTPUT framework, going deeper than the guide at `reference/command-design-overview.md`.
 
 ---
 
@@ -35,7 +35,7 @@ Commands also implement the Global Rules Optimization guide's recommended Method
 
 ## 2. The INPUT→PROCESS→OUTPUT Framework
 
-As covered in `sections/09_command_design.md`, every command answers three questions. This section goes deeper with examples and practical guidance.
+As covered in `reference/command-design-overview.md`, every command answers three questions. This section goes deeper with examples and practical guidance.
 
 ### The Three Questions (From the Agent's Perspective)
 
@@ -676,7 +676,7 @@ Both exercises use the same INPUT→PROCESS→OUTPUT framework. Exercise 1 optim
 
 ## Related Resources
 
-- **Section 09 overview**: `sections/09_command_design.md` — always-loaded command reference
+- **Command design overview**: `reference/command-design-overview.md` — on-demand command reference
 - **Command template**: `templates/COMMAND-TEMPLATE.md` — design guide for creating new commands
 - **Structured plan template**: `templates/STRUCTURED-PLAN-TEMPLATE.md` — the output format `/planning` produces
 - **Existing commands**: `.claude/commands/` — see how the Core 4 and other commands are implemented

@@ -10,3 +10,6 @@
 - Business logic decisions required
 
 If unsure, ask.
+
+**NEVER use EnterPlanMode.**
+Planning is done through `/planning` (the slash command), which produces a structured plan document in `requests/`. The built-in plan mode tool bypasses our methodology — don't use it.

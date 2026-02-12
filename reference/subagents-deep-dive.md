@@ -1,6 +1,6 @@
 # Subagents: Parallel AI Execution & Context Isolation
 
-This guide explains **how to extend the PIV Loop with specialized worker agents** — covering subagent fundamentals, the context handoff mental model, built-in vs custom agents, the 5-component design framework, output format as the primary control lever, parallel execution patterns, and integration with existing commands — going deeper than the always-loaded overview in `sections/13_subagents.md`.
+This guide explains **how to extend the PIV Loop with specialized worker agents** — covering subagent fundamentals, the context handoff mental model, built-in vs custom agents, the 5-component design framework, output format as the primary control lever, parallel execution patterns, and integration with existing commands — going deeper than the guide at `reference/subagents-overview.md`.
 
 ---
 
@@ -521,7 +521,7 @@ These mistakes appear frequently when creating your first agents:
 
 ## Next Steps
 
-1. Read `sections/13_subagents.md` for the always-loaded overview
+1. Read `reference/subagents-overview.md` for the subagents overview
 2. Read `reference/subagents-guide.md` for creation mechanics, frontmatter reference, and advanced patterns
 3. Read `templates/AGENT-TEMPLATE.md` for the starter template you can copy to your project
 4. Try Exercise 1 — create your first custom agent (system reviewer)
@@ -533,7 +533,7 @@ These mistakes appear frequently when creating your first agents:
 
 ## Related Resources
 
-- **Subagent overview**: `sections/13_subagents.md` — always-loaded summary
+- **Subagent overview**: `reference/subagents-overview.md` — on-demand subagents guide
 - **Creation guide**: `reference/subagents-guide.md` — step-by-step creation, frontmatter reference, advanced patterns
 - **Agent template**: `templates/AGENT-TEMPLATE.md` — starter template for new agents
 - **Example agents**: `.claude/agents/_examples/` — 4 review agents (type-safety, security, architecture, performance)

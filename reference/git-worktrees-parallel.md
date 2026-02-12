@@ -1,6 +1,6 @@
 # Parallel Implementation with Git Worktrees
 
-This guide explains **how to parallelize feature implementation using Git worktrees** — covering the parallelization journey from subagents to worktrees, vertical slice architecture requirements, the complete worktree workflow, out-of-the-box remote coding solutions, the "build one, mirror many" pattern, and industry direction — going deeper than the always-loaded overview in `sections/14_git_worktrees.md`.
+This guide explains **how to parallelize feature implementation using Git worktrees** — covering the parallelization journey from subagents to worktrees, vertical slice architecture requirements, the complete worktree workflow, out-of-the-box remote coding solutions, the "build one, mirror many" pattern, and industry direction — going deeper than the guide at `reference/git-worktrees-overview.md`.
 
 ---
 
@@ -533,7 +533,7 @@ For research agents (subagents in `/planning`), overlap prevention comes from pa
 
 ## 14. Next Steps
 
-1. Read `sections/14_git_worktrees.md` for the always-loaded worktree overview
+1. Read `reference/git-worktrees-overview.md` for the worktree overview
 2. Review `.claude/commands/new-worktree.md` and `.claude/commands/merge-worktrees.md` for command specifications
 3. Customize the worktree commands for your project's tech stack (dependency sync, validation, health checks)
 4. Build one feature excellently — establish the patterns that parallel agents will mirror
@@ -545,11 +545,11 @@ For research agents (subagents in `/planning`), overlap prevention comes from pa
 
 ## 15. Related Resources
 
-- **Worktree overview**: `sections/14_git_worktrees.md` — always-loaded section on worktrees
+- **Worktree overview**: `reference/git-worktrees-overview.md` — on-demand guide on worktrees
 - **Worktree setup command**: `.claude/commands/new-worktree.md` — `/new-worktree` specification
 - **Merge command**: `.claude/commands/merge-worktrees.md` — `/merge-worktrees` specification
 - **Subagents guide**: `reference/subagents-guide.md` — Subagents Deep Dive context isolation (complementary to worktrees)
-- **Subagents section**: `sections/13_subagents.md` — always-loaded subagent overview
+- **Subagents overview**: `reference/subagents-overview.md` — on-demand subagent guide
 - **Remote system guide**: `reference/remote-agentic-system.md` — remote parallel execution at scale
 - **GitHub Orchestration guide**: `reference/github-orchestration.md` — GitHub Actions (prerequisite for remote workflows)
 - **Execute command**: `.claude/commands/execute.md` — used inside each worktree

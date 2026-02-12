@@ -169,7 +169,7 @@ Subagents complement commands — commands define WHAT to do, agents define WHO 
 - **Command references agent**: A slash command instructs the main agent to delegate to a specific subagent, then acts on results (e.g., "use the code-reviewer agent to review the diff, then fix only critical issues")
 - **Agent produces artifact for command**: A subagent saves a report file that a subsequent command consumes (e.g., agent writes review → `/code-review-fix` reads it)
 
-Agents live in `.claude/agents/*.md` (project) or `~/.claude/agents/*.md` (personal). Use `templates/AGENT-TEMPLATE.md` for the design guide. See `sections/13_subagents.md` for the full subagent documentation.
+Agents live in `.claude/agents/*.md` (project) or `~/.claude/agents/*.md` (personal). Use `templates/AGENT-TEMPLATE.md` for the design guide. See `reference/subagents-overview.md` for the full subagent documentation.
 
 ### GitHub Integration (Remote Workflows)
 
@@ -180,7 +180,7 @@ When using commands remotely via GitHub Actions, the same INPUT → PROCESS → 
 - **Extra OUTPUT**: Branch creation, PR creation, issue comments
 - **Automated reviews**: CodeRabbit (GitHub App) auto-reviews PRs; Claude Code auto-applies fixes via `claude-fix-coderabbit.yml`
 
-Prompt templates for GitHub live in `.github/workflows/prompts/`. Example workflows live in `reference/github-workflows/`. See `sections/10_github_integration.md` for the full guide.
+Prompt templates for GitHub live in `.github/workflows/prompts/`. Example workflows live in `reference/github-workflows/`. See `reference/github-integration.md` for the full guide.
 
 **Trust Progression (extended)**:
 

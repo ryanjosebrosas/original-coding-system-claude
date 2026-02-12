@@ -1,6 +1,6 @@
 # Implementation Discipline: Execute, Meta-Reasoning & Save States
 
-This guide explains **how to implement from plans reliably, evolve your system through meta-reasoning, and build trust for faster iteration** — covering the `/execute` command design, the Navigate→Implement→Verify pattern, research validation, save states, and speed progression — going deeper than the always-loaded overviews in `sections/02_piv_loop.md` and `sections/09_command_design.md`.
+This guide explains **how to implement from plans reliably, evolve your system through meta-reasoning, and build trust for faster iteration** — covering the `/execute` command design, the Navigate→Implement→Verify pattern, research validation, save states, and speed progression — going deeper than the always-loaded overview in `sections/02_piv_loop.md` and the guide at `reference/command-design-overview.md`.
 
 ---
 
@@ -479,7 +479,7 @@ rules, and templates.
 ## Related Resources
 
 - **PIV Loop overview**: `sections/02_piv_loop.md` — always-loaded overview of Plan → Implement → Validate
-- **Command design**: `sections/09_command_design.md` — always-loaded command design with meta-reasoning overview
+- **Command design**: `reference/command-design-overview.md` — on-demand command design with meta-reasoning overview
 - **Execute command**: `.claude/commands/execute.md` — the actual execute command implementation
 - **Structured Plan Template**: `templates/STRUCTURED-PLAN-TEMPLATE.md` — the plan format that `/execute` consumes
 - **Planning Methodology guide** (prerequisite): `reference/planning-methodology-guide.md` — planning phase that feeds into execution

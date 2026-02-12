@@ -240,7 +240,7 @@ You can also invoke them from other commands:
 Use the @code-review-security agent to check for vulnerabilities in the authentication module.
 ```
 
-See `sections/09_command_design.md` for command + agent integration patterns.
+See `reference/command-design-overview.md` for command + agent integration patterns.
 
 ## Reference
 

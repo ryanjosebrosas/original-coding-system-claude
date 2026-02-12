@@ -1,6 +1,6 @@
 # Remote Agentic Coding System: Architecture & Deployment
 
-This guide explains **how to build and deploy a remote AI coding system** — covering the orchestrator architecture, environment setup, Telegram and GitHub webhook configuration, remote PIV Loop walkthrough, cloud deployment, and cross-system integration — going deeper than the always-loaded overview in `sections/11_remote_system.md`.
+This guide explains **how to build and deploy a remote AI coding system** — covering the orchestrator architecture, environment setup, Telegram and GitHub webhook configuration, remote PIV Loop walkthrough, cloud deployment, and cross-system integration — going deeper than the guide at `reference/remote-system-overview.md`.
 
 ---
 
@@ -630,7 +630,7 @@ The Remote System is the final level: full PIV Loop with real-time conversation,
 
 ## Next Steps
 
-1. Read `sections/11_remote_system.md` for the always-loaded architecture overview
+1. Read `reference/remote-system-overview.md` for the architecture overview
 2. Clone the [remote-coding-agent repo](https://github.com/dynamous-community/remote-coding-agent) and explore the codebase
 3. Try Exercise 1 — local setup with Telegram for interactive development
 4. Try Exercise 2 — full remote PIV Loop via GitHub Issues
@@ -642,8 +642,8 @@ The Remote System is the final level: full PIV Loop with real-time conversation,
 
 ## Related Resources
 
-- **Remote system overview**: `sections/11_remote_system.md` — always-loaded architecture summary
-- **GitHub integration**: `sections/10_github_integration.md` — GitHub Actions (GitHub Orchestration guide, prerequisite concepts)
+- **Remote system overview**: `reference/remote-system-overview.md` — on-demand architecture summary
+- **GitHub integration**: `reference/github-integration.md` — GitHub Actions (GitHub Orchestration guide, prerequisite concepts)
 - **Execute command**: `.claude/commands/execute.md` — used remotely via `/command-invoke`
 - **Implementation Discipline guide**: `reference/implementation-discipline.md` — execution discipline feeding remote workflows
 - **Validation Discipline guide**: `reference/validation-discipline.md` — validation discipline for remote quality

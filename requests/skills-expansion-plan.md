@@ -10,7 +10,7 @@ As a developer using the PIV Loop system, I want heavy commands converted to ski
 
 ## Problem Statement
 
-Five commands exceed the 250-line threshold recommended for skill conversion (per sections/12_mcp_servers_cloud_skills.md):
+Five commands exceed the 250-line threshold recommended for skill conversion (per reference/mcp-skills-overview.md):
 - `parallel-e2e.md` — 459 lines
 - `merge-worktrees.md` — 383 lines
 - `planning.md` — 363 lines (already has companion skill)
@@ -46,7 +46,7 @@ Combined: ~1,762 lines loaded upfront every session. As skills, only ~500 tokens
 - `.claude/commands/merge-worktrees.md` (383 lines) — Why: Complex merge workflow with 9-step validation
 - `.claude/commands/new-worktree.md` (255 lines) — Why: Worktree setup with parallel mode
 - `.claude/commands/setup-github-automation.md` (302 lines) — Why: GitHub Actions setup workflow
-- `sections/12_mcp_servers_cloud_skills.md` (lines relevant to skills architecture) — Why: Defines the 3-tier model and conversion criteria
+- `reference/mcp-skills-overview.md` (lines relevant to skills architecture) — Why: Defines the 3-tier model and conversion criteria
 - `templates/SKILL-TEMPLATE.md` — Why: Template for creating skills
 - `reference/mcp-skills-archon.md` — Why: Detailed skill architecture documentation
 
@@ -134,7 +134,7 @@ Extract methodology from setup-github-automation.md (302 lines).
 Update file structure and cross-references.
 
 **Tasks:**
-- Update sections/08_file_structure.md with new skills
+- Update reference/file-structure.md with new skills
 - Verify all skills have proper frontmatter
 
 ---
@@ -198,7 +198,7 @@ Update file structure and cross-references.
 
 ### CREATE .claude/skills/worktree-management/references/conflict-prevention.md
 
-- **IMPLEMENT**: Create conflict prevention reference (~80-100 lines) extracting from sections/14_git_worktrees.md and reference/git-worktrees-parallel.md:
+- **IMPLEMENT**: Create conflict prevention reference (~80-100 lines) extracting from reference/git-worktrees-overview.md and reference/git-worktrees-parallel.md:
   1. **Scope Boundary Principle** — each agent owns specific directories
   2. **Shared File Strategy** — how to handle registration points (routes, configs)
   3. **Research Agent Deduplication** — partitioning work by scope
@@ -326,7 +326,7 @@ Update file structure and cross-references.
 - **GOTCHA**: Include actual YAML snippets — abstract descriptions of YAML don't help users configure
 - **VALIDATE**: `powershell -Command "if (Test-Path '.claude/skills/github-automation/references/workflow-templates.md') { Write-Host 'OK' } else { Write-Host 'MISSING' }"`
 
-### UPDATE sections/08_file_structure.md
+### UPDATE reference/file-structure.md
 
 - **IMPLEMENT**: Add all 3 new skills to the `.claude/skills/` section of the file structure:
   ```
@@ -349,7 +349,7 @@ Update file structure and cross-references.
 - **PATTERN**: Follow existing planning-methodology/ entry format
 - **IMPORTS**: None
 - **GOTCHA**: Keep the indentation and comment alignment consistent with existing entries
-- **VALIDATE**: `powershell -Command "Select-String -Path 'sections/08_file_structure.md' -Pattern 'worktree-management|parallel-implementation|github-automation' | Measure-Object | Select-Object -ExpandProperty Count"` — should be >= 3
+- **VALIDATE**: `powershell -Command "Select-String -Path 'reference/file-structure.md' -Pattern 'worktree-management|parallel-implementation|github-automation' | Measure-Object | Select-Object -ExpandProperty Count"` — should be >= 3
 
 ---
 
@@ -411,7 +411,7 @@ Estimate total Tier 1 cost: 4 skills × ~100 tokens = ~400 tokens. Total with pl
 - [ ] Each SKILL.md body provides high-level overview with reference pointers
 - [ ] Reference documents contain extracted methodology, not duplicated command text
 - [ ] Existing commands remain unchanged (backward compatibility)
-- [ ] sections/08_file_structure.md updated with all new skills
+- [ ] reference/file-structure.md updated with all new skills
 - [ ] Total Tier 1 token cost for all skills is under 600 tokens
 
 ---

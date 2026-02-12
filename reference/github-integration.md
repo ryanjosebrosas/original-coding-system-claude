@@ -143,7 +143,7 @@ Manual Prompts → Reusable Commands → Chained Commands → Remote Automation
 
 ### Limitations
 
-- **No easy conversation**: Each GitHub Action run is a single-shot execution. You can't easily iterate with the agent mid-task. For a custom system that solves this with real-time conversation, multi-platform support, and persistent sessions, see `sections/11_remote_system.md`.
+- **No easy conversation**: Each GitHub Action run is a single-shot execution. You can't easily iterate with the agent mid-task. For a custom system that solves this with real-time conversation, multi-platform support, and persistent sessions, see `reference/remote-system-overview.md`.
 - **Limited visibility**: You must check Action logs to see what the agent is doing. No real-time terminal output.
 - **No mem0 in CI**: GitHub Actions runners don't have access to your local mem0 instance. Cross-session memory is unavailable in remote workflows.
 - **Cost**: Each Action run consumes GitHub Actions minutes and your MAX/Pro subscription usage (or API credits if using `ANTHROPIC_API_KEY`).
