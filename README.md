@@ -49,7 +49,7 @@ graph TD
     CLAUDE -.->|"on-demand"| R["reference/<br/>20+ deep guides"]
     CLAUDE -.->|"on-demand"| T["templates/<br/>16 templates"]
 
-    CMD[".claude/commands/<br/>19 slash commands"] -->|"reads"| T
+    CMD[".claude/commands/<br/>20 slash commands"] -->|"reads"| T
     CMD -->|"produces"| REQ["requests/<br/>feature plans"]
 
     SK[".claude/skills/<br/>4 cloud skills"] -.->|"loads"| R
@@ -110,7 +110,7 @@ My-Coding-System/
 ├── reference/             # Deep guides (on-demand, ~89K tokens)
 ├── templates/             # Reusable templates (16 files)
 ├── requests/              # Feature plans (per PIV loop)
-├── .claude/commands/      # Slash commands (19 commands)
+├── .claude/commands/      # Slash commands (20 commands)
 ├── .claude/skills/        # Cloud skills (4 skills)
 └── .claude/agents/        # Subagent examples (6 agents)
 ```
