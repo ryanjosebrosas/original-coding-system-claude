@@ -406,24 +406,24 @@ Estimate total Tier 1 cost: 4 skills × ~100 tokens = ~400 tokens. Total with pl
 
 ## ACCEPTANCE CRITERIA
 
-- [ ] All 3 skill directories created with proper structure (SKILL.md + references/)
-- [ ] Each SKILL.md has valid frontmatter with name and description
-- [ ] Each SKILL.md body provides high-level overview with reference pointers
-- [ ] Reference documents contain extracted methodology, not duplicated command text
-- [ ] Existing commands remain unchanged (backward compatibility)
-- [ ] reference/file-structure.md updated with all new skills
-- [ ] Total Tier 1 token cost for all skills is under 600 tokens
+- [x] All 3 skill directories created with proper structure (SKILL.md + references/)
+- [x] Each SKILL.md has valid frontmatter with name and description
+- [x] Each SKILL.md body provides high-level overview with reference pointers
+- [x] Reference documents contain extracted methodology, not duplicated command text
+- [x] Existing commands remain unchanged (backward compatibility)
+- [x] reference/file-structure.md updated with all new skills
+- [x] Total Tier 1 token cost for all skills is under 600 tokens
 
 ---
 
 ## COMPLETION CHECKLIST
 
-- [ ] All tasks completed in order
-- [ ] Each task validation passed
-- [ ] All validation commands executed successfully
-- [ ] Skills follow planning-methodology pattern
-- [ ] Manual verification confirms proper 3-tier structure
-- [ ] Acceptance criteria all met
+- [x] All tasks completed in order
+- [x] Each task validation passed
+- [x] All validation commands executed successfully
+- [x] Skills follow planning-methodology pattern
+- [x] Manual verification confirms proper 3-tier structure
+- [x] Acceptance criteria all met
 
 ---
 

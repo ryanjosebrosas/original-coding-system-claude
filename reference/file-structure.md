@@ -87,6 +87,21 @@ requests/
     references/                        #   Detailed docs (Tier 3, on-demand)
       6-phase-process.md               #     Phase-by-phase methodology
       template-guide.md                #     Template section-filling guide
+  worktree-management/                 #   Git worktree parallel workflow
+    SKILL.md                           #   Entry point + frontmatter (Tier 1+2)
+    references/                        #   Detailed docs (Tier 3, on-demand)
+      worktree-workflow.md             #     Setup + merge workflow
+      conflict-prevention.md           #     Conflict prevention strategies
+  parallel-implementation/             #   Parallel end-to-end pipeline
+    SKILL.md                           #   Entry point + frontmatter (Tier 1+2)
+    references/                        #   Detailed docs (Tier 3, on-demand)
+      parallel-workflow.md             #     Full 8-stage pipeline
+      troubleshooting.md              #     Common issues and fixes
+  github-automation/                   #   GitHub Actions setup methodology
+    SKILL.md                           #   Entry point + frontmatter (Tier 1+2)
+    references/                        #   Detailed docs (Tier 3, on-demand)
+      setup-workflow.md                #     Step-by-step setup
+      workflow-templates.md            #     Template customization
   {skill-name}/                        #   Additional skills follow same structure
     SKILL.md                           #   Entry point + frontmatter (required)
     references/                        #   Detailed docs (loaded on-demand)
