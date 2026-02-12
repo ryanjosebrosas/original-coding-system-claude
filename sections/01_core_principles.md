@@ -12,3 +12,9 @@
 4. **Limit AI Assumptions**
    - Be explicit in plans and prompts
    - The less the AI guesses, the better the output
+
+5. **Always Be Priming** (ABP)
+   - Start every session with `/prime` — context is everything
+   - An AI without context is just guessing. An AI with context is a partner.
+   - Before any task: Does the AI know the codebase? The rules? The patterns? Recent changes?
+   - If you're getting bad output, the first question is always: "Did I give it enough context?"

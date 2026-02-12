@@ -83,7 +83,15 @@
       "Bash(del \"C:\\\\Users\\\\Utopia\\\\Documents\\\\AI Coding Template\\\\test-schema.ts\")",
       "mcp__archon-local__rag_get_available_sources",
       "mcp__archon-local__rag_search_code_examples",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(gh:*)",
+      "Bash(claude mcp add:*)",
+      "mcp__archon__rag_get_available_sources",
+      "mcp__archon__find_projects",
+      "mcp__archon__find_tasks",
+      "mcp__archon__health_check",
+      "mcp__archon__manage_project",
+      "mcp__archon__manage_task"
     ]
   }
 }
