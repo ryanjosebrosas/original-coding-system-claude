@@ -329,25 +329,25 @@ powershell -Command "Select-String -Path 'reference/multi-instance-routing.md' -
 
 ## ACCEPTANCE CRITERIA
 
-- [ ] code-review-fix.md is 120-150 lines with severity prioritization and selectivity principle
-- [ ] agents.md generates agent files using the 5-component design framework
-- [ ] planning.md has Phase 0 Interactive Discovery that acts as a collaborative buddy
-- [ ] Phase 0 adapts to user's technical level and challenges ideas constructively
-- [ ] Phase 0 has escape hatch for users with clear specs
-- [ ] multi-instance-routing.md has all 5 questions answered with "Verified Answers" section
-- [ ] All commands have proper frontmatter (description, argument-hint where needed)
-- [ ] reference/file-structure.md includes agents.md entry
-- [ ] No aspirational features are presented as working (honest documentation)
+- [x] code-review-fix.md is 120-150 lines with severity prioritization and selectivity principle
+- [x] agents.md generates agent files using the 5-component design framework
+- [x] planning.md has Phase 0 Interactive Discovery that acts as a collaborative buddy
+- [x] Phase 0 adapts to user's technical level and challenges ideas constructively
+- [x] Phase 0 has escape hatch for users with clear specs
+- [x] multi-instance-routing.md has all 5 questions answered with "Verified Answers" section
+- [x] All commands have proper frontmatter (description, argument-hint where needed)
+- [x] reference/file-structure.md includes agents.md entry
+- [x] No aspirational features are presented as working (honest documentation)
 
 ---
 
 ## COMPLETION CHECKLIST
 
-- [ ] All tasks completed in order
-- [ ] Each task validation passed
-- [ ] All validation commands executed successfully
+- [x] All tasks completed in order
+- [x] Each task validation passed
+- [x] All validation commands executed successfully
 - [ ] Manual testing confirms commands work as expected
-- [ ] Acceptance criteria all met
+- [x] Acceptance criteria all met
 
 ---
 

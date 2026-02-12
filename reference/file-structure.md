@@ -58,6 +58,7 @@ templates/
 requests/
   {feature}-plan.md                    # Layer 2: Feature plans go here
 .claude/commands/                      # Slash commands (reusable prompts)
+  agents.md                            #   /agents — generate subagent definition files
   init-c.md                            # /init-c — generate CLAUDE.md for a new project
   prime.md                             # /prime — load codebase context
   planning.md                          # /planning — create implementation plan

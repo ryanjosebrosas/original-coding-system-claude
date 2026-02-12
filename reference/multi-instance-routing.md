@@ -121,20 +121,20 @@ claude1 planning "feature"      # Route to main account
 claude2 design-review           # Route to design account
 ```
 
-### Method 3: Agent Frontmatter (if supported)
+### Method 3: Agent Frontmatter — NOT YET SUPPORTED
 
-Add instance to agent configuration:
+> **Status**: As of Claude Code's current version, agent frontmatter does NOT support an `instance` field. Supported fields are: `name`, `description`, `tools`, `disallowedTools`, `model`, `maxTurns`, `skills`, `mcpServers`, `hooks`, `memory`, `color`, `permissionMode`. There is no mechanism to route a subagent to a specific Claude account via frontmatter.
 
 ```yaml
 ---
 name: code-review-type-safety
 model: haiku
-instance: claude-zai  # Route to cheap instance
+# instance: claude-zai  # NOT SUPPORTED — this field is ignored
 tools: ["Read", "Glob", "Grep", "Bash"]
 ---
 ```
 
-**Note**: This requires Claude Code support for instance routing in agents. Check with `claude --help` if this is available.
+**Workaround**: Use Method 2 (Command Prefix) or Method 4 (Wrapper Scripts) instead. These are the working alternatives for instance routing today.
 
 ### Method 4: Wrapper Scripts
 
@@ -252,18 +252,9 @@ claude2 --version
 claude3 --version
 ```
 
-### Step 2: Update Code Review Agents
+### Step 2: Use Wrapper Scripts for Agent Routing
 
-If agent frontmatter supports `instance` field, add it:
-
-```yaml
----
-name: code-review-type-safety
-model: haiku
-instance: claude-zai
-tools: ["Read", "Glob", "Grep", "Bash"]
----
-```
+Agent frontmatter does NOT support `instance` — use wrapper scripts or command prefixes instead. See Method 2 and Method 4 above.
 
 ### Step 3: Create Routing Wrapper Scripts
 
@@ -417,19 +408,49 @@ claude /code-review
 ## Next Steps
 
 1. **Test routing**: Try `claude-zai --version` and other instances
-2. **Update agents**: Add `instance: claude-zai` to code review agents if supported
-3. **Create wrapper scripts**: For common cheap tasks
-4. **Document routing rules**: Add to your project's CLAUDE.md
-5. **Monitor costs**: Track savings from routing cheap tasks to claude-zai
+2. **Create wrapper scripts**: For common cheap tasks (see Method 4)
+3. **Document routing rules**: Add to your project's CLAUDE.md
+4. **Monitor costs**: Track savings from routing cheap tasks to claude-zai
+5. **Watch for updates**: Agent frontmatter `instance` support may be added in future Claude Code versions
 
 ---
 
-## Questions to Investigate
+## Verified Answers (Previously Open Questions)
 
-- Does agent frontmatter support `instance` field?
-- Can Task tool accept instance parameter?
-- What's the pricing difference between instances?
-- Do all instances have same rate limits?
-- How to track which instance did what work?
+### 1. Does agent frontmatter support `instance` field?
 
-Run `claude --help` and check agent documentation to answer these.
+**NO.** As of the current Claude Code version, the supported agent frontmatter fields are: `name`, `description`, `tools`, `disallowedTools`, `model`, `maxTurns`, `skills`, `mcpServers`, `hooks`, `memory`, `color`, `permissionMode`. There is no `instance` field. Source: [Claude Code Sub-agents Documentation](https://code.claude.com/docs/en/sub-agents.md).
+
+### 2. Can the Task tool accept an instance parameter?
+
+**NO.** The Task tool accepts: `prompt`, `subagent_type`, `model`, `max_turns`, `run_in_background`, `resume`, `description`. There is no `instance` parameter. Subagents inherit the current session's account.
+
+### 3. What's the pricing difference between instances?
+
+- **MAX subscription** ($100-200/month): All instances on the same subscription share the same usage pool. No per-instance pricing difference — the benefit is rate limit distribution, not cost savings.
+- **API billing** (pay-per-token): Each instance uses its own API key and billing account. Costs are tracked separately per account. Pricing depends on each account's plan and negotiated rates.
+
+### 4. Do all instances have the same rate limits?
+
+**Each account has its own rate limits.** Multiple MAX subscriptions = separate rate limit pools. This is the primary benefit of multi-instance routing — distributing work across accounts avoids hitting rate limits on any single account. API billing accounts also have independent rate limits.
+
+### 5. How to track which instance did what work?
+
+- **Git commits**: Each instance creates commits under its authenticated user. Track via `git log --format='%an: %s'`.
+- **Branch naming**: Use convention `{instance}/{feature}` (e.g., `claude-zai/code-review`, `claude1/auth-feature`).
+- **Wrapper script logging**: Add logging to wrapper scripts that records which instance ran which command.
+- **Archon tasks**: Assign tasks to specific instances via the `assignee` field for visibility on the Kanban board.
+
+---
+
+## Supported vs Aspirational Methods
+
+| Method | Status | Notes |
+|--------|--------|-------|
+| **Method 1: Environment Variable** | Supported | Set `CLAUDE_INSTANCE` before running commands |
+| **Method 2: Command Prefix** | Supported | `claude-zai /code-review` works if aliases/symlinks are configured |
+| **Method 4: Wrapper Scripts** | Supported | Shell scripts that set env vars and run commands |
+| **Method 3: Agent Frontmatter** | NOT YET SUPPORTED | No `instance` field in agent frontmatter. May be added in future versions. |
+| **Task tool `instance` param** | NOT YET SUPPORTED | Cannot route subagents to specific instances programmatically. |
+
+**Recommendation**: Use Method 2 (Command Prefix) for interactive work and Method 4 (Wrapper Scripts) for automated workflows. These are reliable and available today.

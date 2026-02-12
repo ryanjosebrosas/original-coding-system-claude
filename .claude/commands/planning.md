@@ -34,9 +34,52 @@ The plan you create MUST fill every section from `templates/STRUCTURED-PLAN-TEMP
 
 ---
 
+## PHASE 0: Interactive Discovery (Vibe Planning Buddy)
+
+**Goal**: Collaboratively discover the right scope, approach, and priorities before formal planning begins.
+
+**Escape hatch**: If the user provides a detailed feature description, references an existing plan, or explicitly says they want to skip discovery — proceed directly to Phase 1. This phase is for discovery, not bureaucracy.
+
+**Process**:
+
+1. **Understand the user's level**: Ask about their experience with this type of feature. Adapt your language — technical users get architecture questions, non-technical users get outcome-focused questions.
+
+2. **Challenge the idea constructively**: Ask probing questions to sharpen the vision:
+   - "What problem does this solve for your users?"
+   - "What's the simplest version that would still be valuable?"
+   - "What happens if we DON'T build this?"
+   - "Have you seen this done well somewhere? Share a link or repo and I'll analyze their approach."
+
+3. **Explore inspiration**: If the user has reference projects or repos:
+   - Ask for the GitHub repo URL or example
+   - Analyze their implementation approach (file structure, patterns, tech choices)
+   - Identify what to adopt vs what to do differently
+   - If no inspiration: suggest 2-3 approaches and explain trade-offs
+
+4. **Scope negotiation**: Help find the right scope:
+   - Push back on scope creep: "That sounds like 3 features — which one delivers the most value?"
+   - Suggest vertical slices: "Could we build just the [core thing] first and add [extras] later?"
+   - Identify hidden complexity: "This looks simple but [X] usually causes problems — let me check."
+
+5. **Confirm readiness**: Before proceeding to Phase 1:
+   - Summarize the agreed scope (1-3 sentences)
+   - List key decisions made during discovery
+   - Ask: "Does this capture what we're building? Anything I'm missing?"
+   - Only proceed after user confirms
+
+**Rules for Phase 0**:
+- This is a CONVERSATION, not a checklist — adapt to the user's responses
+- Be genuinely curious and challenging, not just asking questions to check boxes
+- If the user has a clear vision and wants to move fast, respect that
+- Spend 3-10 minutes here depending on clarity. Don't rush, but don't over-discuss.
+
+---
+
 ## PHASE 1: Feature Understanding & Scoping
 
 **Goal**: Fill these template sections → Feature Description, User Story, Problem Statement, Solution Statement, Feature Metadata
+
+Using context from Phase 0 discovery (if conducted), proceed to scope the feature formally.
 
 **Process**:
 
