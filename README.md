@@ -2,7 +2,7 @@
 
 A comprehensive AI-assisted development methodology combining systematic planning, implementation discipline, and validation strategies.
 
-Built for [Claude Code](https://claude.com/claude-code) | Powered by the PIV Loop
+Built for [Claude Code](https://claude.com/claude-code) | Powered by the PIV Loop | [MIT License](LICENSE)
 
 ---
 
@@ -55,13 +55,11 @@ graph TD
     SK[".claude/skills/<br/>5 cloud skills"] -.->|"loads"| R
 
     MEM["memory.md<br/>cross-session context"] -.-> CMD
-    ARCHON["Archon MCP<br/>task management + RAG"] -.-> CMD
+    ARCHON["Archon MCP<br/>(optional) task mgmt + RAG"] -.-> CMD
 
     REQ -->|"/execute"| IMPL["Implementation"]
     IMPL -->|"/commit"| GIT["Git Save Points"]
 ```
-
-Auto-loaded context is kept minimal (~2K tokens) so the AI has maximum context window available for actual work. Deep guides are loaded on-demand only when relevant.
 
 ---
 
@@ -72,18 +70,97 @@ Auto-loaded context is kept minimal (~2K tokens) so the AI has maximum context w
 - Git configured
 
 ### Setup
-1. Clone this repo (or copy to your project)
-2. Run `/prime` to load codebase context
-3. Run `/planning [feature description]` to create a plan
-4. Run `/execute requests/feature-plan.md` to implement
-5. Run `/commit` to save your work
+
+1. **Clone** this repo into your project (or fork it):
+   ```bash
+   git clone https://github.com/your-username/my-coding-system.git
+   cd my-coding-system
+   ```
+
+2. **Create your memory file** from the template:
+   ```bash
+   cp templates/MEMORY-TEMPLATE.md memory.md
+   ```
+
+3. **Start a Claude Code session** and prime the system:
+   ```bash
+   claude
+   > /prime
+   ```
+
+4. **Plan your first feature**:
+   ```
+   > /planning user-authentication
+   ```
+
+5. **Execute the plan** (in a fresh session for clean context):
+   ```
+   > /execute requests/user-authentication-plan.md
+   ```
+
+6. **Commit your work**:
+   ```
+   > /commit
+   ```
 
 ### First Time?
-Start with `/prime` to understand the system, then try `/planning` on a small feature.
+Start with `/prime` to understand the system, then try `/planning` on a small feature. Read `reference/file-structure.md` for a full map of everything included.
+
+---
+
+## Adopting for Your Project
+
+There are two ways to use this system:
+
+### Option A: Use as Your Project Base (Recommended for new projects)
+Fork or clone this repo, then build your application inside it. The slash commands, templates, and reference guides are all ready to go.
+
+### Option B: Copy Into an Existing Project
+Copy these directories into your project root:
+```bash
+cp -r sections/ reference/ templates/ requests/ your-project/
+cp CLAUDE.md AGENTS.md .coderabbit.yaml your-project/
+cp -r .claude/ your-project/
+cp templates/MEMORY-TEMPLATE.md your-project/memory.md
+```
+
+Then update `CLAUDE.md` for your project's specifics using `/init-c`.
+
+### After Setup
+- `memory.md` — Created from template, gitignored. Each developer maintains their own.
+- `requests/*.md` — Feature plans, gitignored. Project-specific and ephemeral.
+- `.claude/settings.local.json` — Personal Claude Code settings, gitignored.
+
+---
+
+## Model Strategy
+
+The system separates planning from execution across different model tiers:
+
+| Phase | Recommended Model | Why |
+|-------|-------------------|-----|
+| `/planning` | **Opus** (`claude --model opus`) | Deep reasoning produces better plans |
+| `/execute` | **Sonnet** (`claude` default) | Balanced — follows plans well at lower cost |
+| `/code-review` | **Haiku** (via subagents) | Pattern matching at 1/10th the cost |
+| `/commit`, `/prime` | **Sonnet** (`claude` default) | General-purpose tasks |
+
+```bash
+# Planning session (Opus for deep reasoning)
+claude --model opus
+> /planning my-feature
+
+# Execution session (Sonnet for focused implementation)
+claude
+> /execute requests/my-feature-plan.md
+```
+
+See `reference/multi-model-strategy.md` for the full cost optimization guide.
 
 ---
 
 ## Core Commands
+
+### Essential Workflow
 
 | Command | Description | When to Use |
 |---------|-------------|-------------|
@@ -93,12 +170,26 @@ Start with `/prime` to understand the system, then try `/planning` on a small fe
 | `/commit` | Git commit with conventional format | After implementation |
 | `/code-review` | Technical quality review | After implementation |
 | `/code-review-fix` | Fix review findings | After code review |
+
+### Advanced Workflows
+
+| Command | Description | When to Use |
+|---------|-------------|-------------|
 | `/end-to-end-feature` | Full autonomous pipeline | Trusted, simple features |
 | `/team [plan]` | Multi-agent coordinated build | Complex features needing coordination |
 | `/new-worktree` | Create parallel branch | Multi-feature work |
+| `/merge-worktrees` | Merge worktree branches | After parallel implementation |
 | `/parallel-e2e` | Parallel multi-feature | Advanced parallel builds |
+
+### Utilities
+
+| Command | Description | When to Use |
+|---------|-------------|-------------|
 | `/rca [issue]` | Root cause analysis | GitHub issue investigation |
+| `/implement-fix` | Implement fix from RCA | After root cause analysis |
+| `/create-prd` | Generate PRD from conversation | Defining a new product |
 | `/create-pr` | Create GitHub PR | After pushing a branch |
+| `/execution-report` | Generate implementation report | Post-implementation review |
 | `/init-c` | Generate CLAUDE.md for new project | New projects |
 | `/agents` | Create custom subagent definitions | Extending the system |
 | `/system-review` | Divergence analysis | Auditing system state |
@@ -122,19 +213,81 @@ See `reference/agent-teams-overview.md` for the full architecture guide.
 
 ---
 
+## Subagents
+
+8 example subagents are included in `.claude/agents/_examples/`. Copy them to `.claude/agents/` to activate:
+
+```bash
+# Activate all example agents
+cp .claude/agents/_examples/*.md .claude/agents/
+# Remove the README (not an agent)
+rm .claude/agents/README.md
+```
+
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| research-codebase | Haiku | Parallel codebase exploration |
+| research-external | Sonnet | Documentation and best practices |
+| code-review-type-safety | Haiku | Type annotation review |
+| code-review-security | Haiku | Security vulnerability review |
+| code-review-architecture | Haiku | Design pattern compliance |
+| code-review-performance | Haiku | Performance issue detection |
+| plan-validator | Haiku | Plan structure validation |
+| test-generator | Haiku | Test case suggestions |
+
+See `reference/subagents-overview.md` for creating your own agents.
+
+---
+
+## GitHub Actions
+
+The system includes workflows for AI-assisted issue resolution:
+
+- **`.github/workflows/claude-fix.yml`** — Triggers when you comment `@claude-fix` on an issue or PR
+- **`reference/github-workflows/claude-fix-coderabbit.yml`** — Auto-fixes CodeRabbit review suggestions
+
+### Setup
+
+1. Add `CLAUDE_CODE_OAUTH_TOKEN` to your repo secrets (Settings > Secrets and variables > Actions)
+2. Add `AUTHORIZED_USERS` as a repository variable with a JSON array of allowed GitHub usernames:
+   ```
+   ["your-username", "teammate"]
+   ```
+   (Settings > Secrets and variables > Actions > Variables)
+3. Copy workflows to your project's `.github/workflows/` directory
+
+See `reference/github-integration.md` for the full setup guide.
+
+---
+
+## Optional: Archon MCP
+
+The system architecture diagram shows [Archon MCP](https://github.com/coleam00/archon) for task management and RAG search. This is **optional** — all commands work without it. If configured, Archon provides:
+
+- Task tracking across planning and execution sessions
+- RAG search over curated documentation
+
+See `reference/archon-workflow.md` for setup instructions.
+
+---
+
 ## Project Structure
 
 ```
 My-Coding-System/
 ├── CLAUDE.md              # Auto-loaded rules (slim, ~2K tokens)
-├── memory.md              # Cross-session memory
-├── sections/              # Core rule sections (auto-loaded)
-├── reference/             # Deep guides (on-demand, 26 guides)
+├── AGENTS.md              # Agent guidance for AI assistants
+├── LICENSE                # MIT License
+├── .gitignore             # Protects secrets, memory, plans
+├── memory.md              # Cross-session memory (create from template)
+├── sections/              # Core rule sections (6 files, auto-loaded)
+├── reference/             # Deep guides (26 guides, on-demand)
 ├── templates/             # Reusable templates (19 files)
-├── requests/              # Feature plans (per PIV loop)
+├── requests/              # Feature plans (gitignored, per PIV loop)
 ├── .claude/commands/      # Slash commands (21 commands)
 ├── .claude/skills/        # Cloud skills (5 skills)
-└── .claude/agents/        # Custom subagents (examples included)
+├── .claude/agents/        # Custom subagents (8 examples included)
+└── .github/workflows/     # GitHub Action workflows
 ```
 
 ---
@@ -164,6 +317,7 @@ My-Coding-System/
 | `reference/archon-workflow.md` | Using Archon task management or RAG search |
 | `reference/git-worktrees-overview.md` | Parallel feature implementation with worktrees |
 | `reference/agent-teams-overview.md` | Agent Teams architecture and `/team` command |
+| `reference/multi-model-strategy.md` | Model selection and cost optimization |
 
 ---
 
@@ -175,3 +329,9 @@ The system manages tokens carefully to maximize context window for actual work:
 - **Commands**: loaded only when invoked (largest: `/planning` ~2.2K tokens)
 - **Reference guides**: loaded only when needed (26 guides available on-demand)
 - **Typical session**: uses <10K tokens of system context, leaving the rest for implementation
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
