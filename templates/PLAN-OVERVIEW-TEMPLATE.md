@@ -94,36 +94,21 @@ As a {user type}, I want to {action}, so that {benefit}.
 
 ## EXECUTION ROUTING
 
-### Instance Assignment
-
-| Sub-Plan | Instance | Model | Notes |
-|----------|----------|-------|-------|
-| 01 | claude2 | Sonnet | Primary execution instance |
-| 02 | claude3 | Sonnet | Secondary (load balanced) |
-| 03 | claude2 | Sonnet | Round-robin back to primary |
-
-### Fallback Chain
-
-```
-Primary:   claude2 (Sonnet) — main execution instance
-Secondary: claude3 (Sonnet) — if primary hits rate limit
-Fallback:  claude1 (Sonnet) — last resort
-```
+Each sub-plan runs in a fresh `/execute` session.
+Recommended: Use Sonnet for execution, Opus for planning.
 
 ### Execution Instructions
 
 **Manual execution** (recommended for complex features):
 ```bash
-# Sub-plan 1 on primary instance
-claude2 --model sonnet
+# Execute each sub-plan in a fresh session
+claude
 > /execute requests/{feature}-plan-01-{phase}.md
 
-# Sub-plan 2 on secondary instance
-claude3 --model sonnet
+claude
 > /execute requests/{feature}-plan-02-{phase}.md
 
-# Sub-plan 3 back on primary (or fallback if rate-limited)
-claude2 --model sonnet
+claude
 > /execute requests/{feature}-plan-03-{phase}.md
 ```
 

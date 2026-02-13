@@ -46,13 +46,13 @@ Context is organized in layers — auto-loaded context stays minimal so the AI h
 ```mermaid
 graph TD
     CLAUDE["CLAUDE.md<br/>~2K tokens auto-loaded"] --> S["sections/<br/>6 core rules"]
-    CLAUDE -.->|"on-demand"| R["reference/<br/>20+ deep guides"]
-    CLAUDE -.->|"on-demand"| T["templates/<br/>16 templates"]
+    CLAUDE -.->|"on-demand"| R["reference/<br/>26 deep guides"]
+    CLAUDE -.->|"on-demand"| T["templates/<br/>19 templates"]
 
-    CMD[".claude/commands/<br/>20 slash commands"] -->|"reads"| T
+    CMD[".claude/commands/<br/>21 slash commands"] -->|"reads"| T
     CMD -->|"produces"| REQ["requests/<br/>feature plans"]
 
-    SK[".claude/skills/<br/>4 cloud skills"] -.->|"loads"| R
+    SK[".claude/skills/<br/>5 cloud skills"] -.->|"loads"| R
 
     MEM["memory.md<br/>cross-session context"] -.-> CMD
     ARCHON["Archon MCP<br/>task management + RAG"] -.-> CMD
@@ -94,28 +94,29 @@ Start with `/prime` to understand the system, then try `/planning` on a small fe
 | `/code-review` | Technical quality review | After implementation |
 | `/code-review-fix` | Fix review findings | After code review |
 | `/end-to-end-feature` | Full autonomous pipeline | Trusted, simple features |
+| `/team [plan]` | Multi-agent coordinated build | Complex features needing coordination |
 | `/new-worktree` | Create parallel branch | Multi-feature work |
 | `/parallel-e2e` | Parallel multi-feature | Advanced parallel builds |
-| `/team [plan]` | Multi-agent coordinated build | Complex features needing coordination |
+| `/rca [issue]` | Root cause analysis | GitHub issue investigation |
+| `/create-pr` | Create GitHub PR | After pushing a branch |
 | `/init-c` | Generate CLAUDE.md for new project | New projects |
+| `/agents` | Create custom subagent definitions | Extending the system |
+| `/system-review` | Divergence analysis | Auditing system state |
 
 ---
 
-## Agent Teams & Multi-Instance
+## Agent Teams
 
 For complex features, Agent Teams coordinates multiple Claude instances with contract-first spawning — upstream agents publish interfaces before downstream agents start building.
 
-**Cost optimization**: Run planning on your main account (Opus), team execution on burn accounts (Sonnet):
-
 ```bash
-cplan                                    # Planning: c1, Opus
+# Plan the feature (Opus recommended for deep reasoning)
+claude --model opus
 > /planning my-feature
 
-c2                                       # Execution: c2, Sonnet (burn first)
+# Execute with a coordinated team (Sonnet recommended for speed)
 > /team requests/my-feature-plan.md
 ```
-
-Burn order: `c2 → c3 → ck → cz`. All coordination features work on any account.
 
 See `reference/agent-teams-overview.md` for the full architecture guide.
 
@@ -128,12 +129,12 @@ My-Coding-System/
 ├── CLAUDE.md              # Auto-loaded rules (slim, ~2K tokens)
 ├── memory.md              # Cross-session memory
 ├── sections/              # Core rule sections (auto-loaded)
-├── reference/             # Deep guides (on-demand, ~89K tokens)
-├── templates/             # Reusable templates (16 files)
+├── reference/             # Deep guides (on-demand, 26 guides)
+├── templates/             # Reusable templates (19 files)
 ├── requests/              # Feature plans (per PIV loop)
-├── .claude/commands/      # Slash commands (20 commands)
-├── .claude/skills/        # Cloud skills (4 skills)
-└── .claude/agents/        # Active subagents (8 agents)
+├── .claude/commands/      # Slash commands (21 commands)
+├── .claude/skills/        # Cloud skills (5 skills)
+└── .claude/agents/        # Custom subagents (examples included)
 ```
 
 ---
@@ -162,6 +163,7 @@ My-Coding-System/
 | `reference/subagents-overview.md` | Creating or debugging subagents |
 | `reference/archon-workflow.md` | Using Archon task management or RAG search |
 | `reference/git-worktrees-overview.md` | Parallel feature implementation with worktrees |
+| `reference/agent-teams-overview.md` | Agent Teams architecture and `/team` command |
 
 ---
 
@@ -171,5 +173,5 @@ The system manages tokens carefully to maximize context window for actual work:
 
 - **Auto-loaded**: ~2K tokens (CLAUDE.md + 6 sections)
 - **Commands**: loaded only when invoked (largest: `/planning` ~2.2K tokens)
-- **Reference guides**: loaded only when needed (~89K tokens available)
+- **Reference guides**: loaded only when needed (26 guides available on-demand)
 - **Typical session**: uses <10K tokens of system context, leaving the rest for implementation

@@ -1,6 +1,6 @@
 # Example Agents
 
-> **Note**: These agents have been activated and are live in `.claude/agents/`. This `_examples/` directory is kept as a reference for the original templates, including the `instance` field documentation. The active agents in `.claude/agents/` have `instance` removed since it's not a valid Claude Code frontmatter field.
+> **Note**: These are example agent templates. Copy agents to `.claude/agents/` in your project to activate them.
 
 This directory contains **8 example agents** demonstrating different subagent patterns. Copy agents to `.claude/agents/` in your project to activate them.
 
@@ -30,21 +30,16 @@ Use the research-codebase agent to find all authentication-related files and pat
 Use the research-external agent to find the React 19 migration guide and breaking changes.
 ```
 
-### Multi-Instance Routing
+### Cost Optimization
 
-Research agents use **cost-optimized routing** to `claude-zai`:
+Research agents use **cost-optimized model selection**:
 
-| Agent | Instance | Model | Why |
-|-------|----------|-------|-----|
-| **research-codebase** | `claude-zai` | Haiku | Non-critical: Phase 3b validation catches errors |
-| **research-external** | `claude-zai` | Sonnet | Non-critical: validation catches errors; synthesis quality kept via Sonnet model |
+| Agent | Model | Why |
+|-------|-------|-----|
+| **research-codebase** | Haiku | Non-critical: Phase 3b validation catches errors |
+| **research-external** | Sonnet | Synthesis quality needed; validation catches errors |
 
-**Routing Philosophy for Research**:
-- Research is non-critical — wrong results get caught by Phase 3b research validation
-- Unlike code review (where security findings are VITAL), research findings are always validated
-- Both agents route to `claude-zai` for maximum cost savings
-
-If you don't have multiple instances, remove the `instance:` lines and all agents will use your default.
+**Philosophy**: Research is non-critical — wrong results get caught by Phase 3b research validation. Haiku handles codebase exploration (pattern matching), Sonnet handles external research (synthesis).
 
 ### Parallel Research in /planning
 
@@ -52,18 +47,18 @@ When custom research agents are activated, the `/planning` command can launch **
 
 ```text
 Main Agent (Sonnet)
-  |-> research-codebase #1 (claude-zai, Haiku) --- "auth patterns middleware"
-  |-> research-codebase #2 (claude-zai, Haiku) --- "session model schema"
-  |-> research-codebase #3 (claude-zai, Haiku) --- "auth test fixtures"
-  |-> research-external #1 (claude-zai, Sonnet) -- "JWT token refresh"
-  |-> research-external #2 (claude-zai, Sonnet) -- "bcrypt password hashing"
-  |-> research-external #3 (claude-zai, Sonnet) -- "OAuth2 PKCE flow"
+  |-> research-codebase #1 (Haiku) --- "auth patterns middleware"
+  |-> research-codebase #2 (Haiku) --- "session model schema"
+  |-> research-codebase #3 (Haiku) --- "auth test fixtures"
+  |-> research-external #1 (Sonnet) -- "JWT token refresh"
+  |-> research-external #2 (Sonnet) -- "bcrypt password hashing"
+  |-> research-external #3 (Sonnet) -- "OAuth2 PKCE flow"
        | (results return in parallel)
 Main Agent combines findings into unified research report
 ```
 
 **Speed improvement**: 3-5x faster than 2-agent standard mode for complex features.
-**Cost optimization**: claude-zai instance + Haiku model = maximum savings for codebase exploration.
+**Cost optimization**: Haiku model for codebase exploration = maximum savings.
 
 **Scale guideline**:
 - Simple features (Low complexity): 2-4 agents total
@@ -105,24 +100,22 @@ Instead of one agent reviewing everything sequentially, these four agents work *
 | **code-review-architecture** | Design patterns & conventions | Layer violations, DRY, YAGNI, naming, structure |
 | **code-review-performance** | Performance & scalability | N+1 queries, inefficient algorithms, memory leaks |
 
-## Multi-Instance Routing
+## Model Selection
 
-These agents use **smart routing** based on criticality:
+These agents use **smart model selection** based on task type:
 
-| Agent | Instance | Model | Why |
-|-------|----------|-------|-----|
-| **Type Safety** | `claude-zai` | Haiku | Pattern matching — type checks follow known rules |
-| **Security** | `claude-zai` | Haiku | Pattern matching — OWASP checks, secret scanning patterns |
-| **Architecture** | `claude-zai` | Haiku | Pattern matching — convention compliance, layer checks |
-| **Performance** | `claude-zai` | Haiku | Pattern matching — N+1 detection, complexity analysis |
+| Agent | Model | Why |
+|-------|-------|-----|
+| **Type Safety** | Haiku | Pattern matching — type checks follow known rules |
+| **Security** | Haiku | Pattern matching — OWASP checks, secret scanning patterns |
+| **Architecture** | Haiku | Pattern matching — convention compliance, layer checks |
+| **Performance** | Haiku | Pattern matching — N+1 detection, complexity analysis |
 
-**Routing Philosophy**:
-All review agents use Haiku + claude-zai. Code review is fundamentally pattern matching
+**Philosophy**:
+All review agents use Haiku. Code review is fundamentally pattern matching
 against documented standards — Haiku benchmarks at 90%+ quality for this task type
 (Qodo: 6.55/10 vs Sonnet 6.20/10). The cost savings are significant: 4 Haiku agents
 cost ~40% of 1 Sonnet doing sequential review.
-
-If you don't have multiple instances, remove the `instance:` lines and all agents will use your default.
 
 ## How to Use
 
@@ -268,12 +261,12 @@ Use the plan-validator agent to validate requests/my-feature-plan.md
 Use the test-generator agent to suggest tests for the files changed in the last commit
 ```
 
-### Multi-Instance Routing
+### Model Selection
 
-| Agent | Instance | Model | Why |
-|-------|----------|-------|-----|
-| **plan-validator** | `claude-zai` | Haiku | Advisory — structural validation is pattern matching |
-| **test-generator** | `claude-zai` | Haiku | Advisory — test suggestions follow existing patterns |
+| Agent | Model | Why |
+|-------|-------|-----|
+| **plan-validator** | Haiku | Advisory — structural validation is pattern matching |
+| **test-generator** | Haiku | Advisory — test suggestions follow existing patterns |
 
 ### Activation
 

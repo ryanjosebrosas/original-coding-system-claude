@@ -2,7 +2,6 @@
 name: code-review-architecture
 description: Reviews code for architecture compliance, design patterns, code organization, and adherence to project conventions
 model: haiku
-instance: claude-zai  # Non-critical: Haiku handles pattern compliance checking effectively
 tools: ["Read", "Glob", "Grep"]
 ---
 

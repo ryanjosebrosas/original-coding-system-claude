@@ -118,8 +118,6 @@ Already used in `/planning` command (Phases 2 & 3 launch Explore + general-purpo
 
 **Model selection for agents**: When choosing `model` in frontmatter (haiku, sonnet, opus), see `reference/multi-model-strategy.md` for cost-performance trade-offs and task routing guidance.
 
-**Multi-instance routing**: For teams or power users routing work across multiple Claude instances, see `reference/multi-instance-routing.md`.
-
 ### Example Agents
 
 8 example agents available in `.claude/agents/_examples/`. Copy to `.claude/agents/` in your project to activate.
@@ -135,7 +133,7 @@ Already used in `/planning` command (Phases 2 & 3 launch Explore + general-purpo
 | plan-validator | Haiku | Read, Glob, Grep | Plan structure validation |
 | test-generator | Haiku | Read, Glob, Grep | Test case suggestions |
 
-These are distinct from Built-in agents above — Built-in agents are always available, example agents require user activation. All example agents use `instance: claude-zai` for cost optimization (7 Haiku + 1 Sonnet).
+These are distinct from Built-in agents above — Built-in agents are always available, example agents require user activation. Example agents use cost-optimized model selection (7 Haiku + 1 Sonnet).
 
 ### Agents vs Skills vs Commands
 

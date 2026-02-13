@@ -15,7 +15,7 @@ The PIV Loop naturally separates planning and execution into different conversat
 |-------|-------|-------------|
 | `/planning` | Opus 4.6 | `claude --model opus` |
 | `/execute` | Sonnet 4.5 | `claude` (default) |
-| `/execute` (decomposed) | Sonnet 4.5 | `claude2` or `claude3` (fallback: `claude1 sonnet`) |
+| `/execute` (decomposed) | Sonnet 4.5 | `claude` (default) |
 | `/code-review` | Sonnet 4.5 | `claude` (default) |
 | `/commit` | Sonnet 4.5 | `claude` (default) |
 | `/prime` | Sonnet 4.5 | `claude` (default) |
@@ -202,20 +202,20 @@ Main Agent (Sonnet or Opus) — orchestrates planning
 ### Strategy 5: Plan Decomposition (Complex Features)
 
 ```
-Planning (claude1, Opus):
+Planning (Opus):
   claude --model opus
   > /planning complex-feature
   → Detects High complexity
   → Produces: overview + N sub-plans
 
-Sequential Execution (claude2/3, Sonnet):
-  claude2
+Sequential Execution (Sonnet):
+  claude
   > /execute requests/complex-feature-plan-01-foundation.md
 
-  claude3
+  claude
   > /execute requests/complex-feature-plan-02-core.md
 
-  claude2
+  claude
   > /execute requests/complex-feature-plan-03-integration.md
 ```
 
@@ -307,17 +307,17 @@ Use Opus for:
 
 - **Default model**: Sonnet 4.5 (set via `ANTHROPIC_MODEL` environment variable)
 - **Planning sessions**: Opus 4.6 (start with `claude --model opus` or `cplan` alias)
-- **Code review agents** (all 4): `model: haiku`, `instance: claude-zai` in frontmatter
-- **Utility agents** (2): `model: haiku`, `instance: claude-zai` — plan-validator + test-generator
+- **Code review agents** (all 4): `model: haiku` in frontmatter
+- **Utility agents** (2): `model: haiku` — plan-validator + test-generator
 - **Built-in Explore agent**: Haiku (used in `/planning` for codebase search)
-- **Research agents**: Haiku (codebase) + Sonnet (external), both `instance: claude-zai`
+- **Research agents**: Haiku (codebase) + Sonnet (external)
 
 ### ⏳ Optional Enhancements
 
 - Opus for complex debugging (escalation pattern: Sonnet → Opus when stuck)
 - Explicit cost tracking per task
 - `opusplan` mode for Claude Code's built-in plan mode (uses Opus for `/plan`, Sonnet for execution — note: this is different from our `/planning` slash command)
-- Agent Teams model routing: Task tool `model` parameter has a known bug (Issue #18873). Specify model guidance in spawn prompts as workaround. See `templates/TEAM-SPAWN-PROMPTS.md` → "Model Routing" section.
+- Agent Teams model routing: Task tool `model` parameter has a known bug (Issue #18873). Specify model guidance in spawn prompts as workaround. See `templates/TEAM-SPAWN-PROMPTS.md` for details.
 
 ---
 
@@ -369,23 +369,23 @@ Launch a Task agent with model="haiku" to generate tests following existing patt
 
 **Why**: Main reasoning in Opus for superior plan quality. Codebase exploration delegated to Haiku (cheap pattern matching). External research delegated to Sonnet (good synthesis at lower cost than Opus).
 
-### Code Review Command (All Haiku + claude-zai)
+### Code Review Command (All Haiku)
 
 ```
 /code-review → Main agent (Sonnet)
-  ├─> Type Safety agent (Haiku, claude-zai)
-  ├─> Security agent (Haiku, claude-zai)
-  ├─> Architecture agent (Haiku, claude-zai)
-  └─> Performance agent (Haiku, claude-zai)
+  ├─> Type Safety agent (Haiku)
+  ├─> Security agent (Haiku)
+  ├─> Architecture agent (Haiku)
+  └─> Performance agent (Haiku)
 ```
 
 **Why all Haiku**: Review is checking against known patterns. Haiku benchmarks at 90%+ quality for pattern-based review (Qodo: 6.55/10 vs Sonnet 6.20/10). 4 Haiku agents cost ~40% of 1 Sonnet doing sequential review.
 
-### Utility Agents (Haiku + claude-zai)
+### Utility Agents (Haiku)
 
 ```
-plan-validator → Validates plan structure before /execute (Haiku, claude-zai)
-test-generator → Suggests test cases from changed code (Haiku, claude-zai)
+plan-validator → Validates plan structure before /execute (Haiku)
+test-generator → Suggests test cases from changed code (Haiku)
 ```
 
 **Why Haiku**: Both agents are advisory and read-only. Plan validation and test suggestion are pattern matching against templates and existing test patterns.
@@ -394,7 +394,7 @@ test-generator → Suggests test cases from changed code (Haiku, claude-zai)
 
 ```
 /execute → Implementation agent (Sonnet, inherited)
-  └─> (optional) plan-validator (Haiku, claude-zai) — Step 1.25
+  └─> (optional) plan-validator (Haiku) — Step 1.25
 ```
 
 **Why Sonnet**: Writing code requires reasoning, not just pattern matching. Sonnet is the right balance of capability and cost.

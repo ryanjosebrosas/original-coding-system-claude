@@ -1,8 +1,11 @@
 ```
 CLAUDE.md                              # Layer 1: Global rules (slim, @references)
 README.md                              # Public-facing project README with PIV Loop diagrams
-memory.md                              # Cross-session memory (optional, from MEMORY-TEMPLATE.md)
+AGENTS.md                              # Agent guidance for AI assistants
+LICENSE                                # MIT License
+.gitignore                             # Protects secrets, personal config, plans
 .coderabbit.yaml                       # CodeRabbit config template (copy to project root)
+memory.md                              # Cross-session memory (optional, from MEMORY-TEMPLATE.md)
 sections/                              # Auto-loaded rule sections (every session)
   01_core_principles.md                #   YAGNI, KISS, DRY, Limit AI Assumptions, ABP
   02_piv_loop.md                       #   Plan, Implement, Validate methodology (slim)
@@ -37,7 +40,6 @@ reference/                             # On-demand guides (loaded when needed)
   remote-system-guide.md               #   Setup & deployment guide for remote coding agent
   subagents-guide.md                   #   Subagent creation, frontmatter, output patterns
   multi-model-strategy.md              #   When to use Haiku/Sonnet/Opus for cost optimization
-  multi-instance-routing.md            #   Route tasks to different Claude accounts (claude1/2/3/zai)
   github-workflows/                    #   Example GitHub Action YAML files
     claude-fix.yml                     #     Claude Code issue fix/create workflow
     claude-fix-coderabbit.yml          #     Claude Code auto-fix from CodeRabbit reviews
@@ -68,6 +70,7 @@ templates/
   TEAM-SPAWN-PROMPTS.md                # Spawn prompt templates for Agent Teams (4 agent types)
   VALIDATION-REPORT-TEMPLATE.md        # Standard format for validation output
 requests/
+  .gitkeep                             # Preserves directory in git (plans are gitignored)
   {feature}-plan.md                    # Layer 2: Feature plans go here
 .claude/commands/                      # Slash commands (reusable prompts)
   agents.md                            #   /agents — generate subagent definition files
@@ -127,6 +130,8 @@ requests/
     code-review-security.md            #   Security vulnerability reviewer
     code-review-architecture.md        #   Architecture & patterns reviewer
     code-review-performance.md         #   Performance & optimization reviewer
+    plan-validator.md                  #   Plan structure validation agent
+    test-generator.md                  #   Test case suggestion agent
     README.md                          #   How to use and customize examples
   {agent-name}.md                      # Your custom project-specific agents
 ```

@@ -201,7 +201,7 @@ Save to multiple files:
 - `requests/{feature}-plan-overview.md` (use `templates/PLAN-OVERVIEW-TEMPLATE.md`)
 - `requests/{feature}-plan-01-{phase}.md` through `-NN-` (use `templates/SUB-PLAN-TEMPLATE.md`)
 
-Include EXECUTION ROUTING in overview: Primary: claude2 (Sonnet), Secondary: claude3, Fallback: claude1.
+Include EXECUTION ROUTING in overview: Recommended model per sub-plan (e.g., Sonnet for execution, Opus for planning).
 
 ### For Both Modes
 

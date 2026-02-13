@@ -202,23 +202,7 @@ Avoid these mistakes based on real-world testing:
 
 ## Model Routing
 
-### Session-Level Routing (Recommended)
-
-The most effective way to control model and cost for Agent Teams is at the **session level** — start the `/team` session on the right account:
-
-```bash
-# Planning phase — Opus thinking on main account
-cplan
-> /planning my-feature
-
-# Execution phase — Sonnet implementation on burn account
-c2
-> /team requests/my-feature-plan.md
-```
-
-All teammates inherit the session's account and model. No per-agent configuration needed.
-
-**Burn order**: c2 → c3 → ck → cz (switch when rate-limited)
+**Cost optimization**: Use Opus for planning sessions (`claude --model opus`), Sonnet (default) for team execution.
 
 ### Known Issue: Task Tool Model Parameter (February 2026)
 

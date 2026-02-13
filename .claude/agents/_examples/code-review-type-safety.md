@@ -2,7 +2,6 @@
 name: code-review-type-safety
 description: Reviews code for type safety violations, missing type hints, and type checking errors
 model: haiku
-instance: claude-zai  # Non-critical: Haiku excels at type checking pattern validation
 tools: ["Read", "Glob", "Grep", "Bash"]
 ---
 

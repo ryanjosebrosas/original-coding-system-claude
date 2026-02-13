@@ -24,14 +24,14 @@ This skill provides the methodology for transforming feature requests into compr
 
 ### Phase 2: Codebase Intelligence (Parallel — Research Agents)
 **Goal**: Understand the existing codebase patterns.
-- If custom research agents exist: Launch 3-5 parallel research-codebase agents (claude-zai) with focused queries
+- If custom research agents exist: Launch 3-5 parallel research-codebase agents (Haiku) with focused queries
 - If no custom agents: Launch single Explore agent (Haiku) for file discovery and pattern extraction
 - Find similar implementations, map integration points, extract project patterns
 - Fill: Relevant Codebase Files (with line numbers), New Files to Create, Patterns to Follow
 
 ### Phase 3: External Research (Parallel — Research Agents)
 **Goal**: Gather external documentation and best practices.
-- If custom research agents exist: Launch 3-5 parallel research-external agents (claude-zai) with focused queries
+- If custom research agents exist: Launch 3-5 parallel research-external agents (Sonnet) with focused queries
 - If no custom agents: Launch single general-purpose agent (Sonnet)
 - Find library docs, best practices, version compatibility, gotchas
 - If Archon RAG available: search curated knowledge base FIRST (2-5 keyword queries)

@@ -2,7 +2,6 @@
 name: research-external
 description: Use this agent for documentation search, best practices research, version compatibility checks, and external knowledge gathering. Finds authoritative docs, migration guides, and known gotchas. Uses Sonnet for synthesis quality.
 model: sonnet
-instance: claude-zai  # Non-critical: Phase 3b validation catches research errors
 tools: ["Read", "Glob", "Grep", "WebSearch", "WebFetch"]
 ---
 

@@ -38,7 +38,6 @@ Can someone understand the feature without additional questions? If no, go back 
 - **Detection**: `ls .claude/agents/research-*.md 2>/dev/null | wc -l`
 - **Agent type**: research-codebase (custom)
 - **Model**: Haiku (cost-optimized)
-- **Instance**: claude-zai (non-critical, Phase 3b validates results)
 - **Count**: 3-5 agents, each with a focused research query
 - **Tools**: Read, Glob, Grep
 
@@ -95,7 +94,6 @@ Every file reference has line numbers. Every pattern has a code example from the
 - **Detection**: `ls .claude/agents/research-*.md 2>/dev/null | wc -l`
 - **Agent type**: research-external (custom)
 - **Model**: Sonnet (synthesis quality)
-- **Instance**: claude-zai (non-critical, Phase 3b validates results)
 - **Count**: 3-5 agents, each with a focused research query
 - **Tools**: Read, Glob, Grep, WebSearch, WebFetch
 
