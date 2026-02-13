@@ -1,8 +1,8 @@
 ---
 name: code-review-performance
 description: Reviews code for performance issues including N+1 queries, inefficient algorithms, memory leaks, and unnecessary computations
-model: sonnet
-instance: claude3  # VITAL: Performance issues can be critical, needs quality analysis
+model: haiku
+instance: claude-zai  # Non-critical: Haiku identifies N+1 queries and algorithm issues via pattern matching
 tools: ["Read", "Glob", "Grep"]
 ---
 

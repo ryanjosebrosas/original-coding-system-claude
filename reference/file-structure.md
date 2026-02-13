@@ -20,6 +20,7 @@ reference/                             # On-demand guides (loaded when needed)
   remote-system-overview.md            #   Remote Agentic Coding System, orchestrator
   mcp-skills-overview.md               #   MCP protocol, cloud skills, progressive loading
   subagents-overview.md                #   Subagents, parallel execution, context isolation
+  agent-teams-overview.md              #   Agent Teams: architecture, contract-first spawning, configuration
   git-worktrees-overview.md            #   Git worktrees, parallel implementation
   system-foundations.md                #   System gap, mental models, self-assessment
   piv-loop-practice.md                #   PIV Loop in practice, 4 Pillars, validation
@@ -64,6 +65,7 @@ templates/
   GITHUB-SETUP-CHECKLIST.md            # Step-by-step GitHub Actions setup
   META-REASONING-CHECKLIST.md          # 5-step meta-reasoning + WHERE-to-fix framework
   TOOL-DOCSTRING-TEMPLATE.md           # 7-element template for agent tool documentation
+  TEAM-SPAWN-PROMPTS.md                # Spawn prompt templates for Agent Teams (4 agent types)
   VALIDATION-REPORT-TEMPLATE.md        # Standard format for validation output
 requests/
   {feature}-plan.md                    # Layer 2: Feature plans go here
@@ -85,6 +87,7 @@ requests/
   new-worktree.md                      # /new-worktree — create git worktrees with optional parallel setup
   merge-worktrees.md                   # /merge-worktrees — safely merge feature branches from worktrees
   parallel-e2e.md                      # /parallel-e2e — parallel end-to-end with worktrees
+  team.md                              # /team — Agent Teams: contract-first multi-agent implementation
 .claude/skills/                        # Cloud Skills (progressive loading)
   planning-methodology/                #   6-phase planning methodology (example skill)
     SKILL.md                           #   Entry point + frontmatter (Tier 1+2)
@@ -101,6 +104,11 @@ requests/
     references/                        #   Detailed docs (Tier 3, on-demand)
       parallel-workflow.md             #     Full 8-stage pipeline
       troubleshooting.md              #     Common issues and fixes
+  agent-teams/                         #   Agent Teams coordinated multi-agent implementation
+    SKILL.md                           #   Entry point + frontmatter (Tier 1+2)
+    references/                        #   Detailed docs (Tier 3, on-demand)
+      contract-first-spawning.md       #     Contract-first spawning deep dive
+      tmux-wsl-setup.md               #     WSL + tmux installation guide
   github-automation/                   #   GitHub Actions setup methodology
     SKILL.md                           #   Entry point + frontmatter (Tier 1+2)
     references/                        #   Detailed docs (Tier 3, on-demand)

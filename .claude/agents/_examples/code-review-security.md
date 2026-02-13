@@ -1,8 +1,8 @@
 ---
 name: code-review-security
 description: Reviews code for security vulnerabilities including SQL injection, XSS, exposed secrets, and insecure data handling
-model: sonnet
-instance: claude2  # VITAL: Security review cannot fail, needs quality model + reliable instance
+model: haiku
+instance: claude-zai  # Non-critical: Haiku benchmarks 90%+ on pattern-based security review (Qodo)
 tools: ["Read", "Glob", "Grep", "Bash"]
 ---
 

@@ -19,9 +19,10 @@ Git worktrees are built into Git — not a third-party tool. They enable the sam
 | **Subagents** | Low | Context only | 2-5x | Research, analysis, code review |
 | **Multiple terminals** | Low | None | 2x | Quick parallel tasks on same branch |
 | **Git worktrees** | Medium | Full (code-level) | 2-10x | **Feature implementation** |
+| **Agent Teams + Worktrees** | Medium | Full (code + coordination) | 3-10x | **Coordinated parallel implementation** |
 | **Containers/Cloud** | High | Complete | Unlimited | Large-scale parallel work, CI/CD |
 
-**Key difference**: Subagents (see `reference/subagents-deep-dive.md`) parallelize **research and analysis**. Worktrees (see `reference/git-worktrees-parallel.md`) parallelize **implementation and code changes**.
+**Key difference**: Subagents (see `reference/subagents-deep-dive.md`) parallelize **research and analysis**. Worktrees (see `reference/git-worktrees-parallel.md`) parallelize **implementation and code changes**. Agent Teams can automatically create worktrees for implementation teammates, combining coordination (shared task list, messaging) with isolation (separate file systems). See `reference/agent-teams-overview.md` and the `/team` command.
 
 ### When to Use Git Worktrees
 
@@ -31,6 +32,7 @@ Git worktrees are built into Git — not a third-party tool. They enable the sam
 - You want to maximize agent utilization
 - Each feature takes 30+ minutes to implement
 - Features touch different parts of the codebase
+- Using `/team` command for coordinated multi-agent implementation (worktrees created automatically)
 
 **Don't use worktrees when:**
 - Quick bug fixes (same branch is fine)

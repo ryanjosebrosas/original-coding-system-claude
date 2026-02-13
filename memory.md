@@ -14,6 +14,8 @@
 - [2026-02-12] Adopted 3-tier skills architecture (SKILL.md → references/) — Progressive disclosure for complex workflows
 - [2026-02-12] Plan decomposition for complex features — `<!-- PLAN-SERIES -->` marker triggers series mode in `/execute`
 - [2026-02-12] Moved Archon workflow to on-demand reference — Auto-loaded pointer is 5 lines, full guide at `reference/archon-workflow.md`
+- [2026-02-13] Integrated Agent Teams with contract-first spawning — Upstream agents publish contracts before downstream agents start; lead relays and verifies
+- [2026-02-13] Agent Teams for implementation only, subagents for research — 2-4x token savings vs using Agent Teams for everything
 
 ## Architecture Patterns
 <!-- Format: - **Pattern name**: Description. Used in: location -->
@@ -22,6 +24,8 @@
 - **Skills 3-tier**: SKILL.md (overview) → references/ (deep guides) → templates/ (artifacts). Used in: `.claude/skills/`
 - **Command chaining**: `/execute → /execution-report → /code-review → /code-review-fix → /commit`. Used in: validation workflow
 - **Plan decomposition**: Overview + N sub-plans for High-complexity features. Trigger: Phase 4.5 in `/planning`. Used in: `planning.md`, `execute.md`
+- **Contract-First Spawning**: Upstream agents first → lead verifies contract → relays to downstream. Used in: `/team` command
+- **Auto-Worktree per Teammate**: Implementation teammates get isolated worktrees. Branch: `team/{feature}/{agent}`. Used in: `/team` Step 2
 
 ## Gotchas & Pitfalls
 <!-- Format: - **Area**: What goes wrong — How to avoid -->
@@ -41,6 +45,7 @@
 - [2026-02-12] Completed Reference-to-System Alignment project (Plans A-D): templates, commands, skills, memory migration
 - [2026-02-12] Implemented plan decomposition & execution routing — 2 templates, 2 commands updated, 4 reference docs updated
 - [2026-02-12] Token efficiency: compressed 5 commands (43-59%), slimmed auto-loaded context (66%), added README.md with Mermaid diagrams
+- [2026-02-13] Implemented Agent Teams integration: /team command, reference guide, skill, spawn templates, contract-first spawning guide
 
 ---
 

@@ -50,5 +50,6 @@ A comprehensive AI-assisted development methodology combining systematic plannin
 | `reference/subagents-overview.md` | Creating or debugging subagents |
 | `reference/archon-workflow.md` | Using Archon task management or RAG search |
 | `reference/git-worktrees-overview.md` | Parallel feature implementation with worktrees |
+| `reference/agent-teams-overview.md` | Using Agent Teams, `/team` command, contract-first spawning |
 
 > For deeper context, see additional reference guides in `reference/` (e.g., `system-foundations.md`, `piv-loop-practice.md`, `global-rules-optimization.md`).

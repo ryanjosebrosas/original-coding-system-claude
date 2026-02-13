@@ -53,6 +53,9 @@ Every command should answer:
 **Parallel (requires proven worktree commands):**
 - `/parallel-e2e [feature A | feature B | ...]` — Parallel end-to-end: prime → plan all → worktrees → execute in parallel via `claude -p` → merge → commit → PR
 
+**Agent Teams (requires proven worktree + parallel commands):**
+- `/team [feature-description or plan-path]` — Orchestrate Agent Teams for contract-first multi-agent implementation with auto-worktrees, delegate mode, and contract relay
+
 All core commands integrate with `memory.md` (if it exists) for cross-session memory. `/prime` and `/planning` read, `/commit` updates.
 
 ### Skills vs Commands
@@ -101,8 +104,8 @@ Commands are designed to work independently AND as workflows:
 ### Trust Progression
 
 ```
-Manual Prompts → Reusable Commands → Chained Commands → Parallel Chained
-     ↑ trust & verify ↑    ↑ trust & verify ↑    ↑ trust & verify ↑
+Manual Prompts → Commands → Chained → Subagents → Worktrees → Agent Teams → Remote
+     ↑ trust & verify ↑  ↑ trust & verify ↑  ↑ trust & verify ↑  ↑ trust & verify ↑
 ```
 
 **Before creating commands**: You've manually prompted the same task 3+ times successfully, you know what instructions work, the pattern is stable.

@@ -307,9 +307,10 @@ Use Opus for:
 
 - **Default model**: Sonnet 4.5 (set via `ANTHROPIC_MODEL` environment variable)
 - **Planning sessions**: Opus 4.6 (start with `claude --model opus` or `cplan` alias)
-- **Code review agents** (all 4): `model: haiku` in frontmatter
+- **Code review agents** (all 4): `model: haiku`, `instance: claude-zai` in frontmatter
+- **Utility agents** (2): `model: haiku`, `instance: claude-zai` — plan-validator + test-generator
 - **Built-in Explore agent**: Haiku (used in `/planning` for codebase search)
-- **Research agents**: Haiku (codebase) + Sonnet (external)
+- **Research agents**: Haiku (codebase) + Sonnet (external), both `instance: claude-zai`
 
 ### ⏳ Optional Enhancements
 
@@ -341,7 +342,7 @@ For tasks you do frequently, create Haiku agents:
 ---
 name: test-generator
 model: haiku
-tools: ["Read", "Glob", "Grep", "Write"]
+tools: ["Read", "Glob", "Grep"]
 ---
 ```
 
@@ -367,22 +368,32 @@ Launch a Task agent with model="haiku" to generate tests following existing patt
 
 **Why**: Main reasoning in Opus for superior plan quality. Codebase exploration delegated to Haiku (cheap pattern matching). External research delegated to Sonnet (good synthesis at lower cost than Opus).
 
-### Code Review Command (All Haiku)
+### Code Review Command (All Haiku + claude-zai)
 
 ```
 /code-review → Main agent (Sonnet)
-  ├─> Type Safety agent (Haiku)
-  ├─> Security agent (Haiku)
-  ├─> Architecture agent (Haiku)
-  └─> Performance agent (Haiku)
+  ├─> Type Safety agent (Haiku, claude-zai)
+  ├─> Security agent (Haiku, claude-zai)
+  ├─> Architecture agent (Haiku, claude-zai)
+  └─> Performance agent (Haiku, claude-zai)
 ```
 
-**Why all Haiku**: Review is checking against known patterns. Haiku is 10x cheaper and just as good for this task.
+**Why all Haiku**: Review is checking against known patterns. Haiku benchmarks at 90%+ quality for pattern-based review (Qodo: 6.55/10 vs Sonnet 6.20/10). 4 Haiku agents cost ~40% of 1 Sonnet doing sequential review.
+
+### Utility Agents (Haiku + claude-zai)
+
+```
+plan-validator → Validates plan structure before /execute (Haiku, claude-zai)
+test-generator → Suggests test cases from changed code (Haiku, claude-zai)
+```
+
+**Why Haiku**: Both agents are advisory and read-only. Plan validation and test suggestion are pattern matching against templates and existing test patterns.
 
 ### Execute Command (Sonnet)
 
 ```
 /execute → Implementation agent (Sonnet, inherited)
+  └─> (optional) plan-validator (Haiku, claude-zai) — Step 1.25
 ```
 
 **Why Sonnet**: Writing code requires reasoning, not just pattern matching. Sonnet is the right balance of capability and cost.

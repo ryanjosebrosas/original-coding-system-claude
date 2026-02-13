@@ -1,4 +1,4 @@
-# Plan Overview: Agent Teams Integration with PIV-Phased Control & TMUX
+# Plan Overview: Agent Teams Integration with Contract-First Spawning
 
 <!-- PLAN-SERIES -->
 
@@ -7,43 +7,44 @@
 > conversation. Do NOT implement from this file — use `/execute` on each sub-plan in order.
 >
 > **Total Sub-Plans**: 3
-> **Total Estimated Tasks**: 19
+> **Total Estimated Tasks**: 16
 
 ---
 
 ## Feature Description
 
-Integrate Claude Code's experimental Agent Teams feature into My Coding System as the primary multi-agent orchestration layer. This creates a new `/team` command that runs a full PIV Loop using coordinated Agent Teams — with PIV-phased control (Coordinator mode for planning, Delegate-only mode for implementation, Synthesizer mode for validation). Implementation teammates automatically get worktrees for file isolation, and all task management flows through Archon as the source of truth. TMUX split-pane display is enabled via WSL for visibility.
+Integrate Claude Code's experimental Agent Teams feature into My Coding System as the primary multi-agent implementation layer. Creates a new `/team` command that orchestrates coordinated Claude Code instances using **contract-first spawning** — upstream agents publish interface contracts before downstream agents begin, and the lead relays and verifies contracts between teammates. Each implementation teammate gets a worktree for file isolation. Research stays with subagents (cheaper, focused). Validation is built into the team workflow (each agent self-validates + lead does end-to-end checks).
 
 ## User Story
 
-As a developer using My Coding System, I want to orchestrate multiple Claude Code instances as a coordinated team with PIV-phased control, so that complex features get parallel research, parallel implementation (with worktree isolation), and parallel review — all managed through a single `/team` command.
+As a developer using My Coding System, I want to orchestrate multiple Claude Code instances as a coordinated implementation team using contract-first spawning and delegate mode, so that complex features get parallel implementation with automatic interface alignment, worktree isolation, and a single `/team` command.
 
 ## Problem Statement
 
-The current system has three parallel execution approaches that don't communicate with each other:
+The current system has parallel execution approaches that don't coordinate on interfaces:
 1. **Subagents** — parallel research, but results only flow back to the main agent (no inter-agent discussion)
-2. **Worktrees + `claude -p`** — parallel implementation, but headless processes with no coordination
+2. **Worktrees + `claude -p`** — parallel implementation, but headless processes with no coordination — agents diverge on interfaces (e.g., backend builds against wrong DB schema)
 3. **Archon tasks** — tracking, but disconnected from the parallel execution layer
 
-Agent Teams fills the gap: agents that can message each other, share a task list, self-coordinate, and debate findings — while still leveraging worktrees for file isolation and Archon for task tracking.
+Agent Teams fills the gap: agents that can message each other, share a task list, and self-coordinate — but only when guided with contract-first spawning to prevent the interface divergence problem.
 
 ## Solution Statement
 
-- Decision 1: **Full integration** (not additive tier) — because Agent Teams supersedes headless `claude -p` processes with a richer coordination model. Subagents remain for quick, focused tasks within a single session.
-- Decision 2: **New `/team` command** (not modifying existing commands) — because existing commands stay stable while `/team` wraps the orchestration layer. Users opt in explicitly.
-- Decision 3: **PIV-phased control** — because different PIV phases need different lead behaviors. Planning = coordinator (guide research). Implementation = delegate-only (never code, only assign). Validation = synthesizer (aggregate reviews).
-- Decision 4: **Auto-worktree per implementation teammate** — because file conflicts are eliminated by design. Each teammate gets their own worktree and branch.
-- Decision 5: **Archon is source of truth** — because the Agent Teams built-in task list is ephemeral (session-scoped). Archon persists across sessions and provides RAG search.
-- Decision 6: **WSL + tmux** for split-pane display — because Windows doesn't support tmux natively, and split panes give visibility into all teammates simultaneously.
+- Decision 1: **Implementation-focused** — Agent Teams for coordinated implementation, subagents for research (per Cole Medin's guidance: "subagents for research, Agent Teams for implementation"). This is more token-efficient than using Agent Teams for everything.
+- Decision 2: **Contract-first spawning** (core pattern) — Upstream agents spawn first, publish interface contracts (DB schema, API shapes), lead relays verified contracts to downstream agents BEFORE they start coding. Prevents the #1 failure mode: agents building against wrong interfaces.
+- Decision 3: **Delegate mode** — Lead uses Shift+Tab to enter delegate mode. Never codes directly, only coordinates, relays contracts, and validates. One mode, not three invented ones.
+- Decision 4: **Auto-worktree per teammate** — File conflicts eliminated by design. Each teammate gets their own worktree and branch.
+- Decision 5: **Dynamic team sizing** — 2 agents for simple splits, 3 for full-stack, 4 for complex systems, 5+ for large independent modules. Determined from the plan, not fixed.
+- Decision 6: **Archon summary sync** — Update Archon once at end of session (not real-time per-task sync). Agent Teams' built-in task list handles in-session coordination.
+- Decision 7: **WSL + tmux** for split-pane display — Windows users need WSL. In-process mode as universal fallback.
 
 ## Feature Metadata
 
 - **Feature Type**: New Capability
 - **Estimated Complexity**: High
 - **Plan Mode**: Decomposed (3 sub-plans)
-- **Primary Systems Affected**: Commands (`.claude/commands/`), Reference guides (`reference/`), Settings, Skills (`.claude/skills/`), Templates (`templates/`)
-- **Dependencies**: Claude Code Agent Teams (experimental), WSL, tmux, Archon MCP
+- **Primary Systems Affected**: Commands (`.claude/commands/`), Reference guides (`reference/`), Skills (`.claude/skills/`), Templates (`templates/`)
+- **Dependencies**: Claude Code Agent Teams (experimental), WSL, tmux
 
 ---
 
@@ -57,57 +58,75 @@ Agent Teams fills the gap: agents that can message each other, share a task list
 
 > IMPORTANT: The execution agent MUST read these files before implementing any sub-plan!
 
-- `.claude/commands/parallel-e2e.md` — Why: current parallel execution command that Agent Teams evolves beyond. Mirror its structure and error handling patterns.
-- `.claude/commands/new-worktree.md` — Why: worktree creation logic that `/team` will embed for implementation teammates
+- `.claude/commands/parallel-e2e.md` — Why: current parallel execution command. Mirror its structure and error handling patterns.
+- `.claude/commands/new-worktree.md` — Why: worktree creation logic that `/team` will embed for teammates
 - `.claude/commands/end-to-end-feature.md` — Why: single-feature PIV loop pattern that `/team` extends to multi-agent
-- `reference/subagents-overview.md` — Why: existing parallel execution documentation that needs Agent Teams added
-- `reference/git-worktrees-overview.md` — Why: worktree documentation that needs Agent Teams integration noted
+- `reference/subagents-overview.md` — Why: existing parallel execution docs that need Agent Teams comparison added
+- `reference/git-worktrees-overview.md` — Why: worktree docs that need Agent Teams integration noted
 - `memory.md` — Why: will be updated with Agent Teams decisions
+
+### External Reference: Cole Medin's Agent Teams Skill
+
+> This is the primary reference implementation. Our `/team` command adapts his patterns for our system.
+
+**Key patterns from Cole's `build-with-agent-team` skill:**
+
+1. **Contract-First Spawning** — The core innovation:
+   - Identify the contract chain: `Database → publishes function signatures → Backend → publishes API contract → Frontend`
+   - Spawn upstream agents first (staggered, not all parallel)
+   - Lead acts as **active contract relay** — receives, verifies, and forwards contracts. Never tell agents to "share with each other" directly.
+   - Agents publish contracts BEFORE implementing — contract must be verified before downstream agents spawn
+
+2. **Spawn Prompt Structure** — Each teammate prompt includes:
+   - **Ownership**: files they own, files they must NOT touch
+   - **What they're building**: specific scope
+   - **Mandatory communication**: contract publishing before implementation
+   - **Contract conformity**: the verified contract they must build against
+   - **Cross-cutting concerns**: shared conventions (URL patterns, error shapes, etc.)
+
+3. **5-Phase Collaboration Flow**:
+   - Phase 1: Contracts (sequential, lead-orchestrated)
+   - Phase 2: Implementation (parallel where safe)
+   - Phase 3: Pre-completion contract verification (lead runs contract diff)
+   - Phase 4: Polish (cross-review between agents)
+   - Phase 5: Lead end-to-end validation
+
+4. **Team Sizing**:
+   - 2 agents: Simple frontend/backend split
+   - 3 agents: Full-stack (frontend, backend, database/infra)
+   - 4 agents: Complex systems with testing, DevOps, docs
+   - 5+ agents: Large systems with many independent modules
+
+5. **Anti-Patterns** (from Cole's testing):
+   - Don't spawn all agents simultaneously — upstream must publish contracts first
+   - Don't tell agents to "share with each other" — lead must relay and verify
+   - Don't skip contract verification — leads to interface divergence
+   - Don't use Agent Teams for research — subagents are cheaper and sufficient
+
+### Lessons from Carlini's Parallel Agent Architecture
+
+> These lessons from running 16 autonomous Claude instances inform our design.
+
+1. **High-quality validation as verifier** — "Claude will solve whatever problem I give it. So the task verifier must be nearly perfect." Each agent must self-validate before reporting done.
+2. **Design for Claude, not humans** — Log details to files. Spawn prompts should instruct: "Write findings to files, send concise summaries via messages."
+3. **File lock-based task claiming** — Agent Teams has built-in task claiming — we get this for free.
+4. **Time blindness mitigation** — Include turn limits in spawn prompts: "If you've been working for more than 30 turns without progress, report blockers to the lead."
+5. **Logging architecture** — Teammates write progress to `logs/team-{feature}/` directory for debugging.
 
 ### New Files to Create (All Sub-Plans)
 
 - `reference/agent-teams-overview.md` — Reference guide for Agent Teams integration — Sub-plan: 01
-- `.claude/commands/team.md` — The `/team` slash command — Sub-plan: 02
-- `templates/TEAM-SPAWN-PROMPTS.md` — Spawn prompt templates for each PIV phase — Sub-plan: 02
-- `.claude/skills/agent-teams/SKILL.md` — Agent Teams skill entry point — Sub-plan: 03
-- `.claude/skills/agent-teams/references/piv-phased-control.md` — PIV-phased control deep dive — Sub-plan: 03
+- `.claude/skills/agent-teams/SKILL.md` — Agent Teams skill entry point — Sub-plan: 01
+- `.claude/skills/agent-teams/references/contract-first-spawning.md` — Contract-first spawning deep dive — Sub-plan: 01
 - `.claude/skills/agent-teams/references/tmux-wsl-setup.md` — WSL + tmux setup guide — Sub-plan: 01
+- `.claude/commands/team.md` — The `/team` slash command — Sub-plan: 02
+- `templates/TEAM-SPAWN-PROMPTS.md` — Spawn prompt templates for contract-first pattern — Sub-plan: 02
 
 ### Related Memories (from memory.md)
 
-- Memory: Plan decomposition for complex features — Relevance: this feature uses decomposed plans, confirming the pattern works
-- Memory: Modular CLAUDE.md with on-demand loading — Relevance: Agent Teams docs follow same pattern (overview auto-loaded, reference on-demand)
+- Memory: Plan decomposition for complex features — Relevance: this feature uses decomposed plans
+- Memory: Modular CLAUDE.md with on-demand loading — Relevance: Agent Teams docs follow same pattern
 - Memory: Adopted 3-tier skills architecture — Relevance: Agent Teams skill follows SKILL.md → references/ pattern
-
-### Relevant Documentation
-
-- [Claude Code Agent Teams](https://code.claude.com/docs/en/agent-teams)
-  - Specific sections: All — architecture, display modes, permissions, task list, hooks
-  - Why: primary source for Agent Teams capabilities and configuration
-- [Claude Code Hooks](https://code.claude.com/docs/en/hooks)
-  - Specific section: TeammateIdle, TaskCompleted
-  - Why: quality gate enforcement for teammates
-- [Building a C Compiler with Parallel Claude Agents](https://www.anthropic.com/engineering/building-c-compiler)
-  - Nicholas Carlini ran 16 parallel Claude instances autonomously building a 100K-line C compiler
-  - Why: battle-tested patterns for multi-agent coordination at scale
-
-### Lessons from Carlini's Parallel Agent Architecture
-
-> These lessons from running 16 autonomous Claude instances inform our Agent Teams design.
-
-1. **Extremely high-quality tests as the verifier** — "Claude will solve whatever problem I give it. So the task verifier must be nearly perfect, otherwise Claude solves the wrong problem." Our `/team` command must enforce validation gates (TaskCompleted hooks) to prevent teammates from marking tasks done incorrectly.
-
-2. **Design for Claude, not humans** — Minimize context window pollution. Log details to files agents can grep. Pre-compute aggregate stats. Our spawn prompts should tell teammates to write findings to files, not return massive inline results.
-
-3. **Specialized agent roles** — Beyond core development, Carlini used dedicated agents for: code deduplication, performance optimization, code quality review, documentation. Our PIV-phased approach mirrors this: research specialists, implementation specialists, review specialists.
-
-4. **File lock-based task claiming** — Agents claim work via lock files to prevent duplicates. Agent Teams has built-in task claiming with file locking — we get this for free.
-
-5. **Time blindness mitigation** — Claude "can't tell time and will happily spend hours running tests." Include `--fast` flags and test sampling. Our `/team` command should set `--max-turns` limits on teammates and include time-awareness prompts.
-
-6. **Logging architecture** — Agents need comprehensive logs to self-orient in fresh contexts. Our teammates should write progress to `logs/team-{feature}/` directory for debugging and lead visibility.
-
-7. **Progress documentation** — Frequently updated README/progress docs help agents orient. Our Archon task sync serves this purpose — teammates can query Archon for current project state.
 
 ### Patterns to Follow
 
@@ -129,28 +148,21 @@ allowed-tools: Tool1, Tool2, ...
 
 ---
 ```
-- Why this pattern: all commands follow this frontmatter + stepped structure
-- Common gotchas: `allowed-tools` must include all tools the command uses; missing tools causes permission prompts
+- Why: all commands follow this frontmatter + stepped structure
+- Gotcha: `allowed-tools` must include all tools the command uses
 
 **Reference Guide Structure** (from `reference/subagents-overview.md`):
-```markdown
-### Section Title
-
-Content organized with tables, code blocks, and clear headings.
-Ends with ### Reference Files section pointing to deeper guides.
-```
-- Why this pattern: reference guides are on-demand loaded, so they must be self-contained
-- Common gotchas: don't auto-load reference guides — they're pulled by commands when needed
+- Self-contained, on-demand loaded
+- Organized with tables, code blocks, clear headings
+- Ends with Reference Files section
 
 **Skill 3-Tier Structure** (from `.claude/skills/planning-methodology/`):
 ```
 .claude/skills/{name}/
-  SKILL.md          — Tier 1: overview (auto-loaded when skill invoked)
+  SKILL.md          — Tier 1: overview (<120 lines)
   references/
-    {detail}.md     — Tier 3: deep guides (loaded on-demand)
+    {detail}.md     — Tier 3: deep guides (on-demand)
 ```
-- Why this pattern: progressive disclosure minimizes token usage
-- Common gotchas: SKILL.md should be concise (<200 lines), deep content goes in references/
 
 ---
 
@@ -159,11 +171,10 @@ Ends with ### Reference Files section pointing to deeper guides.
 | # | Phase | Sub-Plan File | Tasks | Context Load |
 |---|-------|---------------|-------|--------------|
 | 01 | Infrastructure & Documentation | `requests/agent-teams-plan-01-infrastructure.md` | 6 | Low |
-| 02 | /team Command & Templates | `requests/agent-teams-plan-02-team-command.md` | 7 | Medium |
-| 03 | Integration & System Updates | `requests/agent-teams-plan-03-integration.md` | 6 | Low |
+| 02 | /team Command & Templates | `requests/agent-teams-plan-02-team-command.md` | 5 | Medium |
+| 03 | Integration & System Updates | `requests/agent-teams-plan-03-integration.md` | 5 | Low |
 
-> Each sub-plan targets 5-8 tasks and 150-250 lines. Context load estimates
-> help decide instance assignment (Low = minimal codebase reads, Medium = several files).
+> Each sub-plan targets 5-6 tasks. Context load estimates help decide instance assignment.
 
 ---
 
@@ -177,17 +188,9 @@ Ends with ### Reference Files section pointing to deeper guides.
 | 02 | claude2 | Sonnet | Secondary — heaviest sub-plan |
 | 03 | claude1 | Sonnet | Back to primary |
 
-### Fallback Chain
-
-```
-Primary:   claude1 (Sonnet) — main execution instance
-Secondary: claude2 (Sonnet) — if primary hits rate limit
-Fallback:  claude3 (Sonnet) — last resort
-```
-
 ### Execution Instructions
 
-**Manual execution** (recommended for this feature):
+**Manual execution** (recommended):
 ```bash
 # Sub-plan 1: Infrastructure
 claude --model sonnet
@@ -211,45 +214,46 @@ claude --model sonnet
 
 ## ACCEPTANCE CRITERIA
 
-- [ ] `/team [feature]` command exists and follows system command patterns
-- [ ] PIV-phased control documented: Coordinator → Delegate → Synthesizer
-- [ ] Auto-worktree creation integrated into implementation phase
-- [ ] Archon task sync documented and integrated into `/team` flow
-- [ ] WSL + tmux setup guide exists with step-by-step instructions
-- [ ] Reference guide `reference/agent-teams-overview.md` covers full architecture
-- [ ] Agent Teams skill follows 3-tier pattern (SKILL.md + references/)
-- [ ] Existing docs updated: `reference/subagents-overview.md`, `reference/git-worktrees-overview.md`
-- [ ] Spawn prompt templates exist for all 3 PIV phases
-- [ ] `memory.md` updated with Agent Teams decisions
-- [ ] Trust progression updated to include Agent Teams tier
-- [ ] Settings configuration documented (experimental flag, teammateMode)
+- [x] `/team [feature]` command exists and follows system command patterns
+- [x] Contract-first spawning documented as the core orchestration pattern
+- [x] Delegate mode documented (lead never codes, only coordinates)
+- [x] Auto-worktree creation integrated into implementation phase
+- [x] Dynamic team sizing guidance (2-5 agents based on plan complexity)
+- [x] WSL + tmux setup guide exists with step-by-step instructions
+- [x] Reference guide `reference/agent-teams-overview.md` covers full architecture
+- [x] Agent Teams skill follows 3-tier pattern (SKILL.md + references/)
+- [x] Existing docs updated: `reference/subagents-overview.md`, `reference/git-worktrees-overview.md`
+- [x] Spawn prompt templates follow contract-first pattern with ownership boundaries
+- [x] `memory.md` updated with Agent Teams decisions
+- [x] Trust progression updated to include Agent Teams tier
+- [x] Settings configuration documented (experimental flag, teammateMode)
 
 ---
 
 ## COMPLETION CHECKLIST
 
-- [ ] Sub-plan 01 (Infrastructure & Documentation) — complete
-- [ ] Sub-plan 02 (/team Command & Templates) — complete
-- [ ] Sub-plan 03 (Integration & System Updates) — complete
-- [ ] All acceptance criteria met
-- [ ] Feature-wide manual validation passed
-- [ ] Ready for `/commit`
+- [x] Sub-plan 01 (Infrastructure & Documentation) — complete
+- [x] Sub-plan 02 (/team Command & Templates) — complete
+- [x] Sub-plan 03 (Integration & System Updates) — complete
+- [x] All acceptance criteria met
+- [x] Feature-wide manual validation passed
+- [x] Ready for `/commit`
 
 ---
 
 ## NOTES
 
 ### Key Design Decisions
-- **Decomposed into 3 sub-plans** because the feature spans infrastructure (settings, TMUX), a new command (the core deliverable), and integration (Archon, hooks, system updates) — three distinct concerns
-- **Sub-plan 02 is the heaviest** because the `/team` command is the centerpiece and needs the most careful design — it orchestrates all three PIV phases with different lead modes
-- **WSL + tmux in sub-plan 01** (not 02) because it's infrastructure that must exist before the command can reference it
+- **Contract-first over PIV-phased control** — The original plan invented Coordinator/Delegate/Synthesizer modes that don't map to real Agent Teams features. Contract-first spawning (from Cole Medin's tested approach) solves the actual problem: interface divergence between parallel agents.
+- **Implementation-only teams** — Agent Teams for research wastes tokens. Subagents are 2-4x cheaper for research tasks and provide sufficient output. Agent Teams' value is coordination during implementation.
+- **Archon summary sync, not real-time** — Real-time Archon sync adds fragility and complexity. Agent Teams' built-in task list handles in-session coordination. Archon gets updated once at the end for cross-session persistence.
 
 ### Risks
-- **Agent Teams is experimental** — API may change. Mitigation: document current API, note experimental status prominently, design for easy updates
-- **Windows + WSL + tmux complexity** — multiple layers of indirection. Mitigation: detailed setup guide with troubleshooting, in-process mode as fallback
-- **Archon sync is conceptual** — Agent Teams doesn't have native Archon integration. Mitigation: the `/team` command handles sync logic (pull tasks at start, push status at end), not a deep integration
+- **Agent Teams is experimental** — API may change. Mitigation: document current API, note experimental status, design for easy updates
+- **Windows + WSL + tmux complexity** — Mitigation: detailed setup guide with troubleshooting, in-process mode as fallback
+- **Contract-first requires plan analysis** — Lead must identify the contract chain from the plan. Mitigation: clear heuristics in the command (DB → Backend → Frontend pattern)
 
 ### Confidence Score: 8/10
-- **Strengths**: clear architecture from vibe planning, well-defined PIV phases, strong existing patterns to follow (commands, skills, reference guides)
-- **Uncertainties**: Agent Teams experimental status may introduce breaking changes; WSL+tmux on Windows may have edge cases; Archon sync is manual (command-level, not automatic)
-- **Mitigations**: in-process mode fallback for tmux issues; Archon sync is a clearly defined step in the command; all docs note experimental status
+- **Strengths**: contract-first pattern is battle-tested by Cole Medin, simpler architecture than original plan, strong existing patterns to follow
+- **Uncertainties**: Agent Teams experimental status; contract chain identification may be tricky for non-standard architectures
+- **Mitigations**: spawn prompt templates cover common patterns; in-process mode fallback; team sizing guidance reduces guesswork

@@ -1,6 +1,6 @@
 # Example Agents
 
-This directory contains **example agents** demonstrating different subagent patterns. Copy agents to `.claude/agents/` in your project to activate them.
+This directory contains **8 example agents** demonstrating different subagent patterns. Copy agents to `.claude/agents/` in your project to activate them.
 
 ---
 
@@ -77,16 +77,6 @@ Launch two Task agents in parallel:
 2. research-external agent: "Find Stripe API v2024 documentation and migration guide"
 ```
 
-### Model Cost Comparison
-
-| Model | Input Cost | Output Cost | Best For |
-|-------|-----------|-------------|----------|
-| **Haiku** | ~$0.80/MTok | ~$4/MTok | High-volume exploration, pattern matching |
-| **Sonnet** | ~$3/MTok | ~$15/MTok | Synthesis, judgment, documentation analysis |
-| **Opus** | ~$15/MTok | ~$75/MTok | Complex reasoning, main orchestration |
-
-Research agents save significant cost by running exploration on cheaper models, reserving Opus for the main agent's decision-making.
-
 ### Activation
 
 Copy agents from `_examples/` to `.claude/agents/` in your project:
@@ -119,15 +109,16 @@ These agents use **smart routing** based on criticality:
 
 | Agent | Instance | Model | Why |
 |-------|----------|-------|-----|
-| **Type Safety** | `claude-zai` | Haiku | Non-critical: helpful but not vital |
-| **Security** | `claude2` | Sonnet | **VITAL**: Must catch vulnerabilities |
-| **Architecture** | `claude2` | Sonnet | **VITAL**: Design expertise needed |
-| **Performance** | `claude3` | Sonnet | **VITAL**: Critical issues can't be missed |
+| **Type Safety** | `claude-zai` | Haiku | Pattern matching — type checks follow known rules |
+| **Security** | `claude-zai` | Haiku | Pattern matching — OWASP checks, secret scanning patterns |
+| **Architecture** | `claude-zai` | Haiku | Pattern matching — convention compliance, layer checks |
+| **Performance** | `claude-zai` | Haiku | Pattern matching — N+1 detection, complexity analysis |
 
 **Routing Philosophy**:
-- `claude-zai` → Basic, spammable, non-critical (can afford false negatives)
-- `claude2/3` → Vital Sonnet work (load balanced to avoid rate limits)
-- `claude1` → Main orchestration, planning, PIV loop
+All review agents use Haiku + claude-zai. Code review is fundamentally pattern matching
+against documented standards — Haiku benchmarks at 90%+ quality for this task type
+(Qodo: 6.55/10 vs Sonnet 6.20/10). The cost savings are significant: 4 Haiku agents
+cost ~40% of 1 Sonnet doing sequential review.
 
 If you don't have multiple instances, remove the `instance:` lines and all agents will use your default.
 
@@ -247,3 +238,56 @@ See `reference/command-design-overview.md` for command + agent integration patte
 - **Pattern source**: `reference/subagents-guide.md` lines 175-185 (Pattern A)
 - **Agent design guide**: `templates/AGENT-TEMPLATE.md`
 - **Full subagent docs**: `reference/subagents-guide.md`
+
+---
+
+## Utility Agents
+
+These agents provide **workflow optimization** — validating plans before execution
+and suggesting test cases for changed code.
+
+| Agent | Model | Tools | Purpose |
+|-------|-------|-------|---------|
+| **plan-validator** | Haiku | Read, Glob, Grep | Validates plan structure before /execute |
+| **test-generator** | Haiku | Read, Glob, Grep | Suggests test cases from changed code |
+
+### When to Use
+
+- **plan-validator**: Before running `/execute` on a new plan. Catches missing sections,
+  incomplete tasks, broken file references. Integrated as optional Step 1.25 in `/execute`.
+- **test-generator**: After implementation, before or during `/code-review`. Identifies
+  untested code paths and suggests structured test cases following project patterns.
+
+### Usage Examples
+```
+Use the plan-validator agent to validate requests/my-feature-plan.md
+```
+```
+Use the test-generator agent to suggest tests for the files changed in the last commit
+```
+
+### Multi-Instance Routing
+
+| Agent | Instance | Model | Why |
+|-------|----------|-------|-----|
+| **plan-validator** | `claude-zai` | Haiku | Advisory — structural validation is pattern matching |
+| **test-generator** | `claude-zai` | Haiku | Advisory — test suggestions follow existing patterns |
+
+### Activation
+
+Copy agents from `_examples/` to `.claude/agents/` in your project:
+```bash
+cp .claude/agents/_examples/plan-validator.md .claude/agents/
+cp .claude/agents/_examples/test-generator.md .claude/agents/
+```
+
+---
+
+## Model Cost Comparison
+
+| Agent Type | Count | Model | Approx. Cost per Run |
+|-----------|-------|-------|---------------------|
+| Code review (4 agents parallel) | 4 | Haiku | ~$0.16 total |
+| Research (2 agents parallel) | 2 | Haiku + Sonnet | ~$0.44 total |
+| Utility (1-2 agents) | 2 | Haiku | ~$0.08 total |
+| **Total (all 8)** | **8** | **7 Haiku + 1 Sonnet** | **~$0.68** |

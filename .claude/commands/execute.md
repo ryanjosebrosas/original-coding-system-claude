@@ -25,6 +25,12 @@ Read the plan file.
 - Read the ENTIRE plan carefully — all tasks, dependencies, validation commands, testing strategy
 - Check `memory.md` for gotchas related to this feature area
 
+### 1.25. Plan Validation (optional)
+
+**If plan-validator agent exists** in `.claude/agents/` or `.claude/agents/_examples/`: Use the @plan-validator agent to validate the plan structure. Review findings. If Critical issues found, report to user before proceeding. If no critical issues, continue.
+
+**If agent not available**: Skip — proceed to Archon setup.
+
 ### 1.5. Archon Setup (if available)
 
 Create project and tasks: `manage_project("create", ...)`, then `manage_task("create", ...)` for each plan task with dependency-based task_order. Skip if Archon unavailable.
