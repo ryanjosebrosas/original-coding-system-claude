@@ -60,6 +60,25 @@ If Archon RAG is available, search for project-relevant documentation:
 
 If Archon RAG is not available, skip this section gracefully.
 
+### 5c. Surface Active Tasks (if Archon available)
+
+Query Archon for in-progress and upcoming tasks:
+
+1. Search for tasks with status "doing": `find_tasks(filter_by="status", filter_value="doing")`
+2. Search for tasks with status "todo": `find_tasks(filter_by="status", filter_value="todo")`
+3. Display as compact list: `[project] task title (status)`
+
+If no active tasks, note "No active Archon tasks."
+If Archon unavailable, skip this section gracefully.
+
+### 5d. Memory Health Check
+
+After reading `memory.md`, check the Session Notes section for the most recent date entry. If the most recent entry is older than 7 days from today, flag:
+
+"⚠ Memory may be stale — last session note is from [date]. Consider updating or archiving."
+
+This costs zero extra tokens — it's a check on content already read.
+
 ## Output Report
 
 Provide a concise summary covering:
@@ -95,6 +114,15 @@ Provide a concise summary covering:
 - Known gotchas and lessons
 - Relevant patterns established
 - (If no memory.md found, note "No memory.md found — this is a fresh project or memory.md hasn't been created yet")
+
+### Active Tasks (from Archon)
+- [Project Name] Task title — status
+- (If no active tasks, note "No active tasks in Archon")
+- (If Archon unavailable, note "Archon not available")
+
+### Memory Health
+- Last session note date: [date]
+- Status: Current / ⚠ Stale (older than 7 days)
 
 ### Knowledge Base Context (from Archon RAG)
 - Relevant documentation sources found

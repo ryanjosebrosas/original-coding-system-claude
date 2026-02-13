@@ -56,7 +56,13 @@ Append to memory.md: session note, any lessons/gotchas/decisions discovered. Kee
 
 ### 6. Report Completion
 
-**Archon** (if available): `manage_project("update", project_id="...", description="Feature complete, committed: {hash}")`
+**Archon** (if available):
+1. Find the current project: `find_projects(query="{feature-name}")` or use project_id from the planning/execute session
+2. Find all tasks with status "doing" or "review": `find_tasks(filter_by="project", filter_value=project_id)`
+3. Mark each as "done": `manage_task("update", task_id="...", status="done")`
+4. Update project: `manage_project("update", project_id="...", description="Feature complete, committed: {hash}")`
+
+If no Archon project exists for this feature, skip task updates. Only update project if project_id is available from context.
 
 ## Notes
 
