@@ -35,6 +35,9 @@ Orchestrates a coordinated team of Claude Code instances for parallel implementa
 2. If `$ARGUMENTS` is a description (not a file path): inform the user to create a plan first with `/planning [description]`, then re-run `/team` with the plan path. Stop here.
 3. Generate kebab-case feature name for branches: `team/{feature}/`
 4. Create logs directory: `mkdir -p logs/team-{feature}/`
+5. **Archon Setup** (if available): Create project for team feature:
+   `manage_project("create", title="Team: {feature-name}", description="Agent Teams implementation: {N} agents, contract-first")`
+   Create one task per teammate: `manage_task("create", project_id=..., title="{agent-role} implementation", assignee="{agent-name}")`
 
 ---
 
@@ -140,6 +143,9 @@ This is the core step. Follow contract-first spawning strictly.
    - Each agent must have run their domain-specific validation (tests, type checks)
    - Compare actual implementations against published contracts — catch any drift
 
+2b. **Archon** (if available): Mark completed agent's task as done:
+    `manage_task("update", task_id="...", status="done")`
+
 3. **Cross-review phase**: Have agents review each other's integration points.
    - Backend reviews frontend's API calls
    - Database reviews backend's query patterns
@@ -169,7 +175,9 @@ This is the core step. Follow contract-first spawning strictly.
    ```
    Repeat for each teammate.
 
-5. **Sync to Archon** (if available): create/update project and tasks with final status.
+5. **Sync to Archon** (if available):
+   - Mark all team tasks as "done": `manage_task("update", task_id="...", status="done")`
+   - Update project: `manage_project("update", project_id="...", description="Team implementation complete. All {N} agents merged successfully.")`
 
 ---
 
