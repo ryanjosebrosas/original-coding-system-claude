@@ -144,10 +144,15 @@ Particularly powerful for the execute phase: read tasks from plan, create in Arc
 
 See `reference/mcp-skills-archon.md` for setup instructions.
 
+### Creating New Skills
+
+When creating a new skill, use `templates/SKILL-TEMPLATE.md` for the correct structure
+and frontmatter format. Skills live in `.claude/skills/{skill-name}/SKILL.md`.
+
 ### Reference Files
 
 - `reference/mcp-skills-archon.md` — Detailed setup guide for MCP servers, skills creation, and Archon
-- `sections/15_archon_workflow.md` — Archon task management & RAG workflow rules (auto-loaded via CLAUDE.md @reference)
+- `sections/06_archon_workflow.md` — Archon task management & RAG workflow rules (auto-loaded via CLAUDE.md @reference)
 - Load when: setting up MCP servers for a project, creating custom skills, troubleshooting token usage
 - MCP official docs: https://modelcontextprotocol.io
 - Skills docs: https://code.claude.com/docs/en/skills

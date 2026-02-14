@@ -17,7 +17,7 @@ Complex features (15+ tasks, 4+ phases): `/planning` auto-decomposes into sub-pl
 2. **Structured Plan** — turn conversation into a markdown document
    - Use template: `templates/STRUCTURED-PLAN-TEMPLATE.md`
    - Save to: `requests/{feature}-plan.md`
-   - Apply the 4 pillars of Context Engineering
+   - Apply the 4 pillars of Context Engineering (see `sections/03_context_engineering.md` for pillar → plan mapping)
 
 **Do NOT** take your PRD and use it as a structured plan. Break it into granular Layer 2 plans — one per PIV loop.
 
@@ -27,4 +27,5 @@ Complex features (15+ tasks, 4+ phases): `/planning` auto-decomposes into sub-pl
 
 ### Validation
 - AI: tests + linting. Human: code review + manual testing.
+- 5-level pyramid: Syntax → Types → Unit → Integration → Human. See `reference/validation-strategy.md`.
 - Small issues → fix prompts. Major issues → revert to save point, tweak plan, retry.

@@ -1,8 +1,8 @@
-# Example Agents
+# Agents
 
-> **Note**: These are example agent templates. Copy agents to `.claude/agents/` in your project to activate them.
+> **Note**: These are agent definitions. Agents in `.claude/agents/` are automatically available in your Claude Code sessions.
 
-This directory contains **8 example agents** demonstrating different subagent patterns. Copy agents to `.claude/agents/` in your project to activate them.
+This directory contains **12 agents** across 4 categories: research, code review, utility, and specialist.
 
 ---
 
@@ -76,12 +76,11 @@ Launch two Task agents in parallel:
 
 ### Activation
 
-Copy agents from `_examples/` to `.claude/agents/` in your project:
-```bash
-cp .claude/agents/_examples/research-*.md .claude/agents/
-```
+Research agents are pre-installed in `.claude/agents/` and automatically available. To customize for your project, edit the agent files directly:
+- Update search patterns and sources for your tech stack
+- Adjust output format or focus areas
 
-Once activated, the `/planning` command automatically detects them and switches to Parallel Research Mode (5-10 agents) instead of Standard Research Mode (2 built-in agents).
+The `/planning` command automatically detects them and switches to Parallel Research Mode (5-10 agents) instead of Standard Research Mode (2 built-in agents).
 
 ---
 
@@ -99,6 +98,9 @@ Instead of one agent reviewing everything sequentially, these four agents work *
 | **code-review-security** | Security vulnerabilities | SQL injection, XSS, exposed secrets, auth issues |
 | **code-review-architecture** | Design patterns & conventions | Layer violations, DRY, YAGNI, naming, structure |
 | **code-review-performance** | Performance & scalability | N+1 queries, inefficient algorithms, memory leaks |
+
+> **Tool access**: Type Safety and Security agents include Bash for running external tools
+> (type checkers, secret scanners). Architecture and Performance agents are read-only analysis.
 
 ## Model Selection
 
@@ -119,26 +121,18 @@ cost ~40% of 1 Sonnet doing sequential review.
 
 ## How to Use
 
-### Option 1: Copy and Customize (Recommended)
+### Customization
 
-1. Copy the agents you need from `_examples/` to `.claude/agents/`:
-   ```bash
-   cp .claude/agents/_examples/code-review-*.md .claude/agents/
-   ```
+Code review agents are pre-installed in `.claude/agents/` and automatically available. To customize for your project, edit the agent files directly:
 
-2. Customize for your project:
-   - Update `Context Gathering` section to reference your project files
-   - Add project-specific patterns to check
-   - Adjust severity thresholds based on your standards
-   - Modify output format if needed
+1. Update `Context Gathering` section to reference your project files
+2. Add project-specific patterns to check
+3. Adjust severity thresholds based on your standards
+4. Modify output format if needed
 
-3. Restart your Claude Code session to load the agents
+Use with `/code-review` command (which will invoke them automatically).
 
-4. Use with `/code-review` command (which will invoke them automatically)
-
-### Option 2: Use As-Is for Testing
-
-The examples work out-of-the-box but are generic. They'll read `CLAUDE.md` and adapt to your project, but won't be as targeted as customized agents.
+The agents work out-of-the-box and adapt to your project by reading `CLAUDE.md`, but will be more targeted after customization.
 
 ## Parallel Execution
 
@@ -230,7 +224,7 @@ See `reference/command-design-overview.md` for command + agent integration patte
 
 ## Reference
 
-- **Pattern source**: `reference/subagents-guide.md` lines 175-185 (Pattern A)
+- **Pattern source**: `reference/subagents-guide.md` (Pattern A: Parallel Review)
 - **Agent design guide**: `templates/AGENT-TEMPLATE.md`
 - **Full subagent docs**: `reference/subagents-guide.md`
 
@@ -270,10 +264,53 @@ Use the test-generator agent to suggest tests for the files changed in the last 
 
 ### Activation
 
-Copy agents from `_examples/` to `.claude/agents/` in your project:
-```bash
-cp .claude/agents/_examples/plan-validator.md .claude/agents/
-cp .claude/agents/_examples/test-generator.md .claude/agents/
+Utility agents are pre-installed in `.claude/agents/` and automatically available. To customize for your project, edit the agent files directly:
+- Adjust validation rules or test patterns for your tech stack
+- Modify output format or severity thresholds
+
+---
+
+## Specialist Agents
+
+These agents combine **deep domain expertise** with **methodology awareness**. Unlike single-purpose agents (research-only or review-only), specialist agents operate in 3 modes: research, plan+implement, and review. They understand the PIV Loop, context engineering pillars, and validation pyramid, applying them through the lens of their domain.
+
+| Agent | Model | Tools | Purpose |
+|-------|-------|-------|---------|
+| **specialist-devops** | Sonnet | All | CI/CD, Docker, IaC, monitoring, deployments |
+| **specialist-data** | Sonnet | All | DB design, migrations, queries, data pipelines |
+| **specialist-copywriter** | Sonnet | All | UI copy, microcopy, error messages, UX writing |
+| **specialist-tech-writer** | Sonnet | All | API docs, READMEs, changelogs, architecture docs |
+
+### Operating Modes
+
+Each specialist agent detects its mode from the invocation context:
+
+- **Research mode**: Read-only analysis, search docs/codebase, report findings without changes
+- **Plan mode**: Design implementation approach following PIV Loop, generate structured tasks, implement if approved
+- **Review mode**: Analyze code/docs for domain issues AND methodology compliance, report findings with severity
+
+Default to research mode when intent is ambiguous (safest).
+
+### When to Use
+
+| Feature Type | Recommended Specialist |
+|--------------|----------------------|
+| CI/CD pipeline, Docker, deployment | specialist-devops |
+| Database schema, migrations, queries | specialist-data |
+| UI text, error messages, onboarding copy | specialist-copywriter |
+| API docs, README, changelog, developer guides | specialist-tech-writer |
+
+### Model Selection
+
+All specialist agents use **Sonnet** (not Haiku). Multi-modal operation requires synthesis and judgment — these agents must understand methodology context AND apply domain expertise simultaneously. Unlike code review agents (pattern matching → Haiku), specialist agents make nuanced decisions about approach and priorities.
+
+### Usage Examples
+
+```
+Use the specialist-devops agent to review this PR for CI/CD and deployment concerns.
+Use the specialist-data agent to plan a database migration for adding user roles.
+Use the specialist-copywriter agent to research error message patterns in the codebase.
+Use the specialist-tech-writer agent to review the README for completeness.
 ```
 
 ---
@@ -285,4 +322,8 @@ cp .claude/agents/_examples/test-generator.md .claude/agents/
 | Code review (4 agents parallel) | 4 | Haiku | ~$0.16 total |
 | Research (2 agents parallel) | 2 | Haiku + Sonnet | ~$0.44 total |
 | Utility (1-2 agents) | 2 | Haiku | ~$0.08 total |
-| **Total (all 8)** | **8** | **7 Haiku + 1 Sonnet** | **~$0.68** |
+| Specialist (4 agents) | 4 | Sonnet | ~$1.20 total |
+| **Total (all 12)** | **12** | **7 Haiku + 5 Sonnet** | **~$1.88** |
+
+> **Typical usage**: Running all 12 agents simultaneously is rare. Most sessions use
+> 2-4 agents per command (~$0.08-0.44). Full parallel review is ~$0.16.

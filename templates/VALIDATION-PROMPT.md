@@ -4,6 +4,7 @@
 > Replace the commands with your project's actual tools.
 >
 > This covers Levels 1-4 of the 5-level validation pyramid (see `reference/validation-strategy.md`).
+> Save validation results using the format in `templates/VALIDATION-REPORT-TEMPLATE.md`.
 > For comprehensive technical review, also use `/code-review`. For process review, use `/system-review`.
 
 ---

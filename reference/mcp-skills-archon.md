@@ -236,7 +236,7 @@ Mandatory 6-step cycle before coding:
 
 ### ARCHON-FIRST Rule
 
-When Archon MCP is available, it overrides all other task management systems. See `sections/15_archon_workflow.md` for the complete rule set, tool reference, and integration patterns. The core principle: always check Archon availability first, use it as the primary system for tasks and research.
+When Archon MCP is available, it overrides all other task management systems. See `sections/06_archon_workflow.md` for the complete rule set, tool reference, and integration patterns. The core principle: always check Archon availability first, use it as the primary system for tasks and research.
 
 ### Task Granularity
 
@@ -456,7 +456,7 @@ memory.md and Archon solve **different problems** and complement each other:
 
 **Short answer**: No — it's optional but significantly improves visibility.
 
-**Long answer**: Without Archon, your coding assistant uses its built-in task management (invisible to you). Archon adds three things: human-visible Kanban board, curated RAG for documentation, and real-time task collaboration. It is most valuable when you want to see AI progress in real-time, curate specific documentation for the AI to search, or work collaboratively on task prioritization. See `sections/15_archon_workflow.md` for complete integration rules.
+**Long answer**: Without Archon, your coding assistant uses its built-in task management (invisible to you). Archon adds three things: human-visible Kanban board, curated RAG for documentation, and real-time task collaboration. It is most valuable when you want to see AI progress in real-time, curate specific documentation for the AI to search, or work collaboratively on task prioritization. See `sections/06_archon_workflow.md` for complete integration rules.
 
 ### "How do I know if Tool Search is working?"
 
@@ -472,7 +472,7 @@ memory.md and Archon solve **different problems** and complement each other:
 2. Study `reference/mcp-skills-overview.md` for the MCP & Skills overview
 3. Try Exercise 1 — add an MCP server and test it
 4. Try Exercise 2 — create a Cloud Skill for a project convention
-5. Study `sections/15_archon_workflow.md` for the complete Archon integration rules
+5. Study `sections/06_archon_workflow.md` for the complete Archon integration rules
 6. Move to the Subagents Deep Dive guide (see `reference/subagents-deep-dive.md`) to learn about parallel execution and context isolation
 
 ---
@@ -480,7 +480,7 @@ memory.md and Archon solve **different problems** and complement each other:
 ## Related Resources
 
 - **MCP & Skills overview**: `reference/mcp-skills-overview.md` — on-demand guide with tables and integration patterns
-- **Archon workflow rules**: `sections/15_archon_workflow.md` — complete ARCHON-FIRST rule, tool reference, task/RAG workflow
+- **Archon workflow rules**: `sections/06_archon_workflow.md` — complete ARCHON-FIRST rule, tool reference, task/RAG workflow
 - **Remote Agentic System**: `reference/remote-agentic-system.md` — prerequisite: remote system architecture
 - **Subagents guide**: `reference/subagents-guide.md` — next: parallel execution with context isolation
 - **MCP official docs**: <https://modelcontextprotocol.io>

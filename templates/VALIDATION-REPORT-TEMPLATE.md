@@ -1,6 +1,7 @@
 # Validation Report
 
 > Standard output format for PIV Loop validation results.
+> Run validation using `templates/VALIDATION-PROMPT.md` before filling this report.
 > AI fills Levels 1-4 automatically. Humans complete Level 5.
 >
 > **Core Principle**: Validate in order — don't run integration tests

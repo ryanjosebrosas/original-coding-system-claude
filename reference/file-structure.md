@@ -12,7 +12,7 @@ sections/                              # Auto-loaded rule sections (every sessio
   03_context_engineering.md            #   4 Pillars: Memory, RAG, Prompts, Tasks
   04_git_save_points.md                #   Commit plans before implementing
   05_decision_framework.md             #   When to proceed vs ask
-  15_archon_workflow.md                #   Archon integration pointer (slim — loads reference/archon-workflow.md)
+  06_archon_workflow.md                #   Archon integration pointer (slim — loads reference/archon-workflow.md)
 reference/                             # On-demand guides (loaded when needed)
   archon-workflow.md                   #   Archon task management & RAG workflow (moved from sections/)
   layer1-guide.md                      #   How to build CLAUDE.md for real projects
@@ -67,6 +67,7 @@ templates/
   GITHUB-SETUP-CHECKLIST.md            # Step-by-step GitHub Actions setup
   META-REASONING-CHECKLIST.md          # 5-step meta-reasoning + WHERE-to-fix framework
   TOOL-DOCSTRING-TEMPLATE.md           # 7-element template for agent tool documentation
+  SKILL-TEMPLATE.md                    # How to create new cloud skills (.claude/skills/)
   TEAM-SPAWN-PROMPTS.md                # Spawn prompt templates for Agent Teams (4 agent types)
   VALIDATION-REPORT-TEMPLATE.md        # Standard format for validation output
 requests/
@@ -122,16 +123,18 @@ requests/
     references/                        #   Detailed docs (loaded on-demand)
     examples/                          #   Example outputs
     scripts/                           #   Executable scripts
-.claude/agents/                        # Custom subagents (project-specific, user-created)
-  _examples/                           # Example agents (copy and customize)
-    research-codebase.md               #   Haiku codebase exploration agent
-    research-external.md               #   Sonnet documentation research agent
-    code-review-type-safety.md         #   Type safety reviewer (parallel review)
-    code-review-security.md            #   Security vulnerability reviewer
-    code-review-architecture.md        #   Architecture & patterns reviewer
-    code-review-performance.md         #   Performance & optimization reviewer
-    plan-validator.md                  #   Plan structure validation agent
-    test-generator.md                  #   Test case suggestion agent
-    README.md                          #   How to use and customize examples
-  {agent-name}.md                      # Your custom project-specific agents
+.claude/agents/                        # Custom subagents (active, automatically loaded)
+  research-codebase.md               #   Haiku codebase exploration agent
+  research-external.md               #   Sonnet documentation research agent
+  code-review-type-safety.md         #   Type safety reviewer (parallel review)
+  code-review-security.md            #   Security vulnerability reviewer
+  code-review-architecture.md        #   Architecture & patterns reviewer
+  code-review-performance.md         #   Performance & optimization reviewer
+  plan-validator.md                  #   Plan structure validation agent
+  test-generator.md                  #   Test case suggestion agent
+  specialist-devops.md               #   DevOps & infrastructure specialist
+  specialist-data.md                 #   Database & data pipeline specialist
+  specialist-copywriter.md           #   UI copy & UX writing specialist
+  specialist-tech-writer.md          #   Technical documentation specialist
+  README.md                          #   Agent overview and usage guide
 ```

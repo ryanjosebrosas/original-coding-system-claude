@@ -138,13 +138,13 @@ My-Coding-System/
 │   ├── 03_context_engineering.md
 │   ├── 04_git_save_points.md
 │   ├── 05_decision_framework.md
-│   └── 15_archon_workflow.md
+│   └── 06_archon_workflow.md
 ├── reference/             # Deep guides (on-demand, 26 guides)
 ├── templates/             # Reusable templates (19 files)
 ├── .claude/
 │   ├── commands/          # Slash commands (21 commands)
 │   ├── skills/            # Cloud skills (5 skills)
-│   └── agents/_examples/  # Subagent examples (8 agents)
+│   └── agents/            # Custom subagents (12 agents)
 └── .github/workflows/     # GitHub Action workflows
 ```
 

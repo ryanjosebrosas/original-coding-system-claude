@@ -256,6 +256,8 @@ During the second PIV loop, streaming issues (missing first token, missing newli
 | Skipping research validation | Gaps discovered during implementation are expensive |
 | Jumping to fix before analyzing | Miss the root cause; fix symptoms not disease |
 
+When implementation fails repeatedly, use `templates/META-REASONING-CHECKLIST.md` to identify whether the root cause is in the plan, the system rules, or the execution approach.
+
 ---
 
 ## 6. Research Validation

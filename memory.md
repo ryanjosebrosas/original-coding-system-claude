@@ -2,7 +2,7 @@
 
 > Copy this file to your project root as `memory.md`.
 > - AI reads at session start (`/prime`) and during planning (`/planning`)
-> - AI appends after implementation (`/commit`)
+> - AI appends after implementation (`/commit`) and after major decisions during planning
 > - Human can edit anytime — it's just a markdown file
 > - Keep entries concise (1-2 lines each) to minimize context token usage
 

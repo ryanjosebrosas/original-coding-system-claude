@@ -184,6 +184,9 @@ Before you start learning the system, establish your baseline on a real feature.
 - Feature works end-to-end in browser?: Yes / No
 - Code would pass basic code review?: Yes / No
 
+To measure your current PIV Loop maturity, use `templates/BASELINE-ASSESSMENT-TEMPLATE.md`.
+Run the assessment before adopting the system and again after 2-4 weeks to track improvement.
+
 ### How to Establish Your Baseline
 
 1. **Pick a real feature** from your project (or use Exercise 1)

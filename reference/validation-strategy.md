@@ -44,4 +44,4 @@ Beyond embedded validation in plans, these commands provide on-demand validation
 - `/execution-report` — Generate implementation report (run in same context as execute)
 - `/system-review [plan] [report]` — Divergence analysis for process improvement
 
-See section 09 for full command descriptions.
+See the command list above for usage, or `reference/command-design-overview.md` for full command documentation.

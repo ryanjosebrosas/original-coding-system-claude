@@ -99,6 +99,17 @@ decisions, and shared patterns, see the overview file.
 
 ---
 
+## ACCEPTANCE CRITERIA
+
+> Per-sub-plan criteria. Feature-wide criteria are in the overview.
+
+- [ ] All deliverables listed in Scope section are complete
+- [ ] All task validations passed
+- [ ] No regressions in files modified
+- [ ] {Add sub-plan-specific criteria here}
+
+---
+
 ## HANDOFF NOTES
 
 > What the NEXT sub-plan needs to know about what was done here.
