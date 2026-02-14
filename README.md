@@ -1,22 +1,45 @@
 # My Coding System
 
-A comprehensive AI-assisted development methodology combining systematic planning, implementation discipline, and validation strategies.
+**Stop guessing. Start engineering.**
 
-Built for [Claude Code](https://claude.com/claude-code) | Powered by the PIV Loop | [MIT License](LICENSE)
+A complete development methodology that turns AI from an unpredictable autocomplete into a disciplined engineering partner. Built for [Claude Code](https://claude.com/claude-code), powered by the PIV Loop, and battle-tested across real projects.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
-## What is this?
+## The Problem
 
-This is NOT an application — it's a **development methodology** for building applications with AI assistance. It provides structured workflows (slash commands), context management (auto-loaded rules + on-demand guides), and quality gates (code review, validation) that turn AI from a "guess and check" tool into a reliable development partner.
+AI coding tools are powerful, but without structure they produce inconsistent results. Give the AI too little context and it guesses. Give it too much and it drowns. Ask it to build a feature without a plan and you get code that works in isolation but breaks everything around it.
 
-The core idea: give the AI exactly the right context at the right time, and it produces dramatically better output. Too little context and it guesses. Too much context and it drowns. This system manages that balance automatically.
+Most developers use AI like a magic 8-ball: ask a question, hope for a good answer, and manually clean up when it isn't.
+
+**This system fixes that.**
+
+It manages context automatically, enforces a plan-first workflow, and gives you quality gates at every stage. The result: AI that produces production-grade code on the first try, not the fifth.
+
+---
+
+## What This Is (and Isn't)
+
+This is **not** an application. There's no source code, no build system, no runtime.
+
+This is a **development methodology** — a structured collection of slash commands, templates, reference guides, and automation that wraps around Claude Code and turns it into a reliable development workflow. You clone this system, then build your applications inside it (or copy it into existing projects).
+
+**What you get:**
+- 21 slash commands that automate every phase of development
+- 19 templates for plans, PRDs, agents, and validation reports
+- 26 reference guides loaded on-demand (not wasting context tokens)
+- 12 pre-built AI subagents for research, code review, and specialist tasks
+- 5 cloud skills for parallel implementation and GitHub automation
+- 3 GitHub Action workflows for AI-assisted issue resolution
+- A token-conscious architecture that keeps <10K tokens of system context, leaving the rest for your actual work
 
 ---
 
 ## The PIV Loop
 
-The PIV Loop is the core workflow: **Plan**, **Implement**, **Validate**, then iterate.
+Every feature follows the same cycle: **Plan**, **Implement**, **Validate**, then iterate.
 
 ```mermaid
 graph LR
@@ -33,15 +56,19 @@ graph LR
     FIX -.-> V
 ```
 
-- **Plan**: Vibe planning conversation into a structured plan document (500-700 lines of context-rich implementation instructions)
-- **Implement**: Execute the plan task-by-task in a fresh conversation (clean context = better output)
-- **Validate**: Code review, testing, and human review. Issues loop back to Plan.
+**Plan** — Start with a vibe planning conversation, then distill it into a structured plan document (500-700 lines of context-rich implementation instructions). The plan captures everything the AI needs: architecture decisions, file paths, code patterns, gotchas, and step-by-step tasks.
+
+**Implement** — Execute the plan in a fresh conversation. Clean context means better output. The AI follows the plan task-by-task instead of improvising.
+
+**Validate** — Code review, testing, and human review. Issues loop back to planning. A 5-level validation pyramid catches problems from syntax errors to architectural violations.
+
+The key insight: **multiple small PIV loops** — one feature slice per loop, built completely before moving on. Complex features auto-decompose into sub-plans.
 
 ---
 
 ## System Architecture
 
-Context is organized in layers — auto-loaded context stays minimal so the AI has maximum context window for actual work. Deep guides load on-demand only when relevant.
+Context is organized in layers. Auto-loaded context stays minimal so the AI has maximum context window for actual work. Deep guides load on-demand only when relevant.
 
 ```mermaid
 graph TD
@@ -61,6 +88,18 @@ graph TD
     IMPL -->|"/commit"| GIT["Git Save Points"]
 ```
 
+### Token Budget
+
+The system manages context tokens carefully:
+
+| Layer | Token Cost | Loading |
+|-------|-----------|---------|
+| `CLAUDE.md` + 6 sections | ~2K tokens | Auto-loaded every session |
+| Slash commands | varies | Loaded only when invoked |
+| Reference guides (26) | varies | On-demand only |
+| Templates (19) | varies | On-demand only |
+| **Typical session total** | **<10K tokens** | Leaves ~100K+ for implementation |
+
 ---
 
 ## Quick Start
@@ -71,10 +110,10 @@ graph TD
 
 ### Setup
 
-1. **Clone** this repo into your project (or fork it):
+1. **Clone** this repo:
    ```bash
    git clone https://github.com/ryanjosebrosas/my-coding-system-claude.git
-   cd my-coding-system
+   cd my-coding-system-claude
    ```
 
 2. **Create your memory file** from the template:
@@ -82,7 +121,7 @@ graph TD
    cp templates/MEMORY-TEMPLATE.md memory.md
    ```
 
-3. **Start a Claude Code session** and prime the system:
+3. **Start Claude Code** and prime the system:
    ```bash
    claude
    > /prime
@@ -98,25 +137,23 @@ graph TD
    > /execute requests/user-authentication-plan.md
    ```
 
-6. **Commit your work**:
+6. **Review and commit**:
    ```
+   > /code-review
    > /commit
    ```
 
 ### First Time?
-Start with `/prime` to understand the system, then try `/planning` on a small feature. Read `reference/file-structure.md` for a full map of everything included.
+Start with `/prime` to load context, then try `/planning` on a small feature. Read `reference/file-structure.md` for a full map of everything included.
 
 ---
 
 ## Adopting for Your Project
 
-There are two ways to use this system:
-
 ### Option A: Use as Your Project Base (Recommended for new projects)
-Fork or clone this repo, then build your application inside it. The slash commands, templates, and reference guides are all ready to go.
+Fork or clone this repo, then build your application inside it. All slash commands, templates, and reference guides are ready to go.
 
 ### Option B: Copy Into an Existing Project
-Copy these directories into your project root:
 ```bash
 cp -r sections/ reference/ templates/ requests/ your-project/
 cp CLAUDE.md AGENTS.md .coderabbit.yaml your-project/
@@ -124,24 +161,24 @@ cp -r .claude/ your-project/
 cp templates/MEMORY-TEMPLATE.md your-project/memory.md
 ```
 
-Then update `CLAUDE.md` for your project's specifics using `/init-c`.
+Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
 
 ### After Setup
 - `memory.md` — Created from template, gitignored. Each developer maintains their own.
-- `requests/*.md` — Feature plans, gitignored. Project-specific and ephemeral.
+- `requests/*.md` — Feature plans, gitignored. Ephemeral by design.
 - `.claude/settings.local.json` — Personal Claude Code settings, gitignored.
 
 ---
 
 ## Model Strategy
 
-The system separates planning from execution across different model tiers:
+The system separates thinking from doing. Use the right model for each phase:
 
 | Phase | Recommended Model | Why |
 |-------|-------------------|-----|
 | `/planning` | **Opus** (`claude --model opus`) | Deep reasoning produces better plans |
 | `/execute` | **Sonnet** (`claude` default) | Balanced — follows plans well at lower cost |
-| `/code-review` | **Haiku** (via subagents) | Pattern matching at 1/10th the cost |
+| `/code-review` | **Haiku** (via subagents) | Pattern matching at a fraction of the cost |
 | `/commit`, `/prime` | **Sonnet** (`claude` default) | General-purpose tasks |
 
 ```bash
@@ -158,47 +195,204 @@ See `reference/multi-model-strategy.md` for the full cost optimization guide.
 
 ---
 
-## Core Commands
+## All 21 Slash Commands
 
-### Essential Workflow
+### Core Workflow
 
-| Command | Description | When to Use |
+These six commands cover 90% of daily development:
+
+| Command | What It Does | When to Use |
 |---------|-------------|-------------|
-| `/prime` | Load codebase context | Start of every session |
-| `/planning [feature]` | Create implementation plan | Before building any feature |
-| `/execute [plan]` | Implement from plan file | After planning |
-| `/commit` | Git commit with conventional format | After implementation |
-| `/code-review` | Technical quality review | After implementation |
-| `/code-review-fix` | Fix review findings | After code review |
+| `/prime` | Loads codebase context, reads memory, checks active tasks | Start of every session |
+| `/planning [feature]` | 6-phase deep analysis producing a structured plan document | Before building any feature |
+| `/execute [plan]` | Implements a plan file task-by-task with validation | After planning, in a fresh session |
+| `/commit` | Creates a conventional-format git commit | After implementation passes review |
+| `/code-review` | Runs 4 parallel review agents (type safety, security, architecture, performance) | After implementation |
+| `/code-review-fix` | Applies fixes from code review findings | After code review surfaces issues |
 
 ### Advanced Workflows
 
-| Command | Description | When to Use |
+For parallel development, multi-agent builds, and automation:
+
+| Command | What It Does | When to Use |
 |---------|-------------|-------------|
-| `/end-to-end-feature` | Full autonomous pipeline | Trusted, simple features |
-| `/team [plan]` | Multi-agent coordinated build | Complex features needing coordination |
-| `/new-worktree` | Create parallel branch | Multi-feature work |
-| `/merge-worktrees` | Merge worktree branches | After parallel implementation |
-| `/parallel-e2e` | Parallel multi-feature | Advanced parallel builds |
+| `/end-to-end-feature` | Full autonomous pipeline: plan, implement, review, commit | Trusted, well-defined features |
+| `/team [plan]` | Coordinates multiple Claude instances with contract-first spawning | Complex features needing parallel agents |
+| `/new-worktree` | Creates isolated git worktrees for parallel branches | Multi-feature parallel development |
+| `/merge-worktrees` | Merges worktree branches back with validation gates | After parallel implementation |
+| `/parallel-e2e` | Runs multiple end-to-end features in parallel via worktrees | Batch feature development |
 
 ### Utilities
 
-| Command | Description | When to Use |
+| Command | What It Does | When to Use |
 |---------|-------------|-------------|
-| `/rca [issue]` | Root cause analysis | GitHub issue investigation |
-| `/implement-fix` | Implement fix from RCA | After root cause analysis |
-| `/create-prd` | Generate PRD from conversation | Defining a new product |
-| `/create-pr` | Create GitHub PR | After pushing a branch |
-| `/execution-report` | Generate implementation report | Post-implementation review |
-| `/init-c` | Generate CLAUDE.md for new project | New projects |
-| `/agents` | Create custom subagent definitions | Extending the system |
-| `/system-review` | Divergence analysis | Auditing system state |
+| `/rca [issue]` | Root cause analysis for a GitHub issue | Investigating bugs |
+| `/implement-fix` | Implements a fix based on an RCA document | After root cause analysis |
+| `/create-prd` | Generates a Product Requirements Document from conversation | Defining a new product or major feature |
+| `/create-pr` | Creates a GitHub Pull Request with AI-generated description | After pushing a branch |
+| `/execution-report` | Generates a post-implementation report for system review | Reviewing what was built vs. what was planned |
+| `/init-c` | Generates a customized `CLAUDE.md` for a new project | New project setup |
+| `/agents` | Creates a new custom subagent definition file | Extending the system with new agents |
+| `/system-review` | Audits system state for divergence between plan and reality | Periodic system health checks |
+| `/setup-github-automation` | Full GitHub Actions and secrets configuration | First-time GitHub automation setup |
+| `/quick-github-setup` | Streamlined GitHub automation using existing scripts | Fast GitHub setup |
+
+---
+
+## 12 Subagents
+
+Pre-installed in `.claude/agents/`, organized by purpose. Each agent runs in isolation with its own context window, so expensive research doesn't pollute your implementation context.
+
+### Research Agents
+
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| `research-codebase` | Haiku | Parallel codebase exploration — finds files, extracts patterns, reports findings |
+| `research-external` | Sonnet | Documentation search, best practices, version compatibility checks |
+
+### Code Review Agents
+
+These four run in parallel during `/code-review`, each checking a different dimension:
+
+| Agent | Model | What It Catches |
+|-------|-------|----------------|
+| `code-review-type-safety` | Haiku | Missing type hints, type checking errors, unsafe casts |
+| `code-review-security` | Haiku | SQL injection, XSS, exposed secrets, insecure data handling |
+| `code-review-architecture` | Haiku | Pattern violations, layer breaches, convention drift |
+| `code-review-performance` | Haiku | N+1 queries, inefficient algorithms, memory leaks, unnecessary computation |
+
+### Utility Agents
+
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| `plan-validator` | Haiku | Validates plan structure and completeness before `/execute` |
+| `test-generator` | Haiku | Analyzes changed code and suggests test cases following project patterns |
+
+### Specialist Agents
+
+Deeper expertise for domain-specific tasks:
+
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| `specialist-devops` | Sonnet | CI/CD pipelines, Docker, IaC, monitoring, deployments |
+| `specialist-data` | Sonnet | Database design, migrations, queries, data pipelines |
+| `specialist-copywriter` | Sonnet | UI copy, microcopy, error messages, UX writing |
+| `specialist-tech-writer` | Sonnet | API docs, READMEs, changelogs, architecture documentation |
+
+See `reference/subagents-overview.md` for creating your own agents.
+
+---
+
+## 5 Cloud Skills
+
+Cloud skills extend the system with MCP-powered capabilities:
+
+| Skill | Purpose |
+|-------|---------|
+| `agent-teams` | Coordinated multi-agent implementation with contract-first spawning |
+| `planning-methodology` | 6-phase systematic planning with parallel research |
+| `worktree-management` | Git worktree lifecycle for parallel feature branches |
+| `parallel-implementation` | End-to-end parallel development via worktrees and headless instances |
+| `github-automation` | GitHub Actions setup, CodeRabbit integration, workflow configuration |
+
+---
+
+## 19 Templates
+
+Reusable templates for every artifact the system produces:
+
+### Planning & Requirements
+| Template | Purpose |
+|----------|---------|
+| `STRUCTURED-PLAN-TEMPLATE.md` | Main planning template — covers all 4 Context Engineering pillars |
+| `SUB-PLAN-TEMPLATE.md` | Sub-feature plans for complex decomposition |
+| `PLAN-OVERVIEW-TEMPLATE.md` | High-level plan overview |
+| `PRD-TEMPLATE.md` | Product Requirements Document |
+| `VIBE-PLANNING-GUIDE.md` | Guide for casual-to-structured planning conversations |
+
+### Validation
+| Template | Purpose |
+|----------|---------|
+| `VALIDATION-PROMPT.md` | Validation execution prompt |
+| `VALIDATION-REPORT-TEMPLATE.md` | Structured findings report |
+| `META-REASONING-CHECKLIST.md` | Reasoning checklist for plan review |
+| `BASELINE-ASSESSMENT-TEMPLATE.md` | Project baseline assessment |
+
+### System Extension
+| Template | Purpose |
+|----------|---------|
+| `AGENT-TEMPLATE.md` | Create custom subagent definitions |
+| `COMMAND-TEMPLATE.md` | Create new slash commands |
+| `SKILL-TEMPLATE.md` | Create MCP cloud skills |
+| `TOOL-DOCSTRING-TEMPLATE.md` | Document tool parameters |
+| `CREATE-REFERENCE-GUIDE-PROMPT.md` | Generate new reference guides |
+
+### Project Setup
+| Template | Purpose |
+|----------|---------|
+| `MEMORY-TEMPLATE.md` | Cross-session memory file |
+| `NEW-PROJECT-CHECKLIST.md` | New project setup steps |
+| `GITHUB-SETUP-CHECKLIST.md` | GitHub Actions and CodeRabbit setup |
+| `IMPLEMENTATION-PROMPT.md` | Implementation work prompt |
+| `TEAM-SPAWN-PROMPTS.md` | Agent Teams coordination prompts |
+
+---
+
+## 26 Reference Guides
+
+Deep documentation loaded on-demand — never wasting context tokens until you need them:
+
+### Core Methodology
+| Guide | What It Covers |
+|-------|---------------|
+| `system-foundations.md` | Why this system exists, baseline assessment, trust progression |
+| `piv-loop-practice.md` | PIV Loop in practice with real examples |
+| `planning-methodology-guide.md` | 6-phase planning methodology, PRD, Vertical Slice Architecture |
+| `implementation-discipline.md` | `/execute` design, Navigate-Implement-Verify, save states |
+| `validation-strategy.md` | Validation planning and structure |
+| `validation-discipline.md` | 5-level validation pyramid |
+| `global-rules-optimization.md` | Layer 1 optimization, `@sections` modular organization |
+
+### Context & Architecture
+| Guide | What It Covers |
+|-------|---------------|
+| `layer1-guide.md` | Setting up CLAUDE.md for a new project |
+| `file-structure.md` | Complete file location reference |
+| `multi-model-strategy.md` | Model selection and cost optimization |
+
+### Agents & Extensions
+| Guide | What It Covers |
+|-------|---------------|
+| `subagents-overview.md` | Creating and managing subagents |
+| `subagents-guide.md` | Detailed subagent creation guide |
+| `subagents-deep-dive.md` | Parallel execution and context isolation |
+| `agent-teams-overview.md` | Multi-agent coordination and `/team` command |
+| `command-design-overview.md` | Slash command design philosophy |
+| `command-design-framework.md` | INPUT-PROCESS-OUTPUT command framework |
+| `mcp-skills-overview.md` | MCP servers and cloud skill configuration |
+| `mcp-skills-archon.md` | MCP, skills, and Archon integration |
+
+### DevOps & Automation
+| Guide | What It Covers |
+|-------|---------------|
+| `github-integration.md` | GitHub Actions and CodeRabbit setup |
+| `github-orchestration.md` | GitHub as AI orchestration layer, 3 integration approaches |
+| `git-worktrees-overview.md` | Parallel implementation with worktrees |
+| `git-worktrees-parallel.md` | Deep worktree guide with parallelization patterns |
+| `archon-workflow.md` | Archon task management and RAG search |
+
+### Remote & Advanced
+| Guide | What It Covers |
+|-------|---------------|
+| `remote-system-overview.md` | Remote coding agent architecture |
+| `remote-system-guide.md` | Remote system setup and deployment |
+| `remote-agentic-system.md` | Remote AI coding system design |
 
 ---
 
 ## Agent Teams
 
-For complex features, Agent Teams coordinates multiple Claude instances with contract-first spawning — upstream agents publish interfaces before downstream agents start building.
+For features too complex for a single Claude instance, Agent Teams coordinates multiple instances with **contract-first spawning** — upstream agents publish interfaces before downstream agents start building.
 
 ```bash
 # Plan the feature (Opus recommended for deep reasoning)
@@ -209,60 +403,71 @@ claude --model opus
 > /team requests/my-feature-plan.md
 ```
 
-See `reference/agent-teams-overview.md` for the full architecture guide.
+The system handles team sizing, task decomposition, spawn prompts, and WSL+tmux orchestration automatically. See `reference/agent-teams-overview.md` for the full architecture.
 
 ---
 
-## Subagents
+## GitHub Automation
 
-12 agents are pre-installed in `.claude/agents/` across 4 categories:
+### Included Workflows
 
-| Agent | Model | Purpose |
-|-------|-------|---------|
-| research-codebase | Haiku | Parallel codebase exploration |
-| research-external | Sonnet | Documentation and best practices |
-| code-review-type-safety | Haiku | Type annotation review |
-| code-review-security | Haiku | Security vulnerability review |
-| code-review-architecture | Haiku | Design pattern compliance |
-| code-review-performance | Haiku | Performance issue detection |
-| plan-validator | Haiku | Plan structure validation |
-| test-generator | Haiku | Test case suggestions |
-| specialist-devops | Sonnet | CI/CD, Docker, IaC, deployments |
-| specialist-data | Sonnet | DB design, migrations, queries |
-| specialist-copywriter | Sonnet | UI copy, error messages, UX writing |
-| specialist-tech-writer | Sonnet | API docs, READMEs, changelogs |
+| Workflow | Trigger | What It Does |
+|----------|---------|-------------|
+| `claude-fix.yml` | `@claude-fix` comment on issue/PR | AI investigates and fixes the issue on a branch |
+| `coderabbit-approval-notify.yml` | CodeRabbit approves a PR | Notifies when automated review passes |
+| `coderabbit-auto-merge.yml` | CodeRabbit submits review | Auto-merges PRs that pass automated review |
 
-See `reference/subagents-overview.md` for creating your own agents.
+### 8 Workflow Prompt Templates
 
----
+Pre-built prompts in `.github/workflows/prompts/` that give GitHub Actions Claude instances the same structured methodology:
 
-## GitHub Actions
-
-The system includes workflows for AI-assisted issue resolution:
-
-- **`.github/workflows/claude-fix.yml`** — Triggers when you comment `@claude-fix` on an issue or PR
-- **`reference/github-workflows/claude-fix-coderabbit.yml`** — Auto-fixes CodeRabbit review suggestions
+`prime-github.md` | `plan-feature-github.md` | `execute-github.md` | `rca-github.md` | `implement-fix-github.md` | `bug-fix-github.md` | `code-review-github.md` | `end-to-end-feature-github.md`
 
 ### Setup
 
-1. Add `CLAUDE_CODE_OAUTH_TOKEN` to your repo secrets (Settings > Secrets and variables > Actions)
-2. Add `AUTHORIZED_USERS` as a repository variable with a JSON array of allowed GitHub usernames:
-   ```
-   ["your-username", "teammate"]
-   ```
-   (Settings > Secrets and variables > Actions > Variables)
-3. Copy workflows to your project's `.github/workflows/` directory
+1. Add `CLAUDE_CODE_OAUTH_TOKEN` to repo secrets
+2. Add `AUTHORIZED_USERS` as a repository variable: `["your-username"]`
+3. Copy workflows to `.github/workflows/`
+4. Optionally configure `.coderabbit.yaml` for automated PR reviews
 
-See `reference/github-integration.md` for the full setup guide.
+See `reference/github-integration.md` for the full setup guide, or run `/setup-github-automation` for automated configuration.
+
+---
+
+## Context Engineering: The 4 Pillars
+
+Every structured plan is built on four pillars that ensure the AI has exactly what it needs:
+
+| Pillar | What It Provides | Plan Section |
+|--------|-----------------|-------------|
+| **Memory** | Past decisions and gotchas from `memory.md` | Related Memories |
+| **RAG** | External docs, library references, codebase patterns | Relevant Documentation, Patterns to Follow |
+| **Prompt Engineering** | Explicit decisions, step-by-step detail, reduced ambiguity | Solution Statement, Implementation Plan |
+| **Task Management** | Atomic tasks with files, actions, and validation criteria | Step-by-Step Tasks |
+
+The balance matters. Too little context and the AI guesses wrong. Too much and it loses focus. The structured plan template (`templates/STRUCTURED-PLAN-TEMPLATE.md`) enforces this balance by mapping each pillar to specific sections.
+
+---
+
+## Core Principles
+
+| Principle | What It Means |
+|-----------|-------------|
+| **YAGNI** | Only implement what's needed right now. No speculative features. |
+| **KISS** | Prefer simple, readable solutions over clever abstractions. |
+| **DRY** | Extract common patterns, but don't over-abstract. |
+| **Limit AI Assumptions** | Be explicit in plans and prompts. Less guessing = better output. |
+| **Always Be Priming (ABP)** | Start every session with `/prime`. Context is everything. |
 
 ---
 
 ## Optional: Archon MCP
 
-The system architecture diagram shows [Archon MCP](https://github.com/coleam00/archon) for task management and RAG search. This is **optional** — all commands work without it. If configured, Archon provides:
+[Archon MCP](https://github.com/coleam00/archon) provides task management and RAG search across sessions. **Completely optional** — all commands work without it. When available, it adds:
 
-- Task tracking across planning and execution sessions
-- RAG search over curated documentation
+- Persistent task tracking across planning and execution sessions
+- RAG search over curated documentation sources
+- Project and version management
 
 See `reference/archon-workflow.md` for setup instructions.
 
@@ -272,78 +477,80 @@ See `reference/archon-workflow.md` for setup instructions.
 
 ```
 My-Coding-System/
-├── CLAUDE.md              # Auto-loaded rules (slim, ~2K tokens)
-├── AGENTS.md              # Agent guidance for AI assistants
-├── LICENSE                # MIT License
-├── .gitignore             # Protects secrets, memory, plans
-├── memory.md              # Cross-session memory (create from template)
-├── sections/              # Core rule sections (6 files, auto-loaded)
-├── reference/             # Deep guides (26 guides, on-demand)
-├── templates/             # Reusable templates (19 files)
-├── requests/              # Feature plans (gitignored, per PIV loop)
-├── .claude/commands/      # Slash commands (21 commands)
-├── .claude/skills/        # Cloud skills (5 skills)
-├── .claude/agents/        # Custom subagents (12 agents, pre-installed)
-└── .github/workflows/     # GitHub Action workflows
+├── CLAUDE.md                          # Auto-loaded rules (~2K tokens)
+├── AGENTS.md                          # Agent guidance for AI assistants
+├── LICENSE                            # MIT License
+├── .coderabbit.yaml                   # CodeRabbit PR review configuration
+├── .gitignore                         # Protects secrets, memory, plans
+├── memory.md                          # Cross-session memory (gitignored)
+│
+├── sections/                          # Core methodology (6 files, auto-loaded)
+│   ├── 01_core_principles.md          #   YAGNI, KISS, DRY, ABP
+│   ├── 02_piv_loop.md                 #   Plan-Implement-Validate cycle
+│   ├── 03_context_engineering.md      #   4 pillars of context
+│   ├── 04_git_save_points.md          #   Commit strategy
+│   ├── 05_decision_framework.md       #   Autonomy vs. ask
+│   └── 06_archon_workflow.md          #   Task management integration
+│
+├── reference/                         # Deep guides (26 files, on-demand)
+│   ├── system-foundations.md
+│   ├── planning-methodology-guide.md
+│   ├── multi-model-strategy.md
+│   ├── ...22 more guides...
+│   └── github-workflows/              # Workflow reference files
+│
+├── templates/                         # Reusable templates (19 files)
+│   ├── STRUCTURED-PLAN-TEMPLATE.md
+│   ├── PRD-TEMPLATE.md
+│   ├── AGENT-TEMPLATE.md
+│   └── ...16 more templates...
+│
+├── requests/                          # Feature plans (gitignored)
+│
+├── .claude/
+│   ├── commands/                      # Slash commands (21 commands)
+│   │   ├── prime.md
+│   │   ├── planning.md
+│   │   ├── execute.md
+│   │   ├── commit.md
+│   │   └── ...17 more commands...
+│   ├── agents/                        # Custom subagents (12 agents)
+│   │   ├── research-codebase.md
+│   │   ├── code-review-security.md
+│   │   ├── specialist-devops.md
+│   │   └── ...9 more agents...
+│   └── skills/                        # Cloud skills (5 skills)
+│       ├── agent-teams/
+│       ├── planning-methodology/
+│       ├── worktree-management/
+│       ├── parallel-implementation/
+│       └── github-automation/
+│
+└── .github/
+    └── workflows/                     # GitHub Actions automation
+        ├── claude-fix.yml
+        ├── coderabbit-approval-notify.yml
+        ├── coderabbit-auto-merge.yml
+        └── prompts/                   # 8 workflow prompt templates
 ```
 
 ---
 
-## Core Principles
+## By the Numbers
 
-- **YAGNI** — Only implement what's needed right now
-- **KISS** — Prefer simple, readable solutions over clever abstractions
-- **DRY** — Extract common patterns, but don't over-abstract
-- **Limit AI Assumptions** — Be explicit in plans and prompts
-- **Always Be Priming (ABP)** — Start every session with `/prime`. Context is everything.
-
----
-
-## On-Demand Guides
-
-| Guide | Load when... |
-|-------|-------------|
-| `reference/layer1-guide.md` | Setting up CLAUDE.md for a new project |
-| `reference/system-foundations.md` | Learning system mental models |
-| `reference/piv-loop-practice.md` | PIV Loop practical application |
-| `reference/planning-methodology-guide.md` | 6-phase planning methodology |
-| `reference/validation-strategy.md` | Planning or running validation |
-| `reference/validation-discipline.md` | 5-level validation pyramid |
-| `reference/file-structure.md` | Looking up where files belong |
-| `reference/command-design-overview.md` | Designing or modifying slash commands |
-| `reference/github-integration.md` | Setting up GitHub Actions or CodeRabbit |
-| `reference/remote-system-overview.md` | Deploying or using the remote coding agent |
-| `reference/mcp-skills-overview.md` | Configuring MCP servers or creating skills |
-| `reference/subagents-overview.md` | Creating or debugging subagents |
-| `reference/archon-workflow.md` | Using Archon task management or RAG search |
-| `reference/git-worktrees-overview.md` | Parallel feature implementation with worktrees |
-| `reference/agent-teams-overview.md` | Agent Teams architecture and `/team` command |
-| `reference/multi-model-strategy.md` | Model selection and cost optimization |
-
----
-
-## Recent Changes: System Integrity Audit
-
-A 4-phase system integrity audit was completed to fix structural inconsistencies, dead references, and documentation gaps across the entire system. All changes are tracked in `requests/system-integrity-audit-plan-*.md`.
-
-**Phase 1 — Critical Fixes**: Removed dead `_examples/` references from agents and commands, fixed broken cross-references in `file-structure.md` and auto-memory, corrected the agents directory listing.
-
-**Phase 2 — Structural Alignment**: Renumbered `sections/15_archon_workflow.md` to `sections/06_archon_workflow.md` for continuous numbering (01-06), updated all cross-references, expanded the CLAUDE.md on-demand guide table from 11 to 15 entries, and added the `/init-c` alignment note clarifying methodology sections (01-06) vs application sections (01-10).
-
-**Phase 3 — Template & Agent Fixes**: Linked 3 orphaned templates (`SKILL-TEMPLATE`, `BASELINE-ASSESSMENT-TEMPLATE`, `META-REASONING-CHECKLIST`) from their relevant reference guides, added acceptance criteria to `SUB-PLAN-TEMPLATE`, created bidirectional links between `VALIDATION-PROMPT` and `VALIDATION-REPORT-TEMPLATE`, replaced hard-coded line numbers in the agents README with section references, and added tool access and cost context notes.
-
-**Phase 4 — Documentation Polish**: Operationalized the 4 Context Engineering pillars with a concrete pillar-to-plan-section mapping table, reconciled Archon language to conditional ("when available") throughout, added the 5-level validation pyramid reference to the PIV Loop section, clarified `memory.md` update timing to include mid-planning decisions, and linked section 02 back to section 03 for pillar details.
-
----
-
-## Token Budget
-
-The system manages tokens carefully to maximize context window for actual work:
-
-- **Auto-loaded**: ~2K tokens (CLAUDE.md + 6 sections)
-- **Commands**: loaded only when invoked (largest: `/planning` ~2.2K tokens)
-- **Reference guides**: loaded only when needed (26 guides available on-demand)
-- **Typical session**: uses <10K tokens of system context, leaving the rest for implementation
+| Component | Count |
+|-----------|-------|
+| Core methodology sections | 6 |
+| Reference guides | 26 |
+| Reusable templates | 19 |
+| Slash commands | 21 |
+| Subagents | 12 |
+| Cloud skills | 5 |
+| GitHub Action workflows | 3 |
+| Workflow prompt templates | 8 |
+| **Total system files** | **~100** |
+| Auto-loaded context cost | ~2K tokens |
+| Typical session context | <10K tokens |
 
 ---
 
