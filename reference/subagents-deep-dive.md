@@ -299,7 +299,7 @@ Confirmed limit: **10 concurrent subagents**. You can queue more in the same con
 
 ### Pattern A in Practice
 
-The `/code-review` command uses Pattern A when agents exist in `.claude/agents/_examples/`. Four specialized agents review the same diff in parallel — each expert in one area (type-safety, security, architecture, performance). Results are combined into a comprehensive review.
+The `/code-review` command uses Pattern A when agents exist in `.claude/agents/`. Four specialized agents review the same diff in parallel — each expert in one area (type-safety, security, architecture, performance). Results are combined into a comprehensive review.
 
 ### Pattern C in Practice
 
@@ -384,7 +384,7 @@ If you answered "no" to all three, subagents add overhead without benefit. Stick
 
 ### Key Rules
 
-- **Agents are project-specific** — don't create agents in the template's `.claude/agents/` directory (use `_examples/` for reference examples only)
+- **Agents are project-specific** — create agents in `.claude/agents/` for your project
 - **Session restart required** — manually added agents require restarting the Claude Code session to load
 - **The markdown body IS the system prompt** — everything after the YAML frontmatter becomes the agent's instructions
 - **Test before parallelizing** — verify a single agent works correctly before running multiple in parallel
@@ -404,7 +404,7 @@ For the full step-by-step creation walkthrough, see `reference/subagents-guide.m
 ### Already in Use
 
 - **`/planning`** command: Launches Explore + general-purpose agents in parallel for research (Phases 2 & 3)
-- **`/code-review`** command: Uses parallel review agents when available in `.claude/agents/_examples/`
+- **`/code-review`** command: Uses parallel review agents when available in `.claude/agents/`
 
 ### Trust Progression
 
@@ -463,7 +463,7 @@ When a subagent produces unexpected results, work backwards through this checkli
 **Challenge**: Create 2+ specialized review agents and run them in parallel on the same diff.
 
 **Steps**:
-1. Copy and customize agents from `.claude/agents/_examples/` (start with type-safety + architecture)
+1. Customize the pre-installed agents in `.claude/agents/` (start with type-safety + architecture)
 2. Adapt frontmatter and system prompts for your project's tech stack
 3. Run `/code-review` with the customized agents available
 4. Compare: does parallel review catch issues that single-agent review misses?
@@ -536,7 +536,7 @@ These mistakes appear frequently when creating your first agents:
 - **Subagent overview**: `reference/subagents-overview.md` — on-demand subagents guide
 - **Creation guide**: `reference/subagents-guide.md` — step-by-step creation, frontmatter reference, advanced patterns
 - **Agent template**: `templates/AGENT-TEMPLATE.md` — starter template for new agents
-- **Example agents**: `.claude/agents/_examples/` — 4 review agents (type-safety, security, architecture, performance)
+- **Pre-installed agents**: `.claude/agents/` — 12 agents across 4 categories (research, code review, utility, specialist)
 - **Execution discipline**: `reference/implementation-discipline.md` — prerequisite concepts for agent workflows
 - **GitHub integration**: `reference/github-orchestration.md` — remote agent workflows via GitHub Actions
 

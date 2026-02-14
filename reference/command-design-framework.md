@@ -98,7 +98,7 @@ Without the framework, a prompt like "Review this code" produces vague, generic,
 
 ## 3. Three Output Patterns
 
-Section 09 introduces these patterns in a table. Here's the deeper understanding of when and how to use each.
+The command design overview (`reference/command-design-overview.md`) introduces these patterns in a table. Here's the deeper understanding of when and how to use each.
 
 ### Pattern 1: Context Loading
 
@@ -132,7 +132,7 @@ Agent reviews changes → creates conventional commit → executes `git add` + `
 
 ## 4. Command Features Reference
 
-Section 09 mentions these features briefly. Here's the complete reference with syntax, behavior, and practical examples.
+The command design overview mentions these features briefly. Here's the complete reference with syntax, behavior, and practical examples.
 
 ### Arguments: Dynamic Input
 
@@ -244,7 +244,7 @@ Bash(pytest:*)          # Bash commands starting with "pytest"
 
 ## 5. The Core 4 Command Patterns
 
-Section 09 lists the Core 4 and their purposes. Here's how each is designed internally — the decisions behind their INPUT, PROCESS, and OUTPUT sections.
+The command design overview lists the Core 4 and their purposes. Here's how each is designed internally — the decisions behind their INPUT, PROCESS, and OUTPUT sections.
 
 ### `/prime` — Context Loading Pattern
 
@@ -529,7 +529,7 @@ When a system (git, CI, API) will receive the output (e.g., `/commit`):
 
 ## 9. Trust Progression: From Manual to Autonomous
 
-Section 09 introduces the three-stage diagram. Here's the deeper understanding with transition criteria and practical guidance.
+The command design overview introduces the three-stage diagram. Here's the deeper understanding with transition criteria and practical guidance.
 
 ### Stage 1: Manual Prompts
 
@@ -649,11 +649,11 @@ Both exercises use the same INPUT→PROCESS→OUTPUT framework. Exercise 1 optim
 
 **Long answer**: Chaining amplifies both good and bad patterns. If planning occasionally produces vague tasks, chaining means vague implementations. Fix individual commands first — the trust progression catches these issues before they compound.
 
-### "What's the difference between section 09 and this guide?"
+### "What's the difference between the overview and this guide?"
 
-**Short answer**: Section 09 is the overview (what). This guide is the deep dive (how).
+**Short answer**: The overview (`reference/command-design-overview.md`) covers what. This guide covers how.
 
-**Long answer**: Section 09 is auto-loaded (essential reference: command list, framework summary, patterns table). This guide is on-demand (teaching depth: command anatomy, Core 4 internals, consumer optimization, exercises). Section 09 = "what are commands?" This guide = "how do I design effective commands?"
+**Long answer**: The overview is a concise on-demand reference (command list, framework summary, patterns table). This guide is the deep dive (command anatomy, Core 4 internals, consumer optimization, exercises). Overview = "what are commands?" This guide = "how do I design effective commands?"
 
 ### "Can I use these commands with other AI tools?"
 

@@ -74,7 +74,7 @@ This prevents the main agent from automatically acting on all findings.
 
 ## Step 4: Generate the Agent File
 
-Read `.claude/agents/_examples/research-codebase.md` as a structural reference.
+Read `.claude/agents/research-codebase.md` as a structural reference.
 
 Create the agent file with this structure:
 

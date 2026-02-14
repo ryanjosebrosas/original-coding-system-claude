@@ -393,16 +393,11 @@ Each agent returns structured findings that the main agent can parse and combine
 
 ### How to Activate
 
-Copy the example agents to your project:
-```bash
-cp .claude/agents/_examples/code-review-*.md .claude/agents/
-```
-
-The `/code-review` command automatically detects these agents and switches to parallel mode. If no agents are found, it falls back to single-agent sequential review.
+The 4 code review agents are pre-installed in `.claude/agents/`. The `/code-review` command automatically detects these agents and switches to parallel mode. If no agents are found, it falls back to single-agent sequential review.
 
 ### Customization
 
-The example agents are generic. Customize for your project:
+The pre-installed agents are generic. Customize for your project:
 
 1. **Update context gathering** — reference your project's specific files and patterns
 2. **Add project-specific checks** — e.g., check for `pytest` coverage in architecture agent
@@ -658,10 +653,10 @@ A: Varies by feature size. For a well-planned feature: 0-2 critical, 2-5 major, 
 - `.claude/commands/system-review.md` — Divergence analysis command
 
 **Agents**:
-- `.claude/agents/_examples/code-review-type-safety.md` — Type safety reviewer
-- `.claude/agents/_examples/code-review-security.md` — Security reviewer
-- `.claude/agents/_examples/code-review-architecture.md` — Architecture reviewer
-- `.claude/agents/_examples/code-review-performance.md` — Performance reviewer
+- `.claude/agents/code-review-type-safety.md` — Type safety reviewer
+- `.claude/agents/code-review-security.md` — Security reviewer
+- `.claude/agents/code-review-architecture.md` — Architecture reviewer
+- `.claude/agents/code-review-performance.md` — Performance reviewer
 
 **Related guides**:
 - `reference/implementation-discipline.md` — The execute phase that validation follows

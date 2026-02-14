@@ -118,9 +118,9 @@ Already used in `/planning` command (Phases 2 & 3 launch Explore + general-purpo
 
 **Model selection for agents**: When choosing `model` in frontmatter (haiku, sonnet, opus), see `reference/multi-model-strategy.md` for cost-performance trade-offs and task routing guidance.
 
-### Example Agents
+### Pre-installed Agents
 
-8 example agents available in `.claude/agents/_examples/`. Copy to `.claude/agents/` in your project to activate.
+12 agents are pre-installed in `.claude/agents/` across 4 categories (research, code review, utility, specialist).
 
 | Agent | Model | Tools | Purpose |
 |-------|-------|-------|---------|

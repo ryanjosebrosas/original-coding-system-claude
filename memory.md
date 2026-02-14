@@ -22,6 +22,7 @@
 
 ## Session Notes
 <!-- Format: - [YYYY-MM-DD] Brief summary of what was done -->
+- [2026-02-14] System integrity audit: fixed dead refs, renumbered section 15→06, expanded CLAUDE.md table to 15 guides, linked orphaned templates, operationalized 4 pillars
 
 ---
 
