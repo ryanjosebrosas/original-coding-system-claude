@@ -51,6 +51,7 @@ A comprehensive AI-assisted development methodology combining systematic plannin
 | `validation-discipline` | 5-level validation pyramid |
 | `file-structure` | File location lookup |
 | `command-design-overview` | Slash command design |
+| `cross-cli-orchestration` | Cross-CLI delegation via tmux |
 | `github-integration` | GitHub Actions / CodeRabbit |
 | `remote-system-overview` | Remote coding agent |
 | `mcp-skills-overview` | MCP servers / skills |

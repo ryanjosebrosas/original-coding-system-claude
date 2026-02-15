@@ -76,7 +76,7 @@ graph LR
 
 **Multiple small loops.** Don't build entire features in one pass. Each PIV loop covers one feature slice, built completely before moving on. Complex features (15+ tasks, 4+ phases) auto-decompose into sub-plans via `/planning`, each getting their own loop.
 
-**The handoff.** The plan is the bridge between thinking and building — 500-700 lines capturing architecture decisions, file paths, code patterns, gotchas, and atomic tasks. Each task has 7 fields (ACTION, TARGET, IMPLEMENT, PATTERN, IMPORTS, GOTCHA, VALIDATE) so the execution agent has zero ambiguity.
+**The handoff.** The plan is the bridge between thinking and building — 700-1000 lines capturing architecture decisions, file paths, code patterns, gotchas, and atomic tasks. Each task has 7 fields (ACTION, TARGET, IMPLEMENT, PATTERN, IMPORTS, GOTCHA, VALIDATE) so the execution agent has zero ambiguity.
 
 ---
 
@@ -92,7 +92,7 @@ graph TD
         PE["Prompt Engineering<br/>explicit decisions"]
         TM["Task Management<br/>7-field atomic tasks"]
     end
-    MEM --> PLAN["Structured Plan<br/>500-700 lines"]
+    MEM --> PLAN["Structured Plan<br/>700-1000 lines"]
     RAG --> PLAN
     PE --> PLAN
     TM --> PLAN
