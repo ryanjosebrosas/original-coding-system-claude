@@ -46,10 +46,8 @@ A comprehensive AI-assisted development methodology combining systematic plannin
 | `layer1-guide` | New project CLAUDE.md setup |
 | `system-foundations` | Learning system mental models |
 | `piv-loop-practice` | PIV Loop practical application |
-| `planning-methodology-guide` | 6-phase planning methodology |
-| `validation-strategy` | Validation planning |
 | `validation-discipline` | 5-level validation pyramid |
 | `file-structure` | File location lookup |
-| `command-design-overview` | Slash command design |
-| `subagents-overview` | Subagent creation |
+| `command-design-framework` | Slash command design |
+| `subagents-deep-dive` | Subagent creation |
 | `archon-workflow` | Archon tasks / RAG |

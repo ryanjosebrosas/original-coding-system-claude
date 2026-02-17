@@ -168,7 +168,7 @@ Before you start learning the system, establish your baseline on a real feature.
 - Feature works end-to-end in browser?: Yes / No
 - Code would pass basic code review?: Yes / No
 
-To measure your current PIV Loop maturity, use `templates/BASELINE-ASSESSMENT-TEMPLATE.md`.
+To measure your current PIV Loop maturity, review your workflow against the PIV Loop methodology and identify areas for improvement.
 Run the assessment before adopting the system and again after 2-4 weeks to track improvement.
 
 ### How to Establish Your Baseline
@@ -481,8 +481,8 @@ The template is a starting point. Every project evolves its own version.
 
 - **Template Structure**: See CLAUDE.md intro for the full template overview
 - **Decision Framework**: Section 05 of CLAUDE.md explains when to proceed vs ask
-- **Planning Deep Dive**: `reference/planning-methodology-guide.md` explains slash commands and trust progression
-- **Validation Strategy**: `reference/validation-strategy.md` explains the 5-level validation pyramid
+- **Planning Deep Dive**: `.claude/skills/planning-methodology/` — 6-phase planning methodology
+- **Validation Discipline**: `reference/validation-discipline.md` explains the 5-level validation pyramid
 - **Your Baseline**: Section 3 (Baseline Self-Assessment) — use this now
 - **PIV Loop Practice**: `reference/piv-loop-practice.md` — PIV Loop methodology in depth
 - **Global Rules**: `reference/global-rules-optimization.md` — CLAUDE.md organization and optimization

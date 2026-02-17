@@ -17,38 +17,23 @@ sections/                              # Auto-loaded rule sections (every sessio
 reference/                             # On-demand guides (loaded when needed)
   archon-workflow.md                   #   Archon task management & RAG workflow
   layer1-guide.md                      #   How to build CLAUDE.md for real projects
-  validation-strategy.md               #   5-level validation pyramid, linting, tests
   file-structure.md                    #   This file — project directory layout
-  command-design-overview.md           #   Slash commands & INPUT→PROCESS→OUTPUT
-  subagents-overview.md                #   Subagents, parallel execution, context isolation
   system-foundations.md                #   System gap, mental models, self-assessment
   piv-loop-practice.md                 #   PIV Loop in practice, 4 Pillars, validation
   global-rules-optimization.md         #   Modular CLAUDE.md, Two-Question Framework
-  command-design-framework.md          #   Slash commands, INPUT→PROCESS→OUTPUT (deep dive)
-  planning-methodology-guide.md        #   6-phase planning, PRD, Vertical Slice
+  command-design-framework.md          #   Slash commands, INPUT→PROCESS→OUTPUT
   implementation-discipline.md         #   Execute command, meta-reasoning, save states
   validation-discipline.md             #   5-level pyramid, code review, system review
   subagents-deep-dive.md               #   Subagents, context handoff, agent design framework
-  subagents-guide.md                   #   Subagent creation, frontmatter, output patterns
-  multi-model-strategy.md              #   When to use Haiku/Sonnet/Opus for cost optimization
 templates/
   PRD-TEMPLATE.md                      # Template for Layer 1 PRD (what to build)
   STRUCTURED-PLAN-TEMPLATE.md          # Template for Layer 2 plans (per feature)
   SUB-PLAN-TEMPLATE.md                 # Individual sub-plan template (500-700 lines, self-contained)
   VIBE-PLANNING-GUIDE.md               # Example prompts for vibe planning
-  IMPLEMENTATION-PROMPT.md             # Reusable prompt for implementation phase
-  VALIDATION-PROMPT.md                 # Reusable prompt for validation phase
-  NEW-PROJECT-CHECKLIST.md             # Step-by-step guide for new projects
   PLAN-OVERVIEW-TEMPLATE.md            # Master file for decomposed plan series (overview + index)
-  CREATE-REFERENCE-GUIDE-PROMPT.md     # Prompt to generate on-demand reference guides
   MEMORY-TEMPLATE.md                   # Template for project memory (cross-session context)
   COMMAND-TEMPLATE.md                  # How to design new slash commands
   AGENT-TEMPLATE.md                    # How to design new subagents
-  BASELINE-ASSESSMENT-TEMPLATE.md      # Self-assessment for measuring PIV Loop improvement
-  META-REASONING-CHECKLIST.md          # 5-step meta-reasoning + WHERE-to-fix framework
-  TOOL-DOCSTRING-TEMPLATE.md           # 7-element template for agent tool documentation
-  SKILL-TEMPLATE.md                    # How to create new cloud skills (.claude/skills/)
-  VALIDATION-REPORT-TEMPLATE.md        # Standard format for validation output
 requests/
   .gitkeep                             # Preserves directory in git (plans are gitignored)
   {feature}-plan.md                    # Layer 2: Feature plans go here

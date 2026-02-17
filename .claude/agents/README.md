@@ -78,7 +78,7 @@ The `/planning` command automatically detects them and switches to Parallel Rese
 
 ## Code Review Agents
 
-These agents demonstrate **parallel code review** using the Pattern A approach from `reference/subagents-guide.md`.
+These agents demonstrate **parallel code review** using the Pattern A approach from `reference/subagents-deep-dive.md`.
 
 ## What These Agents Do
 
@@ -199,13 +199,13 @@ You can also invoke them from other commands:
 Use the @code-review-security agent to check for vulnerabilities in the authentication module.
 ```
 
-See `reference/command-design-overview.md` for command + agent integration patterns.
+See `reference/command-design-framework.md` for command + agent integration patterns.
 
 ## Reference
 
-- **Pattern source**: `reference/subagents-guide.md` (Pattern A: Parallel Review)
+- **Pattern source**: `reference/subagents-deep-dive.md` (Pattern A: Parallel Review)
 - **Agent design guide**: `templates/AGENT-TEMPLATE.md`
-- **Full subagent docs**: `reference/subagents-guide.md`
+- **Full subagent docs**: `reference/subagents-deep-dive.md`
 
 ---
 

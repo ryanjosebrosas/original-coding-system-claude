@@ -232,7 +232,7 @@ claude
 > /execute requests/my-feature-plan.md
 ```
 
-See `reference/multi-model-strategy.md` for the full cost optimization guide.
+See `reference/subagents-deep-dive.md` for model selection guidance.
 
 ---
 
@@ -482,7 +482,7 @@ These four run in parallel during `/code-review`, each checking a different dime
 
 </details>
 
-See `reference/subagents-overview.md` for creating your own agents.
+See `reference/subagents-deep-dive.md` for creating your own agents.
 
 ---
 
@@ -502,7 +502,7 @@ See `reference/subagents-overview.md` for creating your own agents.
 </details>
 
 <details>
-<summary>19 Templates</summary>
+<summary>8 Templates</summary>
 
 ### Planning & Requirements
 | Template | Purpose |
@@ -513,45 +513,24 @@ See `reference/subagents-overview.md` for creating your own agents.
 | `PRD-TEMPLATE.md` | Product Requirements Document |
 | `VIBE-PLANNING-GUIDE.md` | Guide for casual-to-structured planning conversations |
 
-### Validation
-| Template | Purpose |
-|----------|---------|
-| `VALIDATION-PROMPT.md` | Validation execution prompt |
-| `VALIDATION-REPORT-TEMPLATE.md` | Structured findings report |
-| `META-REASONING-CHECKLIST.md` | Reasoning checklist for plan review |
-| `BASELINE-ASSESSMENT-TEMPLATE.md` | Project baseline assessment |
-
 ### System Extension
 | Template | Purpose |
 |----------|---------|
 | `AGENT-TEMPLATE.md` | Create custom subagent definitions |
 | `COMMAND-TEMPLATE.md` | Create new slash commands |
-| `SKILL-TEMPLATE.md` | Create MCP cloud skills |
-| `TOOL-DOCSTRING-TEMPLATE.md` | Document tool parameters |
-| `CREATE-REFERENCE-GUIDE-PROMPT.md` | Generate new reference guides |
-
-### Project Setup
-| Template | Purpose |
-|----------|---------|
 | `MEMORY-TEMPLATE.md` | Cross-session memory file |
-| `NEW-PROJECT-CHECKLIST.md` | New project setup steps |
-| `GITHUB-SETUP-CHECKLIST.md` | GitHub Actions and CodeRabbit setup |
-| `IMPLEMENTATION-PROMPT.md` | Implementation work prompt |
-| `TEAM-SPAWN-PROMPTS.md` | Agent Teams coordination prompts |
 
 </details>
 
 <details>
-<summary>26 Reference Guides</summary>
+<summary>10 Reference Guides</summary>
 
 ### Core Methodology
 | Guide | What It Covers |
 |-------|---------------|
 | `system-foundations.md` | Why this system exists, baseline assessment, trust progression |
 | `piv-loop-practice.md` | PIV Loop in practice with real examples |
-| `planning-methodology-guide.md` | 6-phase planning methodology, PRD, Vertical Slice Architecture |
 | `implementation-discipline.md` | `/execute` design, Navigate-Implement-Verify, save states |
-| `validation-strategy.md` | Validation planning and structure |
 | `validation-discipline.md` | 5-level validation pyramid |
 | `global-rules-optimization.md` | Layer 1 optimization, `@sections` modular organization |
 
@@ -560,35 +539,13 @@ See `reference/subagents-overview.md` for creating your own agents.
 |-------|---------------|
 | `layer1-guide.md` | Setting up CLAUDE.md for a new project |
 | `file-structure.md` | Complete file location reference |
-| `multi-model-strategy.md` | Model selection and cost optimization |
 
 ### Agents & Extensions
 | Guide | What It Covers |
 |-------|---------------|
-| `subagents-overview.md` | Creating and managing subagents |
-| `subagents-guide.md` | Detailed subagent creation guide |
-| `subagents-deep-dive.md` | Parallel execution and context isolation |
-| `agent-teams-overview.md` | Multi-agent coordination and `/team` command |
-| `command-design-overview.md` | Slash command design philosophy |
+| `subagents-deep-dive.md` | Subagent creation, parallel execution, context isolation |
 | `command-design-framework.md` | INPUT-PROCESS-OUTPUT command framework |
-| `mcp-skills-overview.md` | MCP servers and cloud skill configuration |
-| `mcp-skills-archon.md` | MCP, skills, and Archon integration |
-
-### DevOps & Automation
-| Guide | What It Covers |
-|-------|---------------|
-| `github-integration.md` | GitHub Actions and CodeRabbit setup |
-| `github-orchestration.md` | GitHub as AI orchestration layer, 3 integration approaches |
-| `git-worktrees-overview.md` | Parallel implementation with worktrees |
-| `git-worktrees-parallel.md` | Deep worktree guide with parallelization patterns |
 | `archon-workflow.md` | Archon task management and RAG search |
-
-### Remote & Advanced
-| Guide | What It Covers |
-|-------|---------------|
-| `remote-system-overview.md` | Remote coding agent architecture |
-| `remote-system-guide.md` | Remote system setup and deployment |
-| `remote-agentic-system.md` | Remote AI coding system design |
 
 </details>
 
@@ -672,39 +629,33 @@ My-Coding-System/
 │   ├── 05_decision_framework.md       #   Autonomy vs. ask
 │   └── 06_archon_workflow.md          #   Task management integration
 │
-├── reference/                         # Deep guides (26 files, on-demand)
+├── reference/                         # Deep guides (10 files, on-demand)
 │   ├── system-foundations.md
-│   ├── planning-methodology-guide.md
-│   ├── multi-model-strategy.md
-│   ├── ...22 more guides...
-│   └── github-workflows/              # Workflow reference files
+│   ├── piv-loop-practice.md
+│   ├── ...8 more guides...
 │
-├── templates/                         # Reusable templates (19 files)
+├── templates/                         # Reusable templates (8 files)
 │   ├── STRUCTURED-PLAN-TEMPLATE.md
 │   ├── PRD-TEMPLATE.md
 │   ├── AGENT-TEMPLATE.md
-│   └── ...16 more templates...
+│   └── ...5 more templates...
 │
 ├── requests/                          # Feature plans (gitignored)
 │
 ├── .claude/
-│   ├── commands/                      # Slash commands (21 commands)
+│   ├── commands/                      # Slash commands (15 commands)
 │   │   ├── prime.md
 │   │   ├── planning.md
 │   │   ├── execute.md
 │   │   ├── commit.md
-│   │   └── ...17 more commands...
+│   │   └── ...11 more commands...
 │   ├── agents/                        # Custom subagents (12 agents)
 │   │   ├── research-codebase.md
 │   │   ├── code-review-security.md
 │   │   ├── specialist-devops.md
 │   │   └── ...9 more agents...
-│   └── skills/                        # Cloud skills (5 skills)
-│       ├── agent-teams/
-│       ├── planning-methodology/
-│       ├── worktree-management/
-│       ├── parallel-implementation/
-│       └── github-automation/
+│   └── skills/                        # Cloud skills (1 skill)
+│       └── planning-methodology/
 │
 └── .github/
     └── workflows/                     # GitHub Actions automation
