@@ -72,7 +72,7 @@ graph LR
         direction LR
         P["PLAN<br/>/planning<br/><i>Opus recommended</i>"]
         I["IMPLEMENT<br/>/execute<br/><i>Sonnet recommended</i>"]
-        V["VALIDATE<br/>/code-review<br/><i>4 Haiku agents</i>"]
+        V["VALIDATE<br/>/code-review<br/><i>4 Sonnet agents</i>"]
         C["COMMIT<br/>/commit"]
 
         P --> I --> V
@@ -272,7 +272,7 @@ The system separates thinking from doing. Use the right model for each phase:
 ```mermaid
 graph LR
     PLAN["Planning<br/>Opus"] --> EXEC["Execution<br/>Sonnet"]
-    EXEC --> REV["Code Review<br/>4x Haiku agents"]
+    EXEC --> REV["Code Review<br/>4x Sonnet agents"]
     REV --> COM["Commit<br/>Sonnet"]
 
     style PLAN fill:#4a90d9,color:#fff
@@ -281,13 +281,13 @@ graph LR
     style COM fill:#27ae60,color:#fff
 ```
 
-**Why this separation matters.** Planning is the highest-leverage phase — a bad plan guarantees bad implementation. Opus's deeper reasoning produces better feature scoping, more thorough codebase analysis, and higher-confidence implementation plans. The ~3x usage increase pays for itself by reducing implementation retries. Code review uses 4 parallel Haiku agents — pattern matching at ~40% the cost of one Sonnet review.
+**Why this separation matters.** Planning is the highest-leverage phase — a bad plan guarantees bad implementation. Opus's deeper reasoning produces better feature scoping, more thorough codebase analysis, and higher-confidence implementation plans. The ~3x usage increase pays for itself by reducing implementation retries. Code review uses 4 parallel Sonnet agents, each focused on a single review dimension for maximum depth.
 
 | Phase | Recommended Model | Why |
 |-------|-------------------|-----|
 | `/planning` | **Opus** (`claude --model opus`) | Deep reasoning produces better plans |
 | `/execute` | **Sonnet** (`claude` default) | Balanced — follows plans well at lower cost |
-| `/code-review` | **Haiku** (via subagents) | Pattern matching at a fraction of the cost |
+| `/code-review` | **Sonnet** (via subagents) | 4 parallel agents, each covering one review dimension |
 | `/commit`, `/prime` | **Sonnet** (`claude` default) | General-purpose tasks |
 
 ```bash
@@ -349,7 +349,7 @@ graph TD
 
 **Each level gates the next.** Do not run expensive integration tests when a linting error would catch the issue in seconds. Do not request human review until automated checks pass clean.
 
-**Parallel Code Review.** `/code-review` launches 4 specialized Haiku agents simultaneously — type safety, security, architecture, and performance — each focused on one concern with its entire context window:
+**Parallel Code Review.** `/code-review` launches 4 specialized Sonnet agents simultaneously — type safety, security, architecture, and performance — each focused on one concern with its entire context window:
 
 ```mermaid
 graph LR
@@ -370,7 +370,7 @@ graph LR
     style REPORT fill:#27ae60,color:#fff
 ```
 
-40-50% faster than sequential review at ~40% the cost of a single Sonnet agent. Each agent catches issues a general reviewer might miss.
+40-50% faster than sequential review. Each agent catches issues a general reviewer might miss.
 
 **System evolution insight.** When validation catches an issue, do not just fix the code — fix the system that allowed the bug. Update the command, template, or rule that let it through. One-off fixes solve today; system updates solve forever. See `reference/validation-discipline.md` for the full methodology.
 
@@ -503,7 +503,7 @@ Each agent is a markdown file with a system prompt in `.claude/agents/`. The mai
 
 | Agent | Model | Purpose |
 |-------|-------|---------|
-| `research-codebase` | Haiku | Parallel codebase exploration — finds files, extracts patterns, reports findings |
+| `research-codebase` | Sonnet | Parallel codebase exploration — finds files, extracts patterns, reports findings |
 | `research-external` | Sonnet | Documentation search, best practices, version compatibility checks |
 
 ### Code Review Agents
@@ -512,17 +512,17 @@ These four run in parallel during `/code-review`, each checking a different dime
 
 | Agent | Model | What It Catches |
 |-------|-------|----------------|
-| `code-review-type-safety` | Haiku | Missing type hints, type checking errors, unsafe casts |
-| `code-review-security` | Haiku | SQL injection, XSS, exposed secrets, insecure data handling |
-| `code-review-architecture` | Haiku | Pattern violations, layer breaches, convention drift |
-| `code-review-performance` | Haiku | N+1 queries, inefficient algorithms, memory leaks, unnecessary computation |
+| `code-review-type-safety` | Sonnet | Missing type hints, type checking errors, unsafe casts |
+| `code-review-security` | Sonnet | SQL injection, XSS, exposed secrets, insecure data handling |
+| `code-review-architecture` | Sonnet | Pattern violations, layer breaches, convention drift |
+| `code-review-performance` | Sonnet | N+1 queries, inefficient algorithms, memory leaks, unnecessary computation |
 
 ### Utility Agents
 
 | Agent | Model | Purpose |
 |-------|-------|---------|
-| `plan-validator` | Haiku | Validates plan structure and completeness before `/execute` |
-| `test-generator` | Haiku | Analyzes changed code and suggests test cases following project patterns |
+| `plan-validator` | Sonnet | Validates plan structure and completeness before `/execute` |
+| `test-generator` | Sonnet | Analyzes changed code and suggests test cases following project patterns |
 
 ### Specialist Agents
 
