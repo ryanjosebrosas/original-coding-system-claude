@@ -4,16 +4,14 @@ README.md                              # Public-facing project README with PIV L
 AGENTS.md                              # Agent guidance for AI assistants
 LICENSE                                # MIT License
 .gitignore                             # Protects secrets, personal config, plans
-.coderabbit.yaml                       # CodeRabbit config template (copy to project root)
 memory.md                              # Cross-session memory (optional, from MEMORY-TEMPLATE.md)
-opencode.json                          # OpenCode CLI configuration (MCP servers, model settings)
 sections/                              # Auto-loaded rule sections (every session)
   01_core_principles.md                #   YAGNI, KISS, DRY, Limit AI Assumptions, ABP
   02_piv_loop.md                       #   Plan, Implement, Validate methodology (slim)
   03_context_engineering.md            #   4 Pillars: Memory, RAG, Prompts, Tasks
   04_git_save_points.md                #   Commit plans before implementing
   05_decision_framework.md             #   When to proceed vs ask
-  06_archon_workflow.md                #   Archon integration pointer (slim — loads reference/archon-workflow.md)
+  06_archon_workflow.md                #   Archon integration pointer (not @referenced — kept for reference only)
 reference/                             # On-demand guides (loaded when needed)
   archon-workflow.md                   #   Archon task management & RAG workflow
   layer1-guide.md                      #   How to build CLAUDE.md for real projects
@@ -25,6 +23,10 @@ reference/                             # On-demand guides (loaded when needed)
   implementation-discipline.md         #   Execute command, meta-reasoning, save states
   validation-discipline.md             #   5-level pyramid, code review, system review
   subagents-deep-dive.md               #   Subagents, context handoff, agent design framework
+  github-workflows/                    #   GitHub Actions workflow templates
+    claude-fix.yml                     #     Auto-fix workflow for Claude Code
+    claude-fix-coderabbit.yml          #     Auto-fix workflow with CodeRabbit integration
+    README.md                          #     Workflow setup instructions
 templates/
   PRD-TEMPLATE.md                      # Template for Layer 1 PRD (what to build)
   STRUCTURED-PLAN-TEMPLATE.md          # Template for Layer 2 plans (per feature)
@@ -38,6 +40,7 @@ requests/
   .gitkeep                             # Preserves directory in git (plans are gitignored)
   {feature}-plan.md                    # Layer 2: Feature plans go here
   system-reviews/                      # System review output directory
+.claude/settings.json                  # Hooks configuration (auto-compact memory recovery)
 .claude/commands/                      # Slash commands (reusable prompts)
   agents.md                            #   /agents — generate subagent definition files
   init-c.md                            # /init-c — generate CLAUDE.md for a new project
@@ -66,7 +69,7 @@ requests/
     examples/                          #   Example outputs
     scripts/                           #   Executable scripts
 .claude/agents/                        # Custom subagents (active, automatically loaded)
-  research-codebase.md                 #   Haiku codebase exploration agent
+  research-codebase.md                 #   Sonnet codebase exploration agent
   research-external.md                 #   Sonnet documentation research agent
   code-review-type-safety.md           #   Type safety reviewer (parallel review)
   code-review-security.md              #   Security vulnerability reviewer
