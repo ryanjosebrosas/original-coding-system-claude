@@ -215,6 +215,56 @@ Each command loads only what it needs. `/prime` establishes baseline context. `/
 
 ---
 
+## Context Recovery After Auto-Compact
+
+When the context window fills up, Claude Code compacts the conversation automatically to free space. Compaction summarizes the conversation, but summaries drop details: decisions from `memory.md`, architecture patterns, and session notes are not guaranteed to survive. The next prompt arrives in a session that has forgotten its own history.
+
+The system includes a `SessionStart` hook that detects compaction and re-injects `memory.md` automatically on resume, before your next prompt.
+
+```mermaid
+graph LR
+    FULL["Context Window Full"] --> COMPACT["Auto-Compact<br/>summarizes conversation"]
+    COMPACT --> RESUME["Session Resumes"]
+    RESUME --> HOOK["SessionStart Hook<br/>matcher: compact"]
+    HOOK --> MEM["memory.md injected<br/>into context"]
+    MEM --> PRIME["Run /prime<br/>for full inventory"]
+
+    style FULL fill:#e74c3c,color:#fff
+    style COMPACT fill:#e67e22,color:#fff
+    style RESUME fill:#f39c12,color:#fff
+    style HOOK fill:#8e44ad,color:#fff
+    style MEM fill:#4a90d9,color:#fff
+    style PRIME fill:#27ae60,color:#fff
+```
+
+**What gets recovered automatically:** `memory.md` content (key decisions, architecture patterns, gotchas, session notes).
+
+**What still requires `/prime`:** file structure map, command inventory, and agent list. Hooks inject text into context but cannot invoke slash commands, so `/prime` must be run manually after the compaction banner appears.
+
+The hook is defined in `.claude/settings.json` (project-level, committed). Anyone who clones the system gets it automatically.
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '=== Auto-compact occurred - memory context re-injected ===' && echo '' && cat \"$CLAUDE_PROJECT_DIR/memory.md\" && echo '' && echo 'Run /prime for full project structure, commands, and agent inventory.'"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+**After a compaction:** you will see the banner, your memory will already be loaded, and running `/prime` restores the rest.
+
+---
+
 ## Model Strategy
 
 The system separates thinking from doing. Use the right model for each phase:
