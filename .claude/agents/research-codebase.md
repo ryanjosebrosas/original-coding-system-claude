@@ -2,7 +2,6 @@
 name: research-codebase
 description: Use this agent for parallel codebase exploration during planning, file discovery, and pattern extraction. Rapidly finds relevant files, extracts patterns with line numbers, and reports structured findings.
 model: sonnet
-instance: cz
 tools: ["Read", "Glob", "Grep"]
 ---
 

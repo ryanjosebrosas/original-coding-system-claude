@@ -2,7 +2,6 @@
 name: code-review-architecture
 description: Reviews code for architecture compliance, design patterns, code organization, and adherence to project conventions
 model: sonnet
-instance: cz
 tools: ["Read", "Glob", "Grep"]
 ---
 

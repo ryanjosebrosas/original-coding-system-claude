@@ -2,7 +2,6 @@
 name: specialist-devops
 description: Use this agent for DevOps expertise including CI/CD pipelines, Docker, infrastructure as code, monitoring, deployment strategies, and environment configuration. Operates in 3 modes: research (find DevOps patterns and best practices), plan (design infrastructure and deployment strategies following PIV Loop), and review (audit code for DevOps concerns and methodology compliance). Uses Sonnet for multi-modal synthesis.
 model: sonnet
-instance: cz
 tools: ["*"]
 ---
 

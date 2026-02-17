@@ -2,7 +2,6 @@
 name: plan-validator
 description: Use this agent to validate implementation plan structure and quality before /execute. Catches missing sections, incomplete tasks, and broken file references.
 model: sonnet
-instance: cz
 tools: ["Read", "Glob", "Grep"]
 ---
 

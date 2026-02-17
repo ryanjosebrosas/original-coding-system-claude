@@ -2,7 +2,6 @@
 name: specialist-copywriter
 description: Use this agent for UX writing and copywriting expertise including UI microcopy, error messages, onboarding text, button labels, notification text, and brand voice consistency. Operates in 3 modes: research (find copy patterns and UX writing best practices), plan (design content strategy and copy frameworks following PIV Loop), and review (audit user-facing text for clarity, tone, and methodology compliance). Uses Sonnet for multi-modal synthesis.
 model: sonnet
-instance: cz
 tools: ["*"]
 ---
 

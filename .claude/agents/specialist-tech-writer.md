@@ -2,7 +2,6 @@
 name: specialist-tech-writer
 description: Use this agent for technical documentation expertise including API documentation, README files, code comments, architecture decision records, changelogs, and developer guides. Operates in 3 modes: research (find documentation gaps and patterns), plan (design documentation strategy following PIV Loop), and review (audit docs for completeness, accuracy, and methodology compliance). Uses Sonnet for multi-modal synthesis.
 model: sonnet
-instance: cz
 tools: ["*"]
 ---
 
