@@ -37,7 +37,6 @@ This is a **development methodology** — a structured collection of slash comma
 - **10 reference guides** loaded on-demand — consolidated, focused, no redundancy
 - **12 pre-built AI subagents** for parallel research, code review, and specialist tasks
 - **1 skill** for systematic planning methodology
-- **3 GitHub Action workflows** for AI-assisted issue resolution — 24/7 automation
 - A token-conscious architecture that keeps <10K tokens of system context, leaving the rest for your actual work
 
 ---
@@ -164,7 +163,6 @@ graph TD
     subgraph "External Integrations"
         MEM["memory.md<br/>cross-session context"]
         ARCHON["Archon MCP<br/>(optional)<br/>tasks + RAG"]
-        GH["GitHub Actions<br/>3 workflows<br/>8 prompt templates"]
     end
 
     CLAUDE -.->|"on-demand"| R
@@ -178,7 +176,6 @@ graph TD
     REQ -->|"/execute"| IMPL["Implementation"]
     IMPL -->|"/code-review"| AG
     IMPL -->|"/commit"| GIT["Git Save Points"]
-    GIT -->|"push"| GH
 
     style CLAUDE fill:#4a90d9,color:#fff
     style CMD fill:#7b68ee,color:#fff
@@ -265,26 +262,17 @@ graph TD
     M["Manual Prompts<br/><i>Start here</i>"] --> CMD["Slash Commands<br/>/prime, /planning, /execute"]
     CMD --> CHAIN["Chained Workflows<br/>/end-to-end-feature"]
     CHAIN --> SUB["Subagents<br/>Parallel research + review"]
-    SUB --> TEAM["Agent Teams<br/>Coordinated multi-agent"]
-    TEAM --> WT["Worktrees + Parallel<br/>Multi-branch development"]
-    WT --> REMOTE["Remote Automation<br/>GitHub Actions"]
 
     style M fill:#85c1e9,color:#000
     style CMD fill:#5dade2,color:#fff
     style CHAIN fill:#3498db,color:#fff
     style SUB fill:#2e86c1,color:#fff
-    style TEAM fill:#2874a6,color:#fff
-    style WT fill:#21618c,color:#fff
-    style REMOTE fill:#1b4f72,color:#fff
 ```
 
 - **Manual Prompts** — Use Claude Code with good prompts. Understand the base tool before adding structure.
 - **Slash Commands** — Structured reusable prompts. Master the core cycle: `/prime` -> `/planning` -> `/execute` -> `/commit`.
 - **Chained Workflows** — `/end-to-end-feature` chains the full PIV Loop autonomously. Only use after individual commands are trusted.
 - **Subagents** — Parallel research (5-10 agents) and code review (4 agents). Results flow one-way back to the main agent.
-- **Agent Teams** — Two-way communication between Claude instances. Contract-first spawning ensures parallel agents build against verified interfaces.
-- **Worktrees + Parallel** — Git isolation for independent features across multiple instances. `/parallel-e2e` runs multiple features simultaneously.
-- **Remote Automation** — GitHub Actions with AI-assisted issue resolution. `@claude-fix` on any issue triggers autonomous investigation and fix.
 
 **When to move up:** Prove the current tier works reliably across 5+ features before advancing. See `reference/system-foundations.md` for the full trust model.
 
@@ -425,20 +413,16 @@ Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
 | `/code-review-fix` | Applies fixes from code review findings | After code review surfaces issues |
 
 <details>
-<summary>Advanced Workflows (5 commands)</summary>
+<summary>Advanced Workflows (1 command)</summary>
 
 | Command | What It Does | When to Use |
 |---------|-------------|-------------|
 | `/end-to-end-feature` | Full autonomous pipeline: plan, implement, review, commit | Trusted, well-defined features |
-| `/team [plan]` | Coordinates multiple Claude instances with contract-first spawning | Complex features needing parallel agents |
-| `/new-worktree` | Creates isolated git worktrees for parallel branches | Multi-feature parallel development |
-| `/merge-worktrees` | Merges worktree branches back with validation gates | After parallel implementation |
-| `/parallel-e2e` | Runs multiple end-to-end features in parallel via worktrees | Batch feature development |
 
 </details>
 
 <details>
-<summary>Utilities (4 commands)</summary>
+<summary>Utilities (8 commands)</summary>
 
 | Command | What It Does | When to Use |
 |---------|-------------|-------------|
@@ -565,34 +549,6 @@ See `reference/subagents-deep-dive.md` for creating your own agents.
 
 ---
 
-## GitHub Automation
-
-### Included Workflows
-
-| Workflow | Trigger | What It Does |
-|----------|---------|-------------|
-| `claude-fix.yml` | `@claude-fix` comment on issue/PR | AI investigates and fixes the issue on a branch |
-| `coderabbit-approval-notify.yml` | CodeRabbit approves a PR | Notifies when automated review passes |
-| `coderabbit-auto-merge.yml` | CodeRabbit submits review | Auto-merges PRs that pass automated review |
-
-<details>
-<summary>8 Workflow Prompt Templates</summary>
-
-Pre-built prompts in `.github/workflows/prompts/` that give GitHub Actions Claude instances the same structured methodology:
-
-`prime-github.md` | `plan-feature-github.md` | `execute-github.md` | `rca-github.md` | `implement-fix-github.md` | `bug-fix-github.md` | `code-review-github.md` | `end-to-end-feature-github.md`
-
-</details>
-
-### Setup
-
-1. Add `CLAUDE_CODE_OAUTH_TOKEN` to repo secrets
-2. Add `AUTHORIZED_USERS` as a repository variable: `["your-username"]`
-3. Copy workflows to `.github/workflows/`
-4. Optionally configure `.coderabbit.yaml` for automated PR reviews
-
----
-
 ## Optional: Archon MCP
 
 [Archon MCP](https://github.com/coleam00/archon) provides task management and RAG search across sessions. **Completely optional** — all commands work without it. When available, it adds:
@@ -651,13 +607,6 @@ My-Coding-System/
 │   │   └── ...9 more agents...
 │   └── skills/                        # Cloud skills (1 skill)
 │       └── planning-methodology/
-│
-└── .github/
-    └── workflows/                     # GitHub Actions automation
-        ├── claude-fix.yml
-        ├── coderabbit-approval-notify.yml
-        ├── coderabbit-auto-merge.yml
-        └── prompts/                   # 8 workflow prompt templates
 ```
 
 ---
@@ -672,9 +621,7 @@ My-Coding-System/
 | Slash commands | 15 |
 | Subagents | 12 |
 | Cloud skills | 1 |
-| GitHub Action workflows | 3 |
-| Workflow prompt templates | 8 |
-| **Total system files** | **~63** |
+| **Total system files** | **~52** |
 | Auto-loaded context cost | ~2K tokens |
 | Typical session context | <10K tokens |
 
