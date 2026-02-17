@@ -32,13 +32,33 @@ This is a **development methodology** — a structured collection of slash comma
 
 ### What You Get
 
-- 21 slash commands that automate every phase of development — from planning to commit
-- 19 templates for plans, PRDs, agents, and validation reports — enforcing consistency across features
-- 26 reference guides loaded on-demand — deep knowledge without wasting context tokens
-- 12 pre-built AI subagents for parallel research, code review, and specialist tasks — 4x faster reviews
-- 5 cloud skills for parallel implementation and GitHub automation — scale beyond single-agent workflows
-- 3 GitHub Action workflows for AI-assisted issue resolution — 24/7 automation
+- **15 slash commands** that automate every phase of development — from planning to commit
+- **8 templates** for plans, PRDs, and agents — only the ones you will actually use
+- **10 reference guides** loaded on-demand — consolidated, focused, no redundancy
+- **12 pre-built AI subagents** for parallel research, code review, and specialist tasks
+- **1 skill** for systematic planning methodology
+- **3 GitHub Action workflows** for AI-assisted issue resolution — 24/7 automation
 - A token-conscious architecture that keeps <10K tokens of system context, leaving the rest for your actual work
+
+---
+
+## The Philosophy: Less Is More
+
+This system went through a major cleanup. We removed **15 files and 2,326 lines** of documentation. Here is why:
+
+**Why we removed things:**
+- 6 reference guides consolidated into others — one authoritative source per topic
+- 9 templates deleted — speculative templates nobody used
+- Empty directories removed — no dead ends
+
+**What you get instead:**
+- **Less cognitive load** — Fewer files means less to explore and understand
+- **No redundancy** — One guide per topic, not three overlapping ones
+- **Faster context loading** — Smaller codebase = faster AI comprehension
+- **Easier maintenance** — Fewer files to keep in sync
+- **Focused documentation** — Only what is actually used, nothing speculative
+
+The best documentation is documentation you can trust. When every guide is essential, you know where to look.
 
 ---
 
@@ -74,7 +94,7 @@ graph LR
 
 **Why fresh sessions matter.** Planning creates exploration context — options considered, tradeoffs weighed, research gathered. Execution needs clean context, not exploration baggage. The plan distills exploration into execution instructions. A fresh session with only the plan means the AI focuses on building, not rediscovering. *Vibe planning is good, vibe coding is not.*
 
-**Multiple small loops.** Don't build entire features in one pass. Each PIV loop covers one feature slice, built completely before moving on. Complex features (15+ tasks, 4+ phases) auto-decompose into sub-plans via `/planning`, each getting their own loop.
+**Multiple small loops.** Do not build entire features in one pass. Each PIV loop covers one feature slice, built completely before moving on. Complex features (15+ tasks, 4+ phases) auto-decompose into sub-plans via `/planning`, each getting their own loop.
 
 **The handoff.** The plan is the bridge between thinking and building — 700-1000 lines capturing architecture decisions, file paths, code patterns, gotchas, and atomic tasks. Each task has 7 fields (ACTION, TARGET, IMPLEMENT, PATTERN, IMPORTS, GOTCHA, VALIDATE) so the execution agent has zero ambiguity.
 
@@ -82,7 +102,7 @@ graph LR
 
 ## Context Engineering: How the AI Gets It Right
 
-The difference between 30% and 88% code acceptance isn't AI intelligence — it's context clarity. Every structured plan is built on four pillars that ensure the AI has exactly what it needs.
+The difference between 30% and 88% code acceptance is not AI intelligence — it is context clarity. Every structured plan is built on four pillars that ensure the AI has exactly what it needs.
 
 ```mermaid
 graph TD
@@ -110,7 +130,7 @@ graph TD
 
 **Memory** — Past decisions prevent repeated mistakes. `memory.md` persists across sessions: read at `/prime`, appended at `/commit`. Vibe planning conversations add short-term memory within a session.
 
-**RAG** — External docs and codebase patterns ensure the AI doesn't reinvent existing code. Archon MCP adds curated knowledge base search (optional). Always cite specific sections, not just "see the docs."
+**RAG** — External docs and codebase patterns ensure the AI does not reinvent existing code. Archon MCP adds curated knowledge base search (optional). Always cite specific sections, not just "see the docs."
 
 **Prompt Engineering** — Explicit solution statements and decisions from vibe planning eliminate guesswork. Bad context: "Add authentication." Good context: "Add JWT auth following the pattern in `src/auth/jwt.py:45-62`, storing tokens in HttpOnly cookies with 24-hour expiration."
 
@@ -131,14 +151,14 @@ graph TD
     end
 
     subgraph "On-Demand Context (loaded when needed)"
-        R["reference/<br/>26 deep guides"]
-        T["templates/<br/>19 templates"]
+        R["reference/<br/>10 deep guides"]
+        T["templates/<br/>8 templates"]
     end
 
     subgraph "Automation Layer"
-        CMD[".claude/commands/<br/>21 slash commands"]
+        CMD[".claude/commands/<br/>15 slash commands"]
         AG[".claude/agents/<br/>12 subagents"]
-        SK[".claude/skills/<br/>5 cloud skills"]
+        SK[".claude/skills/<br/>1 skill"]
     end
 
     subgraph "External Integrations"
@@ -174,8 +194,8 @@ Auto-loading everything would waste 20-30K tokens before any real work begins. T
 |-------|-----------|---------|
 | `CLAUDE.md` + 6 sections | ~2K tokens | Auto-loaded every session |
 | Slash commands | varies | Loaded only when invoked |
-| Reference guides (26) | varies | On-demand only |
-| Templates (19) | varies | On-demand only |
+| Reference guides (10) | varies | On-demand only |
+| Templates (8) | varies | On-demand only |
 | **Typical session total** | **<10K tokens** | Leaves ~100K+ for implementation |
 
 ### How Context Flows
@@ -238,7 +258,7 @@ See `reference/subagents-deep-dive.md` for model selection guidance.
 
 ## Learning Path: Trust Progression
 
-Don't try everything at once. The system unlocks capabilities progressively — each tier amplifies both good patterns and bad ones.
+Do not try everything at once. The system unlocks capabilities progressively — each tier amplifies both good patterns and bad ones.
 
 ```mermaid
 graph TD
@@ -259,7 +279,7 @@ graph TD
 ```
 
 - **Manual Prompts** — Use Claude Code with good prompts. Understand the base tool before adding structure.
-- **Slash Commands** — Structured reusable prompts. Master the core cycle: `/prime` → `/planning` → `/execute` → `/commit`.
+- **Slash Commands** — Structured reusable prompts. Master the core cycle: `/prime` -> `/planning` -> `/execute` -> `/commit`.
 - **Chained Workflows** — `/end-to-end-feature` chains the full PIV Loop autonomously. Only use after individual commands are trusted.
 - **Subagents** — Parallel research (5-10 agents) and code review (4 agents). Results flow one-way back to the main agent.
 - **Agent Teams** — Two-way communication between Claude instances. Contract-first spawning ensures parallel agents build against verified interfaces.
@@ -272,7 +292,7 @@ graph TD
 
 ## Validation: The 5-Level Pyramid
 
-Validation isn't an afterthought — it's the third pillar of the PIV Loop. A 5-level gated pyramid catches problems from syntax errors to architectural violations.
+Validation is not an afterthought — it is the third pillar of the PIV Loop. A 5-level gated pyramid catches problems from syntax errors to architectural violations.
 
 ```mermaid
 graph TD
@@ -288,7 +308,7 @@ graph TD
     style L5 fill:#e74c3c,color:#fff
 ```
 
-**Each level gates the next.** Don't run expensive integration tests when a linting error would catch the issue in seconds. Don't request human review until automated checks pass clean.
+**Each level gates the next.** Do not run expensive integration tests when a linting error would catch the issue in seconds. Do not request human review until automated checks pass clean.
 
 **Parallel Code Review.** `/code-review` launches 4 specialized Haiku agents simultaneously — type safety, security, architecture, and performance — each focused on one concern with its entire context window:
 
@@ -313,7 +333,7 @@ graph LR
 
 40-50% faster than sequential review at ~40% the cost of a single Sonnet agent. Each agent catches issues a general reviewer might miss.
 
-**System evolution insight.** When validation catches an issue, don't just fix the code — fix the system that allowed the bug. Update the command, template, or rule that let it through. One-off fixes solve today; system updates solve forever. See `reference/validation-discipline.md` for the full methodology.
+**System evolution insight.** When validation catches an issue, do not just fix the code — fix the system that allowed the bug. Update the command, template, or rule that let it through. One-off fixes solve today; system updates solve forever. See `reference/validation-discipline.md` for the full methodology.
 
 ---
 
@@ -389,9 +409,9 @@ Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
 
 ---
 
-## All 21 Slash Commands
+## All 15 Slash Commands
 
-21 slash commands automate every phase. The core 6 cover 90% of daily development — expand below for advanced workflows and utilities.
+15 slash commands automate every phase. The core 6 cover 90% of daily development — expand below for advanced workflows and utilities.
 
 ### Core Workflow
 
@@ -418,7 +438,7 @@ Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
 </details>
 
 <details>
-<summary>Utilities (10 commands)</summary>
+<summary>Utilities (4 commands)</summary>
 
 | Command | What It Does | When to Use |
 |---------|-------------|-------------|
@@ -430,8 +450,6 @@ Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
 | `/init-c` | Generates a customized `CLAUDE.md` for a new project | New project setup |
 | `/agents` | Creates a new custom subagent definition file | Extending the system with new agents |
 | `/system-review` | Audits system state for divergence between plan and reality | Periodic system health checks |
-| `/setup-github-automation` | Full GitHub Actions and secrets configuration | First-time GitHub automation setup |
-| `/quick-github-setup` | Streamlined GitHub automation using existing scripts | Fast GitHub setup |
 
 </details>
 
@@ -489,15 +507,11 @@ See `reference/subagents-deep-dive.md` for creating your own agents.
 ## System Components
 
 <details>
-<summary>5 Cloud Skills</summary>
+<summary>1 Cloud Skill</summary>
 
 | Skill | Purpose |
 |-------|---------|
-| `agent-teams` | Coordinated multi-agent implementation with contract-first spawning |
 | `planning-methodology` | 6-phase systematic planning with parallel research |
-| `worktree-management` | Git worktree lifecycle for parallel feature branches |
-| `parallel-implementation` | End-to-end parallel development via worktrees and headless instances |
-| `github-automation` | GitHub Actions setup, CodeRabbit integration, workflow configuration |
 
 </details>
 
@@ -551,23 +565,6 @@ See `reference/subagents-deep-dive.md` for creating your own agents.
 
 ---
 
-## Agent Teams
-
-For features too complex for a single Claude instance, Agent Teams coordinates multiple instances with **contract-first spawning** — upstream agents publish interfaces before downstream agents start building, ensuring parallel agents build against verified contracts instead of assumptions.
-
-```bash
-# Plan the feature (Opus recommended for deep reasoning)
-claude --model opus
-> /planning my-feature
-
-# Execute with a coordinated team (Sonnet recommended for speed)
-> /team requests/my-feature-plan.md
-```
-
-The system handles team sizing, task decomposition, spawn prompts, and WSL+tmux orchestration automatically. See `reference/agent-teams-overview.md` for the full architecture.
-
----
-
 ## GitHub Automation
 
 ### Included Workflows
@@ -593,8 +590,6 @@ Pre-built prompts in `.github/workflows/prompts/` that give GitHub Actions Claud
 2. Add `AUTHORIZED_USERS` as a repository variable: `["your-username"]`
 3. Copy workflows to `.github/workflows/`
 4. Optionally configure `.coderabbit.yaml` for automated PR reviews
-
-See `reference/github-integration.md` for the full setup guide, or run `/setup-github-automation` for automated configuration.
 
 ---
 
@@ -672,14 +667,14 @@ My-Coding-System/
 | Component | Count |
 |-----------|-------|
 | Core methodology sections | 6 |
-| Reference guides | 26 |
-| Reusable templates | 19 |
-| Slash commands | 21 |
+| Reference guides | 10 |
+| Reusable templates | 8 |
+| Slash commands | 15 |
 | Subagents | 12 |
-| Cloud skills | 5 |
+| Cloud skills | 1 |
 | GitHub Action workflows | 3 |
 | Workflow prompt templates | 8 |
-| **Total system files** | **~100** |
+| **Total system files** | **~63** |
 | Auto-loaded context cost | ~2K tokens |
 | Typical session context | <10K tokens |
 
