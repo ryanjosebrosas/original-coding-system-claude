@@ -43,12 +43,13 @@ This is a **development methodology** — a structured collection of slash comma
 
 ## The Philosophy: Less Is More
 
-This system went through a major cleanup. We removed **15 files and 2,326 lines** of documentation. Here is why:
+This system went through two rounds of cleanup, removing **55+ files** across commands, skills, references, templates, and config. Here is why:
 
-**Why we removed things:**
+**What was removed:**
 - 6 reference guides consolidated into others — one authoritative source per topic
-- 9 templates deleted — speculative templates nobody used
-- Empty directories removed — no dead ends
+- 9 speculative templates nobody used — YAGNI applied to documentation
+- Features with no active use: cross-CLI orchestration, worktrees, agent teams, GitHub automation, remote system guides, MCP skills guides
+- Config files for unused tools (CodeRabbit, githooks, opencode)
 
 **What you get instead:**
 - **Less cognitive load** — Fewer files means less to explore and understand
@@ -383,7 +384,7 @@ Fork or clone this repo, then build your application inside it. All slash comman
 ### Option B: Copy Into an Existing Project
 ```bash
 cp -r sections/ reference/ templates/ requests/ your-project/
-cp CLAUDE.md AGENTS.md .coderabbit.yaml your-project/
+cp CLAUDE.md AGENTS.md your-project/
 cp -r .claude/ your-project/
 cp templates/MEMORY-TEMPLATE.md your-project/memory.md
 ```
@@ -568,7 +569,6 @@ My-Coding-System/
 ├── CLAUDE.md                          # Auto-loaded rules (~2K tokens)
 ├── AGENTS.md                          # Agent guidance for AI assistants
 ├── LICENSE                            # MIT License
-├── .coderabbit.yaml                   # CodeRabbit PR review configuration
 ├── .gitignore                         # Protects secrets, memory, plans
 ├── memory.md                          # Cross-session memory (gitignored)
 │
