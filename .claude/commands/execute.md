@@ -24,6 +24,9 @@ Read the plan file.
 
 - Read the ENTIRE plan carefully — all tasks, dependencies, validation commands, testing strategy
 - Check `memory.md` for gotchas related to this feature area
+- **Derive feature name** from the plan path: strip directory prefix and `-plan.md` suffix.
+  Example: `requests/user-auth-plan.md` → `user-auth`. For plan series: `requests/big-feature-plan-overview.md` → `big-feature`.
+  Store this — you'll use it when saving the execution report.
 
 ### 1.25. Plan Validation (optional)
 
@@ -84,24 +87,55 @@ Check off met items in ACCEPTANCE CRITERIA (`- [ ]` → `- [x]`) and COMPLETION 
 
 ## Output Report
 
-### Completed Tasks
-- List all tasks completed, files created, files modified
+Save this report to: `requests/execution-reports/{feature}-report.md`
 
-### Tests Added
-- Test files, test cases, results
+Use the feature name derived in Step 1. Create the `requests/execution-reports/` directory if it doesn't exist.
+
+**IMPORTANT**: Save the report to the file FIRST, then also display it inline for the user. The saved file is consumed by `/system-review`.
+
+---
+
+### Meta Information
+
+- **Plan file**: {path to the plan that guided this implementation}
+- **Files added**: {list with full paths, or "None"}
+- **Files modified**: {list with full paths}
+
+### Completed Tasks
+
+For each task in the plan:
+- Task N: {brief description} — {completed / skipped with reason}
+
+### Divergences from Plan
+
+For each divergence (if any):
+- **What**: {what changed from the plan}
+- **Planned**: {what the plan specified}
+- **Actual**: {what was implemented instead}
+- **Reason**: {why the divergence occurred}
+
+If no divergences: "None — implementation matched plan exactly."
 
 ### Validation Results
+
 ```bash
-# Output from each validation command
+# Output from each validation command run in Step 4
 ```
 
+### Tests Added
+
+- {test files created, number of test cases, pass/fail status}
+- If no tests: "No tests specified in plan."
+
+### Issues & Notes
+
+- {any issues not addressed in the plan}
+- {challenges encountered during implementation}
+- {recommendations for plan or process improvements}
+- If none: "No issues encountered."
+
 ### Ready for Commit
-- Confirm all changes complete and validations pass
-- Ready for `/commit`
 
-## Notes
-
-- Document issues not addressed in the plan
-- Explain any deviations from the plan
-- Fix failing tests before completing
-- Don't skip validation steps
+- All changes complete: {yes/no}
+- All validations pass: {yes/no}
+- Ready for `/commit`: {yes/no — if no, explain what's blocking}

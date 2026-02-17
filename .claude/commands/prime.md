@@ -8,11 +8,14 @@ Load project context using parallel agents for speed and context isolation. Each
 
 ## Step 1: Detect Context Mode
 
-Check for code directories using Glob patterns:
-- `src/`, `app/`, `frontend/`, `backend/`, `lib/`, `api/`, `server/`, `client/`
+Check for code directories using a **single** Glob call with brace expansion:
 
-**If ANY exist** → **Codebase Mode** (go to Step 2B)
-**If NONE exist** → **System Mode** (go to Step 2A)
+```
+{src,app,frontend,backend,lib,api,server,client}/**
+```
+
+**If ANY files found** → **Codebase Mode** (go to Step 2B)
+**If no files found** → **System Mode** (go to Step 2A)
 
 ---
 
