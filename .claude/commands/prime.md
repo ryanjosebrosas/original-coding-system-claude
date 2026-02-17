@@ -199,10 +199,14 @@ Launch ALL of the following Task agents **simultaneously**:
 - **subagent_type**: `Explore`
 - **description**: "Read project README"
 - **prompt**: |
-    Read README.md if it exists. Extract the project's purpose, description, and any setup instructions.
-    If no README exists, return "No README.md found."
+    Read README.md if it exists. If no README exists, return "No README.md found."
 
-    Return ONLY a brief summary (2-3 bullet points) of what this project is about. This will be used to fill the Project Overview section.
+    Return ONLY this formatted section (nothing else):
+
+    ### README Summary
+    - **Purpose**: {what this project does — 1 sentence}
+    - **Key Capabilities**: {main features — comma-separated list}
+    - **Setup**: {setup instructions summary, or "None specified"}
 
 ### Agent 5: Memory Context (Haiku)
 - **subagent_type**: `Explore`
@@ -243,7 +247,7 @@ After ALL agents return, assemble the Prime Context Report:
 1. Start with `# Prime Context Report`
 2. Add each agent's returned section in this order:
    - **System Mode**: Detection → Project Overview → Current State → Memory Context → Available Resources (Commands + Agents + Skills) → Suggested Next Steps
-   - **Codebase Mode**: Detection → Project Overview → Architecture → Tech Stack → Core Principles → Dependencies & Tooling → Current State → Memory Context → Suggested Next Steps
+   - **Codebase Mode**: Detection → Project Overview (merge Agent 3's overview with Agent 4's README Summary into one section) → Architecture → Tech Stack → Core Principles → Dependencies & Tooling → Current State → Memory Context → Suggested Next Steps
 3. Add a `## Suggested Next Steps` section — synthesize from Current State + Memory Context to suggest what to work on next
 4. Present the assembled report to the user
 

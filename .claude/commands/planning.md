@@ -64,37 +64,77 @@ Read `templates/STRUCTURED-PLAN-TEMPLATE.md` now — it defines the exact struct
 
 ---
 
-## PHASE 2: Codebase Intelligence (Sequential Exploration)
+## PHASE 2: Codebase Intelligence (Parallel Agents)
 
 **Goal**: Fill → Relevant Codebase Files, New Files to Create, Patterns to Follow
 
-Explore the codebase directly using Glob and Grep tools. Do NOT spawn research agents.
+After Phase 1 scopes the feature, launch **2 parallel Task agents** for codebase research. Craft each agent's prompt dynamically using the feature description, systems affected, and keywords from Phase 1.
 
-1. **Find similar implementations** — use Grep to locate patterns, document file paths WITH line numbers
-2. **Map integration points** — what existing files change, what new files to create
-3. **Extract project patterns** (naming, error handling, logging, types, testing, API, DB)
+**Launch simultaneously with Phase 3 and 3b agents** — all research agents run in parallel.
 
-**Key files to examine**:
-- Entry points (main.py, index.ts, app.py)
-- Configuration files (package.json, pyproject.toml)
-- Existing similar features
+### Agent A: Similar Implementations & Integration Points (Sonnet)
+- **subagent_type**: `general-purpose`
+- **model**: `sonnet`
+- **description**: "Find similar code and integration points"
+- **Dynamic prompt must include**:
+  - The feature description and systems affected from Phase 1
+  - Specific Grep/Glob queries for relevant patterns (file types, function names, route patterns)
+  - Instruction: "Document all relevant file paths WITH line numbers"
+  - Instruction: "Identify which existing files need changes and what new files to create"
+  - Instruction: "Return free-form findings with code snippets and file:line references"
+
+### Agent B: Project Patterns & Conventions (Sonnet)
+- **subagent_type**: `general-purpose`
+- **model**: `sonnet`
+- **description**: "Extract project patterns"
+- **Dynamic prompt must include**:
+  - Instruction to read 2-3 representative files in the feature area
+  - Extract: naming conventions, error handling, logging, type patterns, testing approach
+  - Include actual code snippets with file:line references
+  - Note conventions the new feature must follow
+  - Instruction: "Return free-form findings — no specific format required"
+
+**Fallback**: If the feature is trivially simple (1-2 file changes, obvious pattern), skip agents and explore directly with Glob/Grep.
 
 ---
 
-## PHASE 3: External Research (Direct Lookup)
+## PHASE 3: External Research (Parallel Agent)
 
 **Goal**: Fill → Relevant Documentation
 
-Search for documentation directly using WebSearch and WebFetch. Do NOT spawn research agents.
+Launch **1 agent** simultaneously with Phase 2 agents. Skip if no external dependencies are involved (internal-only changes).
 
-1. **Library/framework docs** — find official docs, specific sections needed
-2. **Best practices** — expert recommendations for this feature type
-3. **Version compatibility** — current versions, breaking changes, migration guides
-4. **Gotchas** — what doesn't work as expected
+### Agent C: Documentation & Best Practices (Sonnet)
+- **subagent_type**: `general-purpose`
+- **model**: `sonnet`
+- **description**: "Research external docs and best practices"
+- **Dynamic prompt must include**:
+  - The specific libraries, frameworks, or APIs involved from Phase 1
+  - Instruction: "Find official documentation with specific section links"
+  - Instruction: "Check version compatibility and note any breaking changes"
+  - Instruction: "Identify known gotchas and recommended patterns"
+  - Instruction: "Return free-form findings with doc URLs and relevant excerpts"
 
-## PHASE 3b: Archon RAG Research (if available)
+**Fallback**: If purely internal changes with no external dependencies, skip this agent and note "No external research needed."
 
-**Archon** (if available): Search with SHORT queries (2-5 keywords). Use `rag_get_available_sources()`, then `rag_search_knowledge_base(query="...", source_id="...", match_count=5)` and `rag_search_code_examples(query="...", match_count=3)`. Fallback to web search if no results.
+## PHASE 3b: Archon RAG Research (Parallel Agent)
+
+**Goal**: Fill → Relevant Documentation (from knowledge base)
+
+Launch **1 agent** simultaneously with Phase 2 and Phase 3 agents. Skip if Archon MCP tools are not available.
+
+### Agent D: Archon Knowledge Base (Sonnet)
+- **subagent_type**: `general-purpose`
+- **model**: `sonnet`
+- **description**: "Search Archon RAG knowledge base"
+- **Dynamic prompt must include**:
+  - The feature description and key technologies from Phase 1
+  - Instruction: "Use `rag_get_available_sources()` to discover available knowledge bases"
+  - Instruction: "Search with SHORT queries (2-5 keywords) using `rag_search_knowledge_base(query='...', source_id='...', match_count=5)`"
+  - Instruction: "Search for code examples using `rag_search_code_examples(query='...', match_count=3)`"
+  - Instruction: "Return free-form findings with source references and relevant excerpts"
+
+**Fallback**: If Archon MCP tools are not available, skip this agent. The main agent falls back to web search if needed.
 
 ### Phase 2c: Memory Search (if memory.md exists)
 
@@ -104,7 +144,13 @@ Read memory.md for past decisions, gotchas, and patterns relevant to this featur
 
 ## PHASE 3c: Research Validation
 
-Cross-check key findings — do code patterns still exist? Are library versions current? Are referenced files accurate? Flag contradictions. Do targeted follow-up if critical research is missing.
+After all agents return, validate their findings in the main conversation:
+
+1. **Verify file references** — spot-check that cited file:line locations exist and contain what agents described
+2. **Cross-check agents** — do Agent A and B findings align? Any contradictions about patterns or conventions?
+3. **Validate external research** — are Agent C's library versions current? Are doc links valid?
+4. **Validate RAG results** — are Agent D's knowledge base findings relevant and current? Cross-reference with Agent A/B codebase findings.
+5. **Fill gaps** — if critical research is missing, do targeted follow-up directly with Glob/Grep/WebSearch
 
 ---
 
@@ -112,7 +158,7 @@ Cross-check key findings — do code patterns still exist? Are library versions 
 
 **Goal**: Fill → Implementation Plan (phases), Testing Strategy, Acceptance Criteria
 
-1. **Synthesize validated research** from Phases 2, 3, & 3b
+1. **Synthesize agent findings and validated research** from Phases 2, 3, 3b, & 2c — aggregate free-form agent output (Agents A-D) into the template's Context References sections (Relevant Codebase Files, Patterns to Follow, Relevant Documentation)
 2. **Design implementation approach**: fit with existing architecture, dependency ordering, phases (Foundation → Core → Integration → Testing)
 3. **Plan testing strategy**: unit tests, integration tests, edge cases
 4. **Define acceptance criteria**: specific, measurable, includes functional requirements + test coverage + pattern compliance
