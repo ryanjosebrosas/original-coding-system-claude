@@ -64,50 +64,28 @@ Read `templates/STRUCTURED-PLAN-TEMPLATE.md` now — it defines the exact struct
 
 ---
 
-## PHASE 2 & 3: Research (RUN IN PARALLEL)
-
-### Research Mode Selection
-
-**If custom agents exist** in `.claude/agents/`: Use **Parallel Research Mode** (5-10 agents)
-**If not**: Use **Standard Research Mode** (2 built-in agents)
-
-```bash
-ls .claude/agents/research-*.md 2>/dev/null | wc -l
-```
-
----
-
-### PARALLEL RESEARCH MODE (Preferred)
-
-**Step 1: Generate Research Queries**
-
-Break feature into research dimensions. Generate 5-10 focused queries (2-5 keywords each), split between codebase and external.
-
-**Step 2: Launch Parallel Agents**
-
-Launch up to 5 codebase (@research-codebase) + 5 external (@research-external) agents with focused queries. Scale: Low=2-4, Medium=4-6, High=6-10 agents total.
-
-**Step 3: Combine Results**
-
-Combine codebase findings into "Relevant Codebase Files" and "Patterns to Follow". Combine external into "Relevant Documentation". Deduplicate. Verify file references include line numbers.
-
----
-
-### STANDARD RESEARCH MODE (Fallback)
-
-Launch two Task agents simultaneously:
-
-#### Phase 2: Codebase Intelligence → Task agent (Explore)
+## PHASE 2: Codebase Intelligence (Sequential Exploration)
 
 **Goal**: Fill → Relevant Codebase Files, New Files to Create, Patterns to Follow
 
-1. **Find similar implementations** — document file paths WITH line numbers
+Explore the codebase directly using Glob and Grep tools. Do NOT spawn research agents.
+
+1. **Find similar implementations** — use Grep to locate patterns, document file paths WITH line numbers
 2. **Map integration points** — what existing files change, what new files to create
 3. **Extract project patterns** (naming, error handling, logging, types, testing, API, DB)
 
-#### Phase 3: External Research → Task agent (general-purpose)
+**Key files to examine**:
+- Entry points (main.py, index.ts, app.py)
+- Configuration files (package.json, pyproject.toml)
+- Existing similar features
+
+---
+
+## PHASE 3: External Research (Direct Lookup)
 
 **Goal**: Fill → Relevant Documentation
+
+Search for documentation directly using WebSearch and WebFetch. Do NOT spawn research agents.
 
 1. **Library/framework docs** — find official docs, specific sections needed
 2. **Best practices** — expert recommendations for this feature type

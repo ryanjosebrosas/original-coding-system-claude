@@ -50,15 +50,6 @@ Every command should answer:
 **Autonomous (use only when individual commands are trusted):**
 - `/end-to-end-feature [description]` — Chains prime → planning → execute → commit
 
-**Parallel (requires proven worktree commands):**
-- `/parallel-e2e [feature A | feature B | ...]` — Parallel end-to-end: prime → plan all → worktrees → execute in parallel via `claude -p` → merge → commit → PR
-
-**Agent Teams (requires proven worktree + parallel commands):**
-- `/team [feature-description or plan-path]` — Orchestrate Agent Teams for contract-first multi-agent implementation with auto-worktrees, delegate mode, and contract relay
-
-**Cross-CLI Orchestration (requires tmux workspace):**
-- `/delegate <opencode|codex> "task" [--fire|--wait|--capture]` — Delegate task to OpenCode or Codex via tmux with optional output capture and context forwarding
-
 All core commands integrate with `memory.md` (if it exists) for cross-session memory. `/prime` and `/planning` read, `/commit` updates.
 
 ### Skills vs Commands
@@ -107,15 +98,13 @@ Commands are designed to work independently AND as workflows:
 ### Trust Progression
 
 ```
-Manual → Commands → Chained → Subagents → Worktrees → Teams / Cross-CLI → Remote
-     ↑ trust & verify ↑  ↑ trust & verify ↑  ↑ trust & verify ↑  ↑ trust & verify ↑
+Manual → Commands → Chained → Subagents
+     ↑ trust & verify ↑  ↑ trust & verify ↑  ↑ trust & verify ↑
 ```
 
 **Before creating commands**: You've manually prompted the same task 3+ times successfully, you know what instructions work, the pattern is stable.
 
 **Before chaining commands**: Each individual command works reliably, you've run the full workflow manually 10+ times, you trust each step's output without checking.
-
-**Before parallel chaining**: Your `/end-to-end-feature`, `/new-worktree`, and `/merge-worktrees` commands are each proven reliable. Features are isolated (vertical slice architecture).
 
 Don't skip stages. Prematurely chaining commands leads to unpredictable results and difficult debugging.
 

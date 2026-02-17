@@ -409,7 +409,7 @@ For the full step-by-step creation walkthrough, see `reference/subagents-guide.m
 ### Trust Progression
 
 ```
-Manual → Commands → Chained → Subagents → Worktrees → Remote
+Manual → Commands → Chained → Subagents
   ↑ trust & verify ↑  ↑ trust & verify ↑  ↑ trust & verify ↑
 ```
 
@@ -527,7 +527,6 @@ These mistakes appear frequently when creating your first agents:
 4. Try Exercise 1 — create your first custom agent (system reviewer)
 5. Try Exercise 2 — parallelize to experience the speed improvement firsthand
 6. Read `reference/implementation-discipline.md` for execution discipline that feeds agent workflows
-7. Move to the Git Worktrees guide (see `reference/git-worktrees-parallel.md`) to learn code-level isolation — complementing subagents' context-level isolation
 
 ---
 
@@ -538,7 +537,6 @@ These mistakes appear frequently when creating your first agents:
 - **Agent template**: `templates/AGENT-TEMPLATE.md` — starter template for new agents
 - **Pre-installed agents**: `.claude/agents/` — 12 agents across 4 categories (research, code review, utility, specialist)
 - **Execution discipline**: `reference/implementation-discipline.md` — prerequisite concepts for agent workflows
-- **GitHub integration**: `reference/github-orchestration.md` — remote agent workflows via GitHub Actions
 
 ---
 
@@ -550,6 +548,4 @@ These mistakes appear frequently when creating your first agents:
 - Three parallel execution patterns and the 10-agent concurrency limit
 - The decision framework for when subagents justify their overhead
 - How to create custom agents with frontmatter and structured output
-- Integration patterns with commands and the extended trust progression
-
-**Next**: Learn how Git Worktrees provide code-level isolation for parallel implementation — complementing subagents' context-level isolation for a complete parallel development toolkit. See `reference/git-worktrees-parallel.md`.
+- Integration patterns with commands and the trust progression

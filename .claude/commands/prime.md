@@ -6,37 +6,62 @@ description: Prime agent with codebase understanding
 
 ## Process
 
-### 1. Analyze Project Structure
+### 1. Detect Context Mode
 
-Scan the project using Glob patterns, NOT `git ls-files`:
-- `**/*.{py,ts,js,tsx,jsx,go,rs}` — source code entry points
-- `**/package.json`, `**/pyproject.toml`, `**/Cargo.toml` — config files
-- `**/README.md` — documentation
+Check for code directories using Glob patterns:
+- `src/`, `app/`, `frontend/`, `backend/`, `lib/`, `api/`, `server/`, `client/`
 
-For each match, note the file but do NOT read it yet. Build a mental map of the project.
+**If ANY exist**: This is **Codebase Mode** — focus on source code entry points.
+**If NONE exist**: This is **System Mode** — focus on methodology/documentation files.
 
-### 2. Read Core Documentation
+Report the detected mode and what signals triggered it.
+
+### 2. Analyze Project Structure
+
+**System Mode**:
+- List all `.md` files in root, `sections/`, `reference/`, `.claude/`
+- Identify commands, agents, skills, templates
+
+**Codebase Mode**:
+- Scan using Glob: `**/*.{py,ts,js,tsx,jsx,go,rs}`
+- Find config files: `**/package.json`, `**/pyproject.toml`, `**/Cargo.toml`
+- Build a mental map without reading yet
+
+If `tree` is available, show structure:
+!`tree -L 3 -I 'node_modules|__pycache__|.git|dist|build' 2>/dev/null || ls -la`
+
+### 3. Read Core Documentation
 
 > CLAUDE.md and sections/ are ALREADY auto-loaded. Do NOT re-read them.
 
-Read ONLY files that are NOT auto-loaded:
-- `memory.md` (if exists) — cross-session context
-- Main entry points identified in Step 1 (main.py, index.ts, etc.)
-- Core config files (package.json, pyproject.toml, etc.)
+**Always read**:
+- `memory.md` (if exists) — FULL content, this is cross-session context
 
-Skip: README.md (use git log + file structure to understand the project instead)
-Skip: AGENTS.md (loaded by Claude Code separately)
+**System Mode additional**:
+- List `.claude/commands/` and `.claude/agents/` with descriptions
 
-### 3. Identify Key Files
+**Codebase Mode additional**:
+- Main entry points (main.py, index.ts, app.py)
+- Core config files (package.json, pyproject.toml)
+- README.md (for project overview)
 
-Based on the structure, identify (but only read if NOT auto-loaded):
+**Skip**: AGENTS.md (loaded by Claude Code separately)
+
+Limit: Read at most 5 files total. Prioritize by importance.
+
+### 4. Identify Key Files
+
+**System Mode**:
+- List commands with their descriptions
+- List agents with their purposes
+- List available skills
+
+**Codebase Mode**:
 - Main entry points
 - Core configuration files
 - Key model/schema definitions
 
-Limit: Read at most 5 files total. Prioritize by importance.
-
-### 4. Understand Current State
+### 5. Understand Current State
 
 Check recent activity:
 !`git log -10 --oneline`
@@ -44,34 +69,50 @@ Check recent activity:
 Check current branch and status:
 !`git status`
 
-### 5. Surface Active Tasks (if Archon available)
-
-Query for in-progress tasks ONLY:
-1. `find_tasks(filter_by="status", filter_value="doing")`
-2. Display as compact list: `[project] task title (status)`
-
-Skip: todo tasks (user knows their backlog)
-Skip: Archon RAG source listing (not needed for priming)
-Skip: Archon RAG search queries (save for /planning)
-
 ## Output Report
 
-Provide a CONCISE summary (aim for 20-30 lines max):
+Provide a **COMPREHENSIVE** report (50-80 lines) that is LLM-ready for handoff:
 
-### Project Overview
-- Type, tech stack, current state (3-5 bullets)
+```markdown
+# Prime Context Report
 
-### Architecture
-- Key directories and patterns (3-5 bullets)
+## Detection
+- **Mode**: {System|Codebase}
+- **Signals**: {what directories/patterns triggered this mode}
 
-### Current State
-- Branch, recent commits, git status summary
+## Project Overview
+- **Type**: {project description - what this project is for}
+- **Tech Stack**: {languages, frameworks, build tools}
+- **Structure**: {key directories and their purposes}
+- **Entry Points**: {main files - codebase mode only}
 
-### Memory Context
-- Key decisions and gotchas from memory.md (3-5 bullets)
-- Memory health: last session date + staleness warning if >7 days
+## Architecture
+- {Key patterns and conventions}
+- {Important architectural decisions}
+- {How components interact}
 
-### Active Tasks
-- Archon doing tasks (or "No active tasks")
+## Current State
+- **Branch**: {name}
+- **Status**: {git status summary}
+- **Recent Work**: {last 10 commits with brief descriptions}
 
-**Keep it SHORT. The user will ask for details if needed.**
+## Memory Context
+- **Last Session**: {date from memory.md}
+- **Key Decisions**: {bullet list from memory.md Key Decisions section}
+- **Active Patterns**: {from memory.md Architecture Patterns section}
+- **Gotchas**: {from memory.md Gotchas section}
+- **Memory Health**: {staleness warning if last session >7 days}
+
+## Available Resources
+### Commands
+{List each command with brief description}
+
+### Agents
+{List each agent with brief description}
+
+## Suggested Next Steps
+- {Based on current state and memory context}
+- {What tasks might be in progress or pending}
+```
+
+**Key principle**: The output should be comprehensive enough that a fresh LLM session can pick up full context without additional exploration. "Handoff-ready" means another agent can continue work immediately.

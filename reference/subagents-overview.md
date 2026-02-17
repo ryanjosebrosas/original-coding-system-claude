@@ -41,23 +41,7 @@ Up to 10 concurrent subagents — this is the real power. Instead of one agent r
 
 Warning: many agents returning detailed results can consume significant main context. Keep agent outputs concise, or use file-based reports where agents save findings to disk instead of returning them inline.
 
-### Agent Teams (Coordinated Multi-Agent Implementation)
-
-Agent Teams are a separate capability from subagents. They enable **two-way communication** between Claude Code instances via a shared task list and mailbox. The lead agent orchestrates teammates using **contract-first spawning** — upstream agents publish interface contracts before downstream agents begin.
-
-Key difference: subagents provide **isolation** (one-way results back to main), Agent Teams provide **collaboration** (shared tasks, inter-agent messaging, contract relay).
-
-| Aspect | Subagents | Agent Teams |
-|--------|-----------|-------------|
-| Communication | One-way (results to main) | Two-way (shared task list + mailbox) |
-| Coordination | Main agent manages | Lead orchestrates via delegate mode |
-| File isolation | None | Via worktrees (auto-created) |
-| Token cost | Low | 2-4x higher |
-| Best for | Research, analysis, code review | Coordinated implementation |
-
-**Rule of thumb**: Subagents for research, Agent Teams for implementation. Don't use Agent Teams for tasks that don't require inter-agent coordination — it wastes tokens.
-
-See `reference/agent-teams-overview.md` for the full Agent Teams guide.
+### Output Format: The Primary Control Lever
 
 ### Output Format: The Primary Control Lever
 
@@ -149,8 +133,8 @@ Use ALL together: commands orchestrate, skills provide knowledge, agents do the 
 ### Trust Progression (Complete)
 
 ```
-Manual → Commands → Chained → Subagents → Worktrees → Agent Teams → Remote
-  ↑ trust & verify ↑  ↑ trust & verify ↑  ↑ trust & verify ↑  ↑ trust & verify ↑
+Manual → Commands → Chained → Subagents
+  ↑ trust & verify ↑  ↑ trust & verify ↑  ↑ trust & verify ↑
 ```
 
 Before creating subagents: your manual prompts for the task work reliably. Before parallelizing: your single-agent workflow produces consistent results. Don't skip stages.
