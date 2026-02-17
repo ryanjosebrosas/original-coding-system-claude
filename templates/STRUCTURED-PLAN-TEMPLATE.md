@@ -147,6 +147,10 @@ As a {user type}, I want to {action}, so that {benefit}.
 >
 > **Action keywords**: CREATE (new files), UPDATE (modify existing), ADD (insert new functionality),
 > REMOVE (delete deprecated code), REFACTOR (restructure without changing behavior), MIRROR (copy pattern from elsewhere)
+>
+> **Tip**: For text-centric changes (templates, commands, configs), include exact **Current** / **Replace with**
+> content blocks in IMPLEMENT. This eliminates ambiguity and achieves higher plan-to-implementation fidelity
+> than prose descriptions. See `reference/piv-loop-practice.md` Section 3 for guidance.
 
 ### {ACTION} {target_file_path}
 
