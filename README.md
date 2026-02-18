@@ -217,14 +217,14 @@ Each command loads only what it needs. `/prime` dispatches all analysis work to 
 
 `/prime` was rebuilt from the ground up to eliminate sequential file reads from the main conversation. All analysis work is delegated to parallel agents simultaneously, and only their assembled report lands in main context. This produces a **~74% token reduction** compared to the previous sequential approach.
 
-Mode detection uses a single Glob call with brace expansion to check for application code — no sequential probing.
+**Mode detection** answers one question: are you working on this methodology system, or on an application codebase? A single Glob call checks for application directories (`src/`, `app/`, `backend/`, `api/`, etc.). If any are found, it's Codebase Mode. If none are found — like in this repo, which is all docs and templates — it's System Mode. No sequential probing, no config to set.
 
 ```mermaid
 graph TD
     PRIME["/prime invoked"] --> DETECT["Single Glob call<br/>detect mode"]
 
-    DETECT -->|"No app code found"| SYS["System Mode"]
-    DETECT -->|"App code detected"| APP["Codebase Mode"]
+    DETECT -->|"No app dirs found<br/>(editing this system)"| SYS["System Mode"]
+    DETECT -->|"App dirs found<br/>(editing a codebase)"| APP["Codebase Mode"]
 
     subgraph "System Mode — 5 parallel agents"
         SYS --> S1["Agent 1 (Sonnet)<br/>Commands & skills inventory"]
