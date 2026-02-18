@@ -200,7 +200,7 @@ Auto-loading everything would waste 20-30K tokens before any real work begins. T
 
 ```mermaid
 graph LR
-    PRIME["/prime<br/>memory + structure<br/>~2K baseline"] --> PLANNING["/planning<br/>templates + research<br/>heavy context"]
+    PRIME["/prime<br/>parallel agents → assembled report<br/>~2K baseline"] --> PLANNING["/planning<br/>4 parallel research agents<br/>heavy context"]
     PLANNING --> EXECUTE["/execute<br/>plan file only<br/>clean context"]
     EXECUTE --> COMMIT["/commit<br/>lessons to memory<br/>persistence"]
     COMMIT -->|"next feature"| PRIME
@@ -211,7 +211,75 @@ graph LR
     style COMMIT fill:#27ae60,color:#fff
 ```
 
-Each command loads only what it needs. `/prime` establishes baseline context. `/planning` pulls in templates, spawns research agents, and references external docs — heavy context, but isolated to the planning session. `/execute` starts fresh with only the plan file — clean context for focused implementation. `/commit` appends lessons learned to `memory.md` for cross-session persistence.
+Each command loads only what it needs. `/prime` dispatches all analysis work to parallel agents simultaneously, assembles their reports, and delivers a clean baseline — no sequential file reads polluting main context. `/planning` fires all four research agents at once, then synthesizes their combined findings. `/execute` starts fresh with only the plan file — clean context for focused implementation. `/commit` appends lessons learned to `memory.md` for cross-session persistence.
+
+### `/prime` — Parallel Agent Dispatch
+
+`/prime` was rebuilt from the ground up to eliminate sequential file reads from the main conversation. All analysis work is delegated to parallel agents simultaneously, and only their assembled report lands in main context. This produces a **~74% token reduction** compared to the previous sequential approach.
+
+Mode detection uses a single Glob call with brace expansion to check for application code — no sequential probing.
+
+```mermaid
+graph TD
+    PRIME["/prime invoked"] --> DETECT["Single Glob call<br/>detect mode"]
+
+    DETECT -->|"No app code found"| SYS["System Mode"]
+    DETECT -->|"App code detected"| APP["Codebase Mode"]
+
+    subgraph "System Mode — 5 parallel agents"
+        SYS --> S1["Agent 1 (Sonnet)<br/>Commands & skills inventory"]
+        SYS --> S2["Agent 2 (Sonnet)<br/>Agents inventory"]
+        SYS --> S3["Agent 3 (Haiku)<br/>Project structure mapping"]
+        SYS --> S4["Agent 4 (Haiku)<br/>Memory context"]
+        SYS --> S5["Agent 5 (Haiku)<br/>Git state"]
+    end
+
+    subgraph "Codebase Mode — 6 parallel agents"
+        APP --> C1["Agent 1 (Sonnet)<br/>Architecture & structure"]
+        APP --> C2["Agent 2 (Sonnet)<br/>Tech stack & dependencies"]
+        APP --> C3["Agent 3 (Sonnet)<br/>Code conventions"]
+        APP --> C4["Agent 4 (Haiku)<br/>README summary"]
+        APP --> C5["Agent 5 (Haiku)<br/>Memory context"]
+        APP --> C6["Agent 6 (Haiku)<br/>Git state"]
+    end
+
+    S1 & S2 & S3 & S4 & S5 --> REPORT["Assembled Report<br/>in main context"]
+    C1 & C2 & C3 & C4 & C5 & C6 --> REPORT
+
+    style PRIME fill:#4a90d9,color:#fff
+    style DETECT fill:#8e44ad,color:#fff
+    style SYS fill:#2c3e50,color:#fff
+    style APP fill:#2c3e50,color:#fff
+    style REPORT fill:#27ae60,color:#fff
+```
+
+**Before:** every file read and command run happened sequentially in the main conversation, filling context before any work began.
+
+**After:** parallel agents do all the work in their own isolated context windows. Main context receives only the final assembled report.
+
+### `/planning` — All Research Agents Launch Simultaneously
+
+The planning command fires all four research agents at the same time. There is no first batch or second batch — they all start at once, then Phase 3c (Research Validation) cross-checks their combined findings before synthesis.
+
+```mermaid
+graph TD
+    PLAN["/planning invoked"] --> PHASE3["Phase 3: Parallel Research Dispatch"]
+
+    PHASE3 --> A["Agent A (Sonnet)<br/>Similar implementations<br/>& integration points"]
+    PHASE3 --> B["Agent B (Sonnet)<br/>Project patterns<br/>& conventions"]
+    PHASE3 --> C["Agent C (Sonnet)<br/>External docs<br/>& best practices"]
+    PHASE3 --> D["Agent D (Sonnet)<br/>Archon RAG search<br/>(skipped if unavailable)"]
+
+    A & B & C & D --> VALIDATE["Phase 3c: Research Validation<br/>cross-check combined findings"]
+    VALIDATE --> SYNTH["Phase 4: Synthesis<br/>structured plan document"]
+    SYNTH --> OUT["requests/{feature}-plan.md"]
+
+    style PLAN fill:#8e44ad,color:#fff
+    style PHASE3 fill:#4a90d9,color:#fff
+    style VALIDATE fill:#e67e22,color:#fff
+    style SYNTH fill:#2c3e50,color:#fff
+    style OUT fill:#27ae60,color:#fff
+```
 
 ---
 
@@ -456,9 +524,9 @@ Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
 
 | Command | What It Does | When to Use |
 |---------|-------------|-------------|
-| `/prime` | Loads codebase context, reads memory, checks active tasks | Start of every session |
-| `/planning [feature]` | 6-phase deep analysis producing a structured plan document | Before building any feature |
-| `/execute [plan]` | Implements a plan file task-by-task with validation | After planning, in a fresh session |
+| `/prime` | Dispatches 5-6 parallel agents to assemble codebase context, memory, and git state | Start of every session |
+| `/planning [feature]` | 6-phase deep analysis with 4 simultaneous research agents, producing a structured plan document | Before building any feature |
+| `/execute [plan]` | Implements a plan file task-by-task with validation; auto-saves report to `requests/execution-reports/` | After planning, in a fresh session |
 | `/commit` | Creates a conventional-format git commit | After implementation passes review |
 | `/code-review` | Runs 4 parallel review agents (type safety, security, architecture, performance) | After implementation |
 | `/code-review-fix` | Applies fixes from code review findings | After code review surfaces issues |
@@ -484,7 +552,7 @@ Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
 | `/execution-report` | Generates a post-implementation report for system review | Reviewing what was built vs. what was planned |
 | `/init-c` | Generates a customized `CLAUDE.md` for a new project | New project setup |
 | `/agents` | Creates a new custom subagent definition file | Extending the system with new agents |
-| `/system-review` | Audits system state for divergence between plan and reality | Periodic system health checks |
+| `/system-review` | Audits system state for divergence between plan and reality; consumes execution reports automatically | Periodic system health checks |
 
 </details>
 
@@ -642,6 +710,7 @@ My-Coding-System/
 │   └── ...5 more templates...
 │
 ├── requests/                          # Feature plans (gitignored)
+│   └── execution-reports/             # Auto-saved /execute output reports
 │
 ├── .claude/
 │   ├── commands/                      # Slash commands (15 commands)
@@ -674,6 +743,10 @@ My-Coding-System/
 | **Total system files** | **~52** |
 | Auto-loaded context cost | ~2K tokens |
 | Typical session context | <10K tokens |
+| `/prime` parallel agents (system mode) | 5 |
+| `/prime` parallel agents (codebase mode) | 6 |
+| `/prime` token reduction vs. sequential | ~74% |
+| `/planning` simultaneous research agents | 4 |
 
 ---
 
