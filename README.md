@@ -22,19 +22,19 @@ Most developers use AI like a magic 8-ball: ask a question, hope for a good answ
 
 This is **not** an application. There's no source code, no build system, no runtime.
 
-This is a **development methodology** — a structured collection of slash commands, templates, reference guides, and automation that wraps around Claude Code and turns it into a reliable development workflow. You clone this system, then build your applications inside it (or copy it into existing projects).
+This is a **development methodology**: a structured collection of slash commands, templates, reference guides, and automation that wraps around Claude Code and turns it into a reliable development workflow. You clone this system, then build your applications inside it (or copy it into existing projects).
 
 ### Who Is This For?
 
 - **Solo developers using Claude Code** who want consistent, production-grade output instead of trial-and-error prompting
 - **Teams adopting AI workflows** who need a repeatable methodology, not ad-hoc prompting
-- **Anyone tired of AI inconsistency** — the difference between 30% and 88% code acceptance is context clarity, not AI intelligence
+- **Anyone tired of AI inconsistency.** The difference between 30% and 88% code acceptance is context clarity, not AI intelligence
 
 ### What You Get
 
-- **15 slash commands** that automate every phase of development — from planning to commit
-- **8 templates** for plans, PRDs, and agents — only the ones you will actually use
-- **10 reference guides** loaded on-demand — consolidated, focused, no redundancy
+- **15 slash commands** that automate every phase of development, from planning to commit
+- **8 templates** for plans, PRDs, and agents, only the ones you will actually use
+- **10 reference guides** loaded on-demand, consolidated and focused
 - **12 pre-built AI subagents** for parallel research, code review, and specialist tasks
 - **1 skill** for systematic planning methodology
 - A token-conscious architecture that keeps <10K tokens of system context, leaving the rest for your actual work
@@ -46,17 +46,17 @@ This is a **development methodology** — a structured collection of slash comma
 This system went through two rounds of cleanup, removing **55+ files** across commands, skills, references, templates, and config. Here is why:
 
 **What was removed:**
-- 6 reference guides consolidated into others — one authoritative source per topic
-- 9 speculative templates nobody used — YAGNI applied to documentation
+- 6 reference guides consolidated into others: one authoritative source per topic
+- 9 speculative templates nobody used (YAGNI applied to documentation)
 - Features with no active use: cross-CLI orchestration, worktrees, agent teams, GitHub automation, remote system guides, MCP skills guides
 - Config files for unused tools (CodeRabbit, githooks, opencode)
 
 **What you get instead:**
-- **Less cognitive load** — Fewer files means less to explore and understand
-- **No redundancy** — One guide per topic, not three overlapping ones
-- **Faster context loading** — Smaller codebase = faster AI comprehension
-- **Easier maintenance** — Fewer files to keep in sync
-- **Focused documentation** — Only what is actually used, nothing speculative
+- **Less cognitive load:** fewer files means less to explore and understand
+- **No redundancy:** one guide per topic, not three overlapping ones
+- **Faster context loading:** smaller codebase = faster AI comprehension
+- **Easier maintenance:** fewer files to keep in sync
+- **Focused documentation:** only what is actually used, nothing speculative
 
 The best documentation is documentation you can trust. When every guide is essential, you know where to look.
 
@@ -92,17 +92,17 @@ graph LR
     style C fill:#27ae60,color:#fff
 ```
 
-**Why fresh sessions matter.** Planning creates exploration context — options considered, tradeoffs weighed, research gathered. Execution needs clean context, not exploration baggage. The plan distills exploration into execution instructions. A fresh session with only the plan means the AI focuses on building, not rediscovering. *Vibe planning is good, vibe coding is not.*
+**Why fresh sessions matter.** Planning creates exploration context: options considered, tradeoffs weighed, research gathered. Execution needs clean context, not exploration baggage. The plan distills that into execution instructions. A fresh session with only the plan means the AI focuses on building, not rediscovering. *Vibe planning is good, vibe coding is not.*
 
 **Multiple small loops.** Do not build entire features in one pass. Each PIV loop covers one feature slice, built completely before moving on. Complex features (15+ tasks, 4+ phases) auto-decompose into sub-plans via `/planning`, each getting their own loop.
 
-**The handoff.** The plan is the bridge between thinking and building — 700-1000 lines capturing architecture decisions, file paths, code patterns, gotchas, and atomic tasks. Each task has 7 fields (ACTION, TARGET, IMPLEMENT, PATTERN, IMPORTS, GOTCHA, VALIDATE) so the execution agent has zero ambiguity.
+**The handoff.** The plan is the bridge between thinking and building: 700-1000 lines capturing architecture decisions, file paths, code patterns, gotchas, and atomic tasks. Each task has 7 fields (ACTION, TARGET, IMPLEMENT, PATTERN, IMPORTS, GOTCHA, VALIDATE) so the execution agent has zero ambiguity.
 
 ---
 
 ## Context Engineering: How the AI Gets It Right
 
-The difference between 30% and 88% code acceptance is not AI intelligence — it is context clarity. Every structured plan is built on four pillars that ensure the AI has exactly what it needs.
+The difference between 30% and 88% code acceptance is not AI intelligence. It's context clarity. Every structured plan is built on four pillars that give the AI exactly what it needs.
 
 ```mermaid
 graph TD
@@ -128,13 +128,13 @@ graph TD
     style CODE fill:#27ae60,color:#fff
 ```
 
-**Memory** — Past decisions prevent repeated mistakes. `memory.md` persists across sessions: read at `/prime`, appended at `/commit`. Vibe planning conversations add short-term memory within a session.
+**Memory:** past decisions prevent repeated mistakes. `memory.md` persists across sessions: read at `/prime`, appended at `/commit`. Vibe planning conversations add short-term memory within a session.
 
-**RAG** — External docs and codebase patterns ensure the AI does not reinvent existing code. Archon MCP adds curated knowledge base search (optional). Always cite specific sections, not just "see the docs."
+**RAG:** external docs and codebase patterns stop the AI from reinventing existing code. Archon MCP adds curated knowledge base search (optional). Always cite specific sections, not just "see the docs."
 
-**Prompt Engineering** — Explicit solution statements and decisions from vibe planning eliminate guesswork. Bad context: "Add authentication." Good context: "Add JWT auth following the pattern in `src/auth/jwt.py:45-62`, storing tokens in HttpOnly cookies with 24-hour expiration."
+**Prompt Engineering:** explicit solution statements from vibe planning eliminate guesswork. Bad context: "Add authentication." Good context: "Add JWT auth following the pattern in `src/auth/jwt.py:45-62`, storing tokens in HttpOnly cookies with 24-hour expiration."
 
-**Task Management** — 7-field atomic tasks (ACTION, TARGET, IMPLEMENT, PATTERN, IMPORTS, GOTCHA, VALIDATE) ensure zero ambiguity. Top-to-bottom execution, no backtracking.
+**Task Management:** 7-field atomic tasks (ACTION, TARGET, IMPLEMENT, PATTERN, IMPORTS, GOTCHA, VALIDATE) with zero ambiguity. Top-to-bottom execution, no backtracking.
 
 **The template is the control mechanism.** The structured plan template (`templates/STRUCTURED-PLAN-TEMPLATE.md`) maps each pillar to specific sections, so nothing gets missed. Memory maps to Related Memories. RAG maps to Relevant Documentation. Prompt Engineering maps to Solution Statement. Task Management maps to Step-by-Step Tasks.
 
@@ -211,13 +211,13 @@ graph LR
     style COMMIT fill:#27ae60,color:#fff
 ```
 
-Each command loads only what it needs. `/prime` dispatches all analysis work to parallel agents simultaneously, assembles their reports, and delivers a clean baseline — no sequential file reads polluting main context. `/planning` fires all four research agents at once, then synthesizes their combined findings. `/execute` starts fresh with only the plan file — clean context for focused implementation. `/commit` appends lessons learned to `memory.md` for cross-session persistence.
+Each command loads only what it needs. `/prime` dispatches all analysis work to parallel agents simultaneously, assembles their reports, and delivers a clean baseline. No sequential file reads polluting main context. `/planning` fires all four research agents at once, then synthesizes their combined findings. `/execute` starts fresh with only the plan file: clean context for focused implementation. `/commit` appends lessons learned to `memory.md` for cross-session persistence.
 
 ### `/prime` — Parallel Agent Dispatch
 
-`/prime` was rebuilt from the ground up to eliminate sequential file reads from the main conversation. All analysis work is delegated to parallel agents simultaneously, and only their assembled report lands in main context. This produces a **~74% token reduction** compared to the previous sequential approach.
+`/prime` was rebuilt to eliminate sequential file reads from the main conversation. All analysis work goes to parallel agents simultaneously. Only their assembled report lands in main context: **~74% fewer tokens** than the old sequential approach.
 
-**Mode detection** answers one question: are you working on this methodology system, or on an application codebase? A single Glob call checks for application directories (`src/`, `app/`, `backend/`, `api/`, etc.). If any are found, it's Codebase Mode. If none are found — like in this repo, which is all docs and templates — it's System Mode. No sequential probing, no config to set.
+**Mode detection** answers one question: are you editing this methodology system, or an application codebase? A single Glob call checks for application directories (`src/`, `app/`, `backend/`, `api/`, etc.). If any are found, it's Codebase Mode. If none are found (like in this repo, which is all docs and templates), it's System Mode. No sequential probing, no config to set.
 
 ```mermaid
 graph TD
@@ -259,7 +259,7 @@ graph TD
 
 ### `/planning` — All Research Agents Launch Simultaneously
 
-The planning command fires all four research agents at the same time. There is no first batch or second batch — they all start at once, then Phase 3c (Research Validation) cross-checks their combined findings before synthesis.
+The planning command fires all four research agents at the same time. No first batch, no second batch. They all start at once, then Phase 3c (Research Validation) cross-checks their combined findings before synthesis.
 
 ```mermaid
 graph TD
@@ -349,12 +349,12 @@ graph LR
     style COM fill:#27ae60,color:#fff
 ```
 
-**Why this separation matters.** Planning is the highest-leverage phase — a bad plan guarantees bad implementation. Opus's deeper reasoning produces better feature scoping, more thorough codebase analysis, and higher-confidence implementation plans. The ~3x usage increase pays for itself by reducing implementation retries. Code review uses 4 parallel Sonnet agents, each focused on a single review dimension for maximum depth.
+**Why this separation matters.** Planning is the highest-leverage phase: a bad plan guarantees bad implementation. Opus's deeper reasoning catches more edge cases, produces better feature scoping, and reduces implementation retries. The ~3x cost increase pays for itself. Code review uses 4 parallel Sonnet agents, each focused on a single dimension.
 
 | Phase | Recommended Model | Why |
 |-------|-------------------|-----|
 | `/planning` | **Opus** (`claude --model opus`) | Deep reasoning produces better plans |
-| `/execute` | **Sonnet** (`claude` default) | Balanced — follows plans well at lower cost |
+| `/execute` | **Sonnet** (`claude` default) | Balanced, follows plans well at lower cost |
 | `/code-review` | **Sonnet** (via subagents) | 4 parallel agents, each covering one review dimension |
 | `/commit`, `/prime` | **Sonnet** (`claude` default) | General-purpose tasks |
 
@@ -374,7 +374,7 @@ See `reference/subagents-deep-dive.md` for model selection guidance.
 
 ## Learning Path: Trust Progression
 
-Do not try everything at once. The system unlocks capabilities progressively — each tier amplifies both good patterns and bad ones.
+Don't try everything at once. Each tier amplifies both good patterns and bad ones.
 
 ```mermaid
 graph TD
@@ -388,10 +388,10 @@ graph TD
     style SUB fill:#2e86c1,color:#fff
 ```
 
-- **Manual Prompts** — Use Claude Code with good prompts. Understand the base tool before adding structure.
-- **Slash Commands** — Structured reusable prompts. Master the core cycle: `/prime` -> `/planning` -> `/execute` -> `/commit`.
-- **Chained Workflows** — `/end-to-end-feature` chains the full PIV Loop autonomously. Only use after individual commands are trusted.
-- **Subagents** — Parallel research (5-10 agents) and code review (4 agents). Results flow one-way back to the main agent.
+- **Manual Prompts:** use Claude Code with good prompts. Understand the base tool before adding structure.
+- **Slash Commands:** structured reusable prompts. Master the core cycle: `/prime` -> `/planning` -> `/execute` -> `/commit`.
+- **Chained Workflows:** `/end-to-end-feature` chains the full PIV Loop autonomously. Only use after individual commands are trusted.
+- **Subagents:** parallel research (5-10 agents) and code review (4 agents). Results flow one-way back to the main agent.
 
 **When to move up:** Prove the current tier works reliably across 5+ features before advancing. See `reference/system-foundations.md` for the full trust model.
 
@@ -399,7 +399,7 @@ graph TD
 
 ## Validation: The 5-Level Pyramid
 
-Validation is not an afterthought — it is the third pillar of the PIV Loop. A 5-level gated pyramid catches problems from syntax errors to architectural violations.
+Validation is not an afterthought. It's the third pillar of the PIV Loop: a 5-level gated pyramid that catches problems from syntax errors to architectural violations.
 
 ```mermaid
 graph TD
@@ -417,7 +417,7 @@ graph TD
 
 **Each level gates the next.** Do not run expensive integration tests when a linting error would catch the issue in seconds. Do not request human review until automated checks pass clean.
 
-**Parallel Code Review.** `/code-review` launches 4 specialized Sonnet agents simultaneously — type safety, security, architecture, and performance — each focused on one concern with its entire context window:
+**Parallel Code Review.** `/code-review` launches 4 specialized Sonnet agents simultaneously: type safety, security, architecture, and performance. Each gets its entire context window focused on one concern:
 
 ```mermaid
 graph LR
@@ -440,7 +440,7 @@ graph LR
 
 40-50% faster than sequential review. Each agent catches issues a general reviewer might miss.
 
-**System evolution insight.** When validation catches an issue, do not just fix the code — fix the system that allowed the bug. Update the command, template, or rule that let it through. One-off fixes solve today; system updates solve forever. See `reference/validation-discipline.md` for the full methodology.
+**System evolution insight.** When validation catches an issue, don't just fix the code, fix the system that allowed the bug. Update the command, template, or rule that let it through. One-off fixes solve today; system updates solve forever. See `reference/validation-discipline.md` for the full methodology.
 
 ---
 
@@ -487,7 +487,7 @@ graph LR
 
 ### What Happens Next?
 
-Each feature gets its own PIV loop. Small loops, built completely before moving on. Plan, implement, validate, iterate — then start the next feature. The system compounds: lessons from each loop feed into `memory.md`, informing future plans.
+Each feature gets its own PIV loop. Small loops, built completely before moving on. Plan, implement, validate, iterate. Then start the next feature. Lessons from each loop feed into `memory.md` and inform future plans.
 
 ### First Time?
 Start with `/prime` to load context, then try `/planning` on a small feature. Read `reference/file-structure.md` for a full map of everything included.
@@ -510,15 +510,15 @@ cp templates/MEMORY-TEMPLATE.md your-project/memory.md
 Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
 
 ### After Setup
-- `memory.md` — Created from template, gitignored. Each developer maintains their own.
-- `requests/*.md` — Feature plans, gitignored. Ephemeral by design.
-- `.claude/settings.local.json` — Personal Claude Code settings, gitignored.
+- `memory.md`: created from template, gitignored. Each developer maintains their own.
+- `requests/*.md`: feature plans, gitignored. Ephemeral by design.
+- `.claude/settings.local.json`: personal Claude Code settings, gitignored.
 
 ---
 
 ## All 15 Slash Commands
 
-15 slash commands automate every phase. The core 6 cover 90% of daily development — expand below for advanced workflows and utilities.
+15 slash commands automate every phase. The core 6 cover 90% of daily development; expand below for advanced workflows and utilities.
 
 ### Core Workflow
 
@@ -571,7 +571,7 @@ Each agent is a markdown file with a system prompt in `.claude/agents/`. The mai
 
 | Agent | Model | Purpose |
 |-------|-------|---------|
-| `research-codebase` | Sonnet | Parallel codebase exploration — finds files, extracts patterns, reports findings |
+| `research-codebase` | Sonnet | Parallel codebase exploration: finds files, extracts patterns, reports findings |
 | `research-external` | Sonnet | Documentation search, best practices, version compatibility checks |
 
 ### Code Review Agents
@@ -624,7 +624,7 @@ See `reference/subagents-deep-dive.md` for creating your own agents.
 ### Planning & Requirements
 | Template | Purpose |
 |----------|---------|
-| `STRUCTURED-PLAN-TEMPLATE.md` | Main planning template — covers all 4 Context Engineering pillars |
+| `STRUCTURED-PLAN-TEMPLATE.md` | Main planning template; covers all 4 Context Engineering pillars |
 | `SUB-PLAN-TEMPLATE.md` | Sub-feature plans for complex decomposition |
 | `PLAN-OVERVIEW-TEMPLATE.md` | High-level plan overview |
 | `PRD-TEMPLATE.md` | Product Requirements Document |
@@ -670,7 +670,7 @@ See `reference/subagents-deep-dive.md` for creating your own agents.
 
 ## Optional: Archon MCP
 
-[Archon MCP](https://github.com/coleam00/archon) provides task management and RAG search across sessions. **Completely optional** — all commands work without it. When available, it adds:
+[Archon MCP](https://github.com/coleam00/archon) provides task management and RAG search across sessions. **Completely optional.** All commands work without it. When available, it adds:
 
 - Persistent task tracking across planning and execution sessions
 - RAG search over curated documentation sources
