@@ -1,1 +1,1 @@
-@CLAUDE.md
+@QWEN.md
