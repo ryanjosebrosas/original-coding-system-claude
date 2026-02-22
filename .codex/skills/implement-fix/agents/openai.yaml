@@ -1,0 +1,3 @@
+display_name: Implement-Fix
+short_description: implement-fix command. Use when running /implement-fix.
+default_prompt: /implement-fix

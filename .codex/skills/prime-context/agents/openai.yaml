@@ -1,0 +1,3 @@
+display_name: Prime-Context
+short_description: Prime agent with codebase understanding. Use when starting a new session to load project context, detect project type (System vs Codebase mode), inventory available commands and agents, and establish current state via parallel agent dispatch.
+default_prompt: /prime-context

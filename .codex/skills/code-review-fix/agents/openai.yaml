@@ -1,0 +1,3 @@
+display_name: Code-Review-Fix
+short_description: code-review-fix command. Use when running /code-review-fix.
+default_prompt: /code-review-fix

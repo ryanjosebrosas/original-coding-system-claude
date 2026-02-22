@@ -2,7 +2,7 @@
 
 **Stop guessing. Start engineering.**
 
-A complete development methodology that turns AI from an unpredictable autocomplete into a disciplined engineering partner. Built for [Claude Code](https://claude.com/claude-code), powered by the PIV Loop, and battle-tested across real projects.
+A complete development methodology that turns AI from an unpredictable autocomplete into a disciplined engineering partner. Built for [Qwen Code](https://qwenlm.github.io/qwen-code-docs/), powered by the PIV Loop, and battle-tested across real projects.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -22,22 +22,58 @@ Most developers use AI like a magic 8-ball: ask a question, hope for a good answ
 
 This is **not** an application. There's no source code, no build system, no runtime.
 
-This is a **development methodology**: a structured collection of slash commands, templates, reference guides, and automation that wraps around Claude Code and turns it into a reliable development workflow. You clone this system, then build your applications inside it (or copy it into existing projects).
+This is a **development methodology**: a structured collection of slash commands, templates, reference guides, and automation that wraps around Qwen Code and turns it into a reliable development workflow. You clone this system, then build your applications inside it (or copy it into existing projects).
 
 ### Who Is This For?
 
-- **Solo developers using Claude Code** who want consistent, production-grade output instead of trial-and-error prompting
+- **Solo developers using Qwen Code** who want consistent, production-grade output instead of trial-and-error prompting
 - **Teams adopting AI workflows** who need a repeatable methodology, not ad-hoc prompting
 - **Anyone tired of AI inconsistency.** The difference between 30% and 88% code acceptance is context clarity, not AI intelligence
 
 ### What You Get
 
-- **15 slash commands** that automate every phase of development, from planning to commit
+- **15+ slash commands** that automate every phase of development, from planning to commit
 - **8 templates** for plans, PRDs, and agents, only the ones you will actually use
-- **10 reference guides** loaded on-demand, consolidated and focused
-- **12 pre-built AI subagents** for parallel research, code review, and specialist tasks
-- **1 skill** for systematic planning methodology
+- **10+ reference guides** loaded on-demand, consolidated and focused
+- **12 pre-built AI SubAgents** for parallel research, code review, and specialist tasks
+- **1 Skill** for systematic planning methodology
 - A token-conscious architecture that keeps <10K tokens of system context, leaving the rest for your actual work
+
+---
+
+## Qwen Code Integration
+
+This system is optimized for [Qwen Code](https://qwenlm.github.io/qwen-code-docs/) with native integration of:
+
+### SubAgents
+Qwen Code's multi-agent orchestration system. All research and code review agents use the `general-purpose` SubAgent type with Qwen3-Coder models.
+
+**Key capabilities:**
+- Parallel execution with isolated context windows
+- `@file` and `@symbol` references for precise context
+- Built-in tools: Read, Glob, Grep, Bash, WebSearch, WebFetch
+
+### Plan Mode
+Structured planning workflow using Qwen Code's native Plan Mode (`/plan`).
+
+**Workflow:**
+1. Enter Plan Mode: `/plan`
+2. Run planning: `/planning [feature]`
+3. Review generated plan
+4. Execute: `/execute [plan-file]`
+
+### Skills System
+Extensible capabilities that can be invoked during planning. The `planning-methodology` skill provides the 6-phase planning process.
+
+**Usage:**
+```
+skill: "planning-methodology"
+```
+
+### Context Management
+- `@file:line` syntax for clickable navigation in supported IDEs
+- SubAgents inherit context from parent conversation
+- Plan files serve as context handoff to execution agents
 
 ---
 
@@ -62,6 +98,54 @@ The best documentation is documentation you can trust. When every guide is essen
 
 ---
 
+## Installation
+
+### Prerequisites
+- [Qwen Code CLI](https://qwenlm.github.io/qwen-code-docs/) installed
+- Git configured
+
+### Setup
+
+1. **Install Qwen Code:**
+   ```bash
+   npm i @qwen-code/qwen-code@latest -g
+   ```
+
+2. **Clone** this repo:
+   ```bash
+   git clone https://github.com/ryanjosebrosas/opencode-coding-system.git
+   cd opencode-coding-system
+   ```
+
+3. **Create your memory file** from the template:
+   ```bash
+   cp templates/MEMORY-TEMPLATE.md memory.md
+   ```
+
+4. **Start Qwen Code** and prime the system:
+   ```bash
+   qwen
+   > /prime
+   ```
+
+5. **Plan your first feature:**
+   ```
+   > /planning user-authentication
+   ```
+
+6. **Execute the plan** (in a fresh session for clean context):
+   ```
+   > /execute requests/user-authentication-plan.md
+   ```
+
+7. **Review and commit:**
+   ```
+   > /code-review
+   > /commit
+   ```
+
+---
+
 ## The PIV Loop
 
 Every feature follows the same cycle: **Plan**, **Implement**, **Validate**, then iterate.
@@ -70,9 +154,9 @@ Every feature follows the same cycle: **Plan**, **Implement**, **Validate**, the
 graph LR
     subgraph "PIV Loop"
         direction LR
-        P["PLAN<br/>/planning<br/><i>Opus recommended</i>"]
-        I["IMPLEMENT<br/>/execute<br/><i>Sonnet recommended</i>"]
-        V["VALIDATE<br/>/code-review<br/><i>4 Sonnet agents</i>"]
+        P["PLAN<br/>/planning<br/><i>Deep reasoning model</i>"]
+        I["IMPLEMENT<br/>/execute<br/><i>Default Qwen model</i>"]
+        V["VALIDATE<br/>/code-review<br/><i>4 SubAgents</i>"]
         C["COMMIT<br/>/commit"]
 
         P --> I --> V
@@ -94,7 +178,7 @@ graph LR
 
 **Why fresh sessions matter.** Planning creates exploration context: options considered, tradeoffs weighed, research gathered. Execution needs clean context, not exploration baggage. The plan distills that into execution instructions. A fresh session with only the plan means the AI focuses on building, not rediscovering. *Vibe planning is good, vibe coding is not.*
 
-**Multiple small loops.** Do not build entire features in one pass. Each PIV loop covers one feature slice, built completely before moving on. Complex features (15+ tasks, 4+ phases) auto-decompose into sub-plans via `/planning`, each getting their own loop.
+**Multiple small loops.** Do not build entire features in one pass. Each PIV loop covers one feature slice, built completely before moving on. Complex features (15+ tasks, 4+ phases) auto-decompose into sub-plans via `/planning --swarm`, each getting their own loop.
 
 **The handoff.** The plan is the bridge between thinking and building: 700-1000 lines capturing architecture decisions, file paths, code patterns, gotchas, and atomic tasks. Each task has 7 fields (ACTION, TARGET, IMPLEMENT, PATTERN, IMPORTS, GOTCHA, VALIDATE) so the execution agent has zero ambiguity.
 
@@ -130,7 +214,7 @@ graph TD
 
 **Memory:** past decisions prevent repeated mistakes. `memory.md` persists across sessions: read at `/prime`, appended at `/commit`. Vibe planning conversations add short-term memory within a session.
 
-**RAG:** external docs and codebase patterns stop the AI from reinventing existing code. Archon MCP adds curated knowledge base search (optional). Always cite specific sections, not just "see the docs."
+**RAG:** external docs and codebase patterns stop the AI from reinventing existing code. SubAgents can use `web_search` and `web_fetch` tools. Always cite specific sections, not just "see the docs."
 
 **Prompt Engineering:** explicit solution statements from vibe planning eliminate guesswork. Bad context: "Add authentication." Good context: "Add JWT auth following the pattern in `src/auth/jwt.py:45-62`, storing tokens in HttpOnly cookies with 24-hour expiration."
 
@@ -147,7 +231,7 @@ Context is organized in layers. Auto-loaded context stays minimal so the AI has 
 ```mermaid
 graph TD
     subgraph "Auto-Loaded Context (~2K tokens)"
-        CLAUDE["CLAUDE.md"] --> S["sections/<br/>6 core rules"]
+        QWEN["QWEN.md"] --> S["sections/<br/>6 core rules"]
     end
 
     subgraph "On-Demand Context (loaded when needed)"
@@ -156,29 +240,29 @@ graph TD
     end
 
     subgraph "Automation Layer"
-        CMD[".claude/commands/<br/>15 slash commands"]
-        AG[".claude/agents/<br/>12 subagents"]
-        SK[".claude/skills/<br/>1 skill"]
+        CMD[".qwen/commands/<br/>15 slash commands"]
+        AG[".qwen/agents/<br/>12 SubAgents"]
+        SK[".qwen/skills/<br/>1 skill"]
     end
 
     subgraph "External Integrations"
         MEM["memory.md<br/>cross-session context"]
-        ARCHON["Archon MCP<br/>(optional)<br/>tasks + RAG"]
+        WEB["Web Tools<br/>web_search + web_fetch"]
     end
 
-    CLAUDE -.->|"on-demand"| R
-    CLAUDE -.->|"on-demand"| T
+    QWEN -.->|"on-demand"| R
+    QWEN -.->|"on-demand"| T
     CMD -->|"reads"| T
     CMD -->|"spawns"| AG
     SK -.->|"loads"| R
     MEM -.-> CMD
-    ARCHON -.-> CMD
+    WEB -.-> AG
     CMD -->|"produces"| REQ["requests/<br/>feature plans"]
     REQ -->|"/execute"| IMPL["Implementation"]
     IMPL -->|"/code-review"| AG
     IMPL -->|"/commit"| GIT["Git Save Points"]
 
-    style CLAUDE fill:#4a90d9,color:#fff
+    style QWEN fill:#4a90d9,color:#fff
     style CMD fill:#7b68ee,color:#fff
     style AG fill:#e67e22,color:#fff
     style IMPL fill:#27ae60,color:#fff
@@ -190,7 +274,7 @@ Auto-loading everything would waste 20-30K tokens before any real work begins. T
 
 | Layer | Token Cost | Loading |
 |-------|-----------|---------|
-| `CLAUDE.md` + 6 sections | ~2K tokens | Auto-loaded every session |
+| `QWEN.md` + 6 sections | ~2K tokens | Auto-loaded every session |
 | Slash commands | varies | Loaded only when invoked |
 | Reference guides (10) | varies | On-demand only |
 | Templates (8) | varies | On-demand only |
@@ -227,20 +311,20 @@ graph TD
     DETECT -->|"App dirs found<br/>(editing a codebase)"| APP["Codebase Mode"]
 
     subgraph "System Mode — 5 parallel agents"
-        SYS --> S1["Agent 1 (Sonnet)<br/>Commands & skills inventory"]
-        SYS --> S2["Agent 2 (Sonnet)<br/>Agents inventory"]
-        SYS --> S3["Agent 3 (Haiku)<br/>Project structure mapping"]
-        SYS --> S4["Agent 4 (Haiku)<br/>Memory context"]
-        SYS --> S5["Agent 5 (Haiku)<br/>Git state"]
+        SYS --> S1["Agent 1<br/>Commands & skills inventory"]
+        SYS --> S2["Agent 2<br/>Agents inventory"]
+        SYS --> S3["Agent 3<br/>Project structure mapping"]
+        SYS --> S4["Agent 4<br/>Memory context"]
+        SYS --> S5["Agent 5<br/>Git state"]
     end
 
     subgraph "Codebase Mode — 6 parallel agents"
-        APP --> C1["Agent 1 (Sonnet)<br/>Architecture & structure"]
-        APP --> C2["Agent 2 (Sonnet)<br/>Tech stack & dependencies"]
-        APP --> C3["Agent 3 (Sonnet)<br/>Code conventions"]
-        APP --> C4["Agent 4 (Haiku)<br/>README summary"]
-        APP --> C5["Agent 5 (Haiku)<br/>Memory context"]
-        APP --> C6["Agent 6 (Haiku)<br/>Git state"]
+        APP --> C1["Agent 1<br/>Architecture & structure"]
+        APP --> C2["Agent 2<br/>Tech stack & dependencies"]
+        APP --> C3["Agent 3<br/>Code conventions"]
+        APP --> C4["Agent 4<br/>README summary"]
+        APP --> C5["Agent 5<br/>Memory context"]
+        APP --> C6["Agent 6<br/>Git state"]
     end
 
     S1 & S2 & S3 & S4 & S5 --> REPORT["Assembled Report<br/>in main context"]
@@ -265,10 +349,10 @@ The planning command fires all four research agents at the same time. No first b
 graph TD
     PLAN["/planning invoked"] --> PHASE3["Phase 3: Parallel Research Dispatch"]
 
-    PHASE3 --> A["Agent A (Sonnet)<br/>Similar implementations<br/>& integration points"]
-    PHASE3 --> B["Agent B (Sonnet)<br/>Project patterns<br/>& conventions"]
-    PHASE3 --> C["Agent C (Sonnet)<br/>External docs<br/>& best practices"]
-    PHASE3 --> D["Agent D (Sonnet)<br/>Archon RAG search<br/>(skipped if unavailable)"]
+    PHASE3 --> A["Agent A<br/>Similar implementations<br/>& integration points"]
+    PHASE3 --> B["Agent B<br/>Project patterns<br/>& conventions"]
+    PHASE3 --> C["Agent C<br/>External docs<br/>& best practices"]
+    PHASE3 --> D["Agent D<br/>Web search<br/>(optional)"]
 
     A & B & C & D --> VALIDATE["Phase 3c: Research Validation<br/>cross-check combined findings"]
     VALIDATE --> SYNTH["Phase 4: Synthesis<br/>structured plan document"]
@@ -285,7 +369,7 @@ graph TD
 
 ## Context Recovery After Auto-Compact
 
-When the context window fills up, Claude Code compacts the conversation automatically to free space. Compaction summarizes the conversation, but summaries drop details: decisions from `memory.md`, architecture patterns, and session notes are not guaranteed to survive. The next prompt arrives in a session that has forgotten its own history.
+When the context window fills up, Qwen Code compacts the conversation automatically to free space. Compaction summarizes the conversation, but summaries drop details: decisions from `memory.md`, architecture patterns, and session notes are not guaranteed to survive. The next prompt arrives in a session that has forgotten its own history.
 
 The system includes a `SessionStart` hook that detects compaction and re-injects `memory.md` automatically on resume, before your next prompt.
 
@@ -309,7 +393,7 @@ graph LR
 
 **What still requires `/prime`:** file structure map, command inventory, and agent list. Hooks inject text into context but cannot invoke slash commands, so `/prime` must be run manually after the compaction banner appears.
 
-The hook is defined in `.claude/settings.json` (project-level, committed). Anyone who clones the system gets it automatically.
+The hook is defined in `.qwen/settings.json` (project-level, committed). Anyone who clones the system gets it automatically.
 
 ```json
 {
@@ -320,7 +404,7 @@ The hook is defined in `.claude/settings.json` (project-level, committed). Anyon
         "hooks": [
           {
             "type": "command",
-            "command": "echo '=== Auto-compact occurred - memory context re-injected ===' && echo '' && cat \"$CLAUDE_PROJECT_DIR/memory.md\" && echo '' && echo 'Run /prime for full project structure, commands, and agent inventory.'"
+            "command": "echo '=== Auto-compact occurred - memory context re-injected ===' && echo '' && cat \"$QWEN_PROJECT_DIR/memory.md\" && echo '' && echo 'Run /prime for full project structure, commands, and agent inventory.'"
           }
         ]
       }
@@ -339,9 +423,9 @@ The system separates thinking from doing. Use the right model for each phase:
 
 ```mermaid
 graph LR
-    PLAN["Planning<br/>Opus"] --> EXEC["Execution<br/>Sonnet"]
-    EXEC --> REV["Code Review<br/>4x Sonnet agents"]
-    REV --> COM["Commit<br/>Sonnet"]
+    PLAN["Planning<br/>Deep reasoning"] --> EXEC["Execution<br/>Default model"]
+    EXEC --> REV["Code Review<br/>4 SubAgents"]
+    REV --> COM["Commit<br/>Default model"]
 
     style PLAN fill:#4a90d9,color:#fff
     style EXEC fill:#7b68ee,color:#fff
@@ -349,22 +433,22 @@ graph LR
     style COM fill:#27ae60,color:#fff
 ```
 
-**Why this separation matters.** Planning is the highest-leverage phase: a bad plan guarantees bad implementation. Opus's deeper reasoning catches more edge cases, produces better feature scoping, and reduces implementation retries. The ~3x cost increase pays for itself. Code review uses 4 parallel Sonnet agents, each focused on a single dimension.
+**Why this separation matters.** Planning is the highest-leverage phase: a bad plan guarantees bad implementation. Use a deeper reasoning model for planning to catch more edge cases, produce better feature scoping, and reduce implementation retries. Code review uses 4 parallel SubAgents, each focused on a single dimension.
 
 | Phase | Recommended Model | Why |
 |-------|-------------------|-----|
-| `/planning` | **Opus** (`claude --model opus`) | Deep reasoning produces better plans |
-| `/execute` | **Sonnet** (`claude` default) | Balanced, follows plans well at lower cost |
-| `/code-review` | **Sonnet** (via subagents) | 4 parallel agents, each covering one review dimension |
-| `/commit`, `/prime` | **Sonnet** (`claude` default) | General-purpose tasks |
+| `/planning` | **Deep reasoning model** | Deep reasoning produces better plans |
+| `/execute` | **Default Qwen model** | Balanced, follows plans well |
+| `/code-review` | **Default Qwen model** (via SubAgents) | 4 parallel agents, each covering one review dimension |
+| `/commit`, `/prime` | **Default Qwen model** | General-purpose tasks |
 
 ```bash
-# Planning session (Opus for deep reasoning)
-claude --model opus
+# Planning session (deep reasoning model)
+qwen --model [deep-reasoning-model]
 > /planning my-feature
 
-# Execution session (Sonnet for focused implementation)
-claude
+# Execution session (default model)
+qwen
 > /execute requests/my-feature-plan.md
 ```
 
@@ -388,7 +472,7 @@ graph TD
     style SUB fill:#2e86c1,color:#fff
 ```
 
-- **Manual Prompts:** use Claude Code with good prompts. Understand the base tool before adding structure.
+- **Manual Prompts:** use Qwen Code with good prompts. Understand the base tool before adding structure.
 - **Slash Commands:** structured reusable prompts. Master the core cycle: `/prime` -> `/planning` -> `/execute` -> `/commit`.
 - **Chained Workflows:** `/end-to-end-feature` chains the full PIV Loop autonomously. Only use after individual commands are trusted.
 - **Subagents:** parallel research (5-10 agents) and code review (4 agents). Results flow one-way back to the main agent.
@@ -447,15 +531,15 @@ graph LR
 ## Quick Start
 
 ### Prerequisites
-- [Claude Code CLI](https://claude.com/claude-code) installed
+- [Qwen Code CLI](https://qwenlm.github.io/qwen-code-docs/) installed
 - Git configured
 
 ### Setup
 
 1. **Clone** this repo:
    ```bash
-   git clone https://github.com/ryanjosebrosas/my-coding-system-claude.git
-   cd my-coding-system-claude
+   git clone https://github.com/ryanjosebrosas/opencode-coding-system.git
+   cd opencode-coding-system
    ```
 
 2. **Create your memory file** from the template:
@@ -463,9 +547,9 @@ graph LR
    cp templates/MEMORY-TEMPLATE.md memory.md
    ```
 
-3. **Start Claude Code** and prime the system:
+3. **Start Qwen Code** and prime the system:
    ```bash
-   claude
+   qwen
    > /prime
    ```
 
@@ -502,17 +586,17 @@ Fork or clone this repo, then build your application inside it. All slash comman
 ### Option B: Copy Into an Existing Project
 ```bash
 cp -r sections/ reference/ templates/ requests/ your-project/
-cp CLAUDE.md AGENTS.md your-project/
-cp -r .claude/ your-project/
+cp QWEN.md your-project/
+cp -r .qwen/ your-project/
 cp templates/MEMORY-TEMPLATE.md your-project/memory.md
 ```
 
-Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
+Then run `/init-c` to customize `QWEN.md` for your project's tech stack.
 
 ### After Setup
 - `memory.md`: created from template, gitignored. Each developer maintains their own.
 - `requests/*.md`: feature plans, gitignored. Ephemeral by design.
-- `.claude/settings.local.json`: personal Claude Code settings, gitignored.
+- `.qwen/settings.local.json`: personal Qwen Code settings, gitignored.
 
 ---
 
@@ -550,7 +634,7 @@ Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
 | `/create-prd` | Generates a Product Requirements Document from conversation | Defining a new product or major feature |
 | `/create-pr` | Creates a GitHub Pull Request with AI-generated description | After pushing a branch |
 | `/execution-report` | Generates a post-implementation report for system review | Reviewing what was built vs. what was planned |
-| `/init-c` | Generates a customized `CLAUDE.md` for a new project | New project setup |
+| `/init-c` | Generates a customized `QWEN.md` for a new project | New project setup |
 | `/agents` | Creates a new custom subagent definition file | Extending the system with new agents |
 | `/system-review` | Audits system state for divergence between plan and reality; consumes execution reports automatically | Periodic system health checks |
 
@@ -562,7 +646,7 @@ Then run `/init-c` to customize `CLAUDE.md` for your project's tech stack.
 
 12 subagents run in isolation with their own context windows. Research agents explore in parallel. Code review agents check 4 dimensions simultaneously. Specialist agents bring domain expertise.
 
-Each agent is a markdown file with a system prompt in `.claude/agents/`. The main agent delegates via the Task tool, and agents return structured results without polluting your implementation context.
+Each agent is a markdown file with a system prompt in `.qwen/agents/`. The main agent delegates via the Task tool, and agents return structured results without polluting your implementation context.
 
 <details>
 <summary>All 12 agents — Research, Code Review, Utility, Specialist</summary>
@@ -654,7 +738,7 @@ See `reference/subagents-deep-dive.md` for creating your own agents.
 ### Context & Architecture
 | Guide | What It Covers |
 |-------|---------------|
-| `layer1-guide.md` | Setting up CLAUDE.md for a new project |
+| `layer1-guide.md` | Setting up QWEN.md for a new project |
 | `file-structure.md` | Complete file location reference |
 
 ### Agents & Extensions
@@ -684,8 +768,7 @@ See `reference/archon-workflow.md` for setup instructions.
 
 ```
 My-Coding-System/
-├── CLAUDE.md                          # Auto-loaded rules (~2K tokens)
-├── AGENTS.md                          # Agent guidance for AI assistants
+├── QWEN.md                            # Auto-loaded rules (~2K tokens)
 ├── LICENSE                            # MIT License
 ├── .gitignore                         # Protects secrets, memory, plans
 ├── memory.md                          # Cross-session memory (gitignored)

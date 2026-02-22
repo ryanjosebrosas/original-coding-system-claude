@@ -1,0 +1,3 @@
+display_name: Init-C
+short_description: Initialize new project with structure. Use when starting projects.
+default_prompt: /init-c

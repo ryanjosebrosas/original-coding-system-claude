@@ -1,0 +1,3 @@
+display_name: Prime
+short_description: Prime agent with codebase understanding. Use when starting new session to load project context and establish current state.
+default_prompt: /prime

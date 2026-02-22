@@ -1,0 +1,3 @@
+display_name: Execute
+short_description: Execute implementation plan with step-by-step task completion. Use when implementing from structured plan or following predefined implementation steps.
+default_prompt: /execute

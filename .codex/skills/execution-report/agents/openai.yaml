@@ -1,0 +1,3 @@
+display_name: Execution-Report
+short_description: execution-report command. Use when running /execution-report.
+default_prompt: /execution-report

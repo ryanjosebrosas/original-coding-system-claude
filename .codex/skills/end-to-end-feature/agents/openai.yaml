@@ -1,0 +1,3 @@
+display_name: End-To-End-Feature
+short_description: end-to-end-feature command. Use when running /end-to-end-feature.
+default_prompt: /end-to-end-feature

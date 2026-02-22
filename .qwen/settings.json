@@ -1,0 +1,25 @@
+{
+  "model": {
+    "maxSessionTurns": 100,
+    "skipStartupContext": false,
+    "skipNextSpeakerCheck": false
+  },
+  "tools": {
+    "useRipgrep": true,
+    "exclude": [],
+    "approvalMode": "default"
+  },
+  "context": {
+    "fileName": "QWEN.md",
+    "fileCount": 100,
+    "maxContextTokens": 0.5
+  },
+  "privacy": {
+    "disableTelemetry": false
+  },
+  "ui": {
+    "theme": "Default",
+    "language": "en-US"
+  },
+  "$version": 3
+}

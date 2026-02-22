@@ -1,0 +1,3 @@
+display_name: System-Review
+short_description: system-review command. Use when running /system-review.
+default_prompt: /system-review

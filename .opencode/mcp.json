@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "swarm": {
+      "command": "C:\\\\Users\\\\Utopia\\\\.bun\\\\bin\\\\swarm.exe",
+      "args": ["serve"],
+      "env": {
+        "OLLAMA_HOST": "127.0.0.1:11434"
+      }
+    }
+  }
+}

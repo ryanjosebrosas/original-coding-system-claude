@@ -1,0 +1,3 @@
+display_name: Rca
+short_description: Root cause analysis. Use when investigating bugs or failures.
+default_prompt: /rca

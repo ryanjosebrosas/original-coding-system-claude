@@ -1,0 +1,3 @@
+display_name: Commit
+short_description: Create git commit with conventional message format. Use when committing changes, creating save points, or preparing code for PR.
+default_prompt: /commit

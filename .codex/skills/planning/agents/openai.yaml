@@ -1,0 +1,3 @@
+display_name: Planning
+short_description: Create comprehensive feature plan with deep codebase analysis. Use when planning new features, analyzing codebase, or creating implementation plans.
+default_prompt: /planning

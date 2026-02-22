@@ -1,0 +1,3 @@
+display_name: Code-Review
+short_description: Technical code review with parallel agents. Use when reviewing code for quality, bugs, and standards compliance.
+default_prompt: /code-review
